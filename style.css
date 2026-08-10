@@ -1,0 +1,243 @@
+:root {
+  --bg1: #0d0a1a;
+  --bg2: #1a1330;
+  --bg3: #241a3d;
+  --gold: #d4af6a;
+  --gold-bright: #f0cd82;
+  --purple: #8a6fd6;
+  --text: #ece6f5;
+  --text-sub: #a99cc9;
+  --border: rgba(212, 175, 106, 0.25);
+  --card-bg: rgba(26, 19, 48, 0.72);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-lift: 0 16px 44px rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100vh; }
+
+body {
+  font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+  background: radial-gradient(circle at 50% 0%, var(--bg3) 0%, var(--bg2) 45%, var(--bg1) 100%);
+  color: var(--text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 20%, rgba(138, 111, 214, 0.28), transparent 55%);
+  animation: pulse 6s ease-in-out infinite alternate;
+}
+@keyframes pulse { from { opacity: 0.6; } to { opacity: 1; } }
+
+.stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.star {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0;
+  animation: twinkle 5s ease-in-out infinite;
+}
+.star:nth-child(1) { top: 8%; left: 12%; font-size: 1rem; animation-delay: 0s; }
+.star:nth-child(2) { top: 16%; left: 84%; font-size: 0.8rem; animation-delay: 0.8s; }
+.star:nth-child(3) { top: 30%; left: 6%; font-size: 1.2rem; animation-delay: 1.6s; }
+.star:nth-child(4) { top: 48%; left: 90%; font-size: 0.9rem; animation-delay: 2.4s; }
+.star:nth-child(5) { top: 64%; left: 10%; font-size: 1rem; animation-delay: 3.2s; }
+.star:nth-child(6) { top: 78%; left: 88%; font-size: 0.85rem; animation-delay: 0.4s; }
+.star:nth-child(7) { top: 88%; left: 30%; font-size: 1rem; animation-delay: 1.2s; }
+.star:nth-child(8) { top: 5%; left: 55%; font-size: 0.8rem; animation-delay: 2.8s; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.7); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20px 24px;
+}
+
+.screen { display: none; flex: 1; flex-direction: column; }
+.screen.active { display: flex; }
+
+.eyebrow {
+  display: inline-block;
+  font-family: "Cinzel", serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.accent { color: var(--gold-bright); }
+
+/* ---- スタート画面 ---- */
+#screen-start { align-items: center; justify-content: center; }
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 26px 32px;
+  box-shadow: var(--shadow-lift);
+  text-align: center;
+}
+.emoji { font-size: 2.6rem; margin-bottom: 6px; filter: drop-shadow(0 0 14px rgba(212,175,106,0.5)); }
+.card h1 {
+  font-family: "Cinzel", "Shippori Mincho", serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 4px 0 16px;
+  color: var(--gold-bright);
+}
+.lead { color: var(--text-sub); line-height: 1.85; margin-bottom: 22px; font-size: 0.96rem; }
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+  text-align: left;
+}
+.date-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: rgba(10, 8, 20, 0.6);
+  color: var(--text);
+  margin-bottom: 20px;
+  color-scheme: dark;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), #b8863f);
+  color: #1a1330;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-family: "Cinzel", "Shippori Mincho", serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(212, 175, 106, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  width: 100%;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(212, 175, 106, 0.45); }
+.btn-secondary {
+  background: rgba(212, 175, 106, 0.08);
+  color: var(--gold-bright);
+  border: 1.5px solid var(--border);
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+.btn-secondary:hover { background: rgba(212, 175, 106, 0.16); }
+.card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; opacity: 0.8; }
+
+/* ---- 鑑定中画面 ---- */
+#screen-loading { align-items: center; justify-content: center; text-align: center; }
+.loading-emoji { font-size: 2.8rem; animation: spin 2.4s linear infinite; filter: drop-shadow(0 0 16px rgba(212,175,106,0.6)); }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.loading-text { color: var(--text-sub); margin-top: 16px; font-size: 0.92rem; }
+
+/* ---- 結果画面 ---- */
+#screen-result { padding-top: 8px; }
+.result-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: 18px;
+  padding: 26px 22px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+.result-line {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--gold-bright);
+  line-height: 1.6;
+  margin: 4px 0 16px;
+}
+.result-desc { font-size: 0.92rem; line-height: 1.85; color: var(--text); text-align: left; margin-bottom: 14px; }
+.result-advice { font-size: 0.88rem; line-height: 1.8; color: var(--gold-bright); text-align: left; margin-bottom: 16px; }
+.result-pillars { font-size: 0.7rem; color: var(--text-sub); letter-spacing: 0.02em; margin: 0 0 16px; }
+
+.lucky-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(212, 175, 106, 0.08);
+  border: 1.5px dashed var(--gold);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.lucky-item:hover { background: rgba(212, 175, 106, 0.16); }
+.lucky-emoji { font-size: 1.6rem; flex: none; }
+.lucky-text { flex: 1; display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.lucky-label { font-size: 0.66rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+.lucky-name { font-size: 0.86rem; font-weight: 700; color: var(--text); }
+.lucky-arrow { font-size: 1.3rem; color: var(--gold); flex: none; }
+.pr-tag {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--bg1);
+  background: var(--gold);
+  border-radius: 5px;
+  padding: 1px 5px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.result-actions { margin-top: 22px; }
+.btn-line { background: rgba(6, 199, 85, 0.08); border-color: #06c755; color: #4be08a; }
+.btn-line:hover { background: rgba(6, 199, 85, 0.16); }
+
+.follow-links {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.follow-label { font-size: 0.74rem; color: var(--text-sub); margin: 0 0 8px; }
+.follow-btns { display: flex; justify-content: center; }
+.follow-link {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  background: rgba(212, 175, 106, 0.08);
+  border: 1.5px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+.follow-link:hover { border-color: var(--gold); }
+
+.site-footer { max-width: 480px; margin: 0 auto; padding: 20px 20px 32px; position: relative; z-index: 1; }
+.site-footer p { font-size: 0.66rem; line-height: 1.7; color: var(--text-sub); margin: 0 0 8px; text-align: center; opacity: 0.85; }
+
+@media (min-width: 520px) {
+  .card { padding: 48px 40px 40px; }
+}
