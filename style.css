@@ -222,7 +222,7 @@ body {
   text-align: center;
 }
 .follow-label { font-size: 0.74rem; color: var(--text-sub); margin: 0 0 8px; }
-.follow-btns { display: flex; justify-content: center; }
+.follow-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .follow-link {
   font-size: 0.74rem;
   font-weight: 700;
