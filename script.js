@@ -14,6 +14,27 @@ function dayGanzhiIndex(y, m, d) {
   return (((31 + diff) % 60) + 60) % 60;
 }
 
+// 23時以降(遅子時)は日柱の計算上、翌日の干支を用いる(四柱推命の伝統的な取り扱い、諸説あり)
+function dayGanzhiIndexForHour(y, m, d, hour) {
+  if (hour !== null && hour >= 23) {
+    const next = new Date(Date.UTC(y, m - 1, d));
+    next.setUTCDate(next.getUTCDate() + 1);
+    return dayGanzhiIndex(next.getUTCFullYear(), next.getUTCMonth() + 1, next.getUTCDate());
+  }
+  return dayGanzhiIndex(y, m, d);
+}
+
+// 五鼠遁: 日干グループ(0:甲己 1:乙庚 2:丙辛 3:丁壬 4:戊癸)ごとの子時の干インデックス
+const RAT_START_STEM = [0, 2, 4, 6, 8]; // 甲丙戊庚壬
+
+function hourGanzhi(dayStemIdx, hour) {
+  const group = dayStemIdx % 5;
+  // 子時=23:00-00:59を0とし、以後2時間ごとに丑,寅...と進む
+  const branchPos = Math.floor((hour + 1) / 2) % 12;
+  const stemIdx = (RAT_START_STEM[group] + branchPos) % 10;
+  return { stem: STEMS[stemIdx], branch: BRANCHES[branchPos] };
+}
+
 // 立春(近似2/4)を年の境界とする。節気は年により前後1日程度ずれることがある(エンタメ精度)
 function effectiveYear(y, m, d) {
   if (m < 2 || (m === 2 && d < 4)) return y - 1;
@@ -70,15 +91,21 @@ function monthGanzhi(y, m, d) {
   return { stem: STEMS[stemIdx], branch: branchOrder[pos] };
 }
 
-function computeFourPillars(y, m, d) {
-  const dayIdx = dayGanzhiIndex(y, m, d);
+function computeFourPillars(y, m, d, hour) {
+  const h = (hour === undefined || hour === null || isNaN(hour)) ? null : hour;
+  const dayIdx = dayGanzhiIndexForHour(y, m, d, h);
   const yearIdx = yearGanzhiIndex(y, m, d);
   const month = monthGanzhi(y, m, d);
-  return {
+  const result = {
     day: { stem: STEMS[dayIdx % 10], branch: BRANCHES[dayIdx % 12], stemIdx: dayIdx % 10 },
     year: { stem: STEMS[yearIdx % 10], branch: BRANCHES[yearIdx % 12] },
     month,
+    hour: null,
   };
+  if (h !== null) {
+    result.hour = hourGanzhi(dayIdx % 10, h);
+  }
+  return result;
 }
 
 // ===== 日主(日干)タイプ別 結果コンテンツ =====
@@ -176,20 +203,28 @@ function startDivination() {
     return;
   }
   const [y, m, d] = input.value.split('-').map(Number);
+  const timeInput = document.getElementById('birthtime');
+  let hour = null;
+  if (timeInput.value) {
+    hour = Number(timeInput.value.split(':')[0]);
+  }
   showScreen('screen-loading');
-  setTimeout(() => renderResult(y, m, d), 1400);
+  setTimeout(() => renderResult(y, m, d, hour), 1400);
 }
 
-function renderResult(y, m, d) {
-  const pillars = computeFourPillars(y, m, d);
+function renderResult(y, m, d, hour) {
+  const pillars = computeFourPillars(y, m, d, hour);
   const type = DAY_MASTER_TYPES[pillars.day.stemIdx];
   lastResult = { pillars, type };
 
   document.getElementById('result-line').textContent = type.line;
   document.getElementById('result-desc').textContent = type.desc;
   document.getElementById('result-advice').textContent = '【黒曜先生からひとこと】' + type.advice;
-  document.getElementById('result-pillars').textContent =
-    `年柱: ${pillars.year.stem}${pillars.year.branch} ・ 月柱: ${pillars.month.stem}${pillars.month.branch} ・ 日柱(日主): ${pillars.day.stem}${pillars.day.branch}`;
+  let pillarsText = `年柱: ${pillars.year.stem}${pillars.year.branch} ・ 月柱: ${pillars.month.stem}${pillars.month.branch} ・ 日柱(日主): ${pillars.day.stem}${pillars.day.branch}`;
+  pillarsText += pillars.hour
+    ? ` ・ 時柱: ${pillars.hour.stem}${pillars.hour.branch}`
+    : ` ・ 時柱: 不明(未入力のため省略)`;
+  document.getElementById('result-pillars').textContent = pillarsText;
 
   const luckyLink = document.getElementById('lucky-link');
   luckyLink.href = affiliateUrl(type.lucky.keyword);
