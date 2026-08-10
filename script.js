@@ -316,3 +316,17 @@ document.getElementById('btn-start').addEventListener('click', startDivination);
 document.getElementById('btn-restart').addEventListener('click', restart);
 document.getElementById('btn-share').addEventListener('click', shareResult);
 document.getElementById('btn-share-line').addEventListener('click', shareResultLine);
+
+// ===== アクセス解析(任意) =====
+// GA4の測定IDが決まったらここに設定してください(空文字の間は何も読み込みません、追加コストなし)
+const GA_MEASUREMENT_ID = '';
+if (GA_MEASUREMENT_ID) {
+  const gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(gaScript);
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID);
+}

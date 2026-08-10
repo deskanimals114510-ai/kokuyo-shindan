@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deskanimals114510-ai.github.io/kokuyo-shindan/sitemap.xml
