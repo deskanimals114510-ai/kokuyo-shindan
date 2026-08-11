@@ -189,8 +189,6 @@ body {
   margin: 18px 0 8px;
 }
 .result-advice { font-size: 0.88rem; line-height: 1.8; color: var(--gold-bright); text-align: left; margin-bottom: 16px; }
-.result-pillars { font-size: 0.7rem; color: var(--text-sub); letter-spacing: 0.02em; margin: 0 0 16px; }
-
 .lucky-item {
   display: flex;
   align-items: center;

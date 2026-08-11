@@ -50,7 +50,7 @@
       <label for="birthtime" class="field-label">生まれた時刻(わかれば・任意)</label>
       <input type="time" id="birthtime" class="date-input">
       <button id="btn-start" class="btn-primary">占ってもらう ✦</button>
-      <p class="sub">日主(にっしゅ)から、あなたの核となる気質を鑑定します。時刻を入れると時柱まで含めた鑑定になります</p>
+      <p class="sub">生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります</p>
     </div>
   </section>
 
@@ -58,7 +58,7 @@
   <section id="screen-loading" class="screen">
     <div class="loading-wrap">
       <div class="loading-emoji">🔮</div>
-      <p class="loading-text">黒曜先生が、命式を読み解いています…</p>
+      <p class="loading-text">黒曜先生が、生まれた日を読み解いています…</p>
     </div>
   </section>
 
@@ -72,10 +72,11 @@
       <p id="result-work" class="result-desc"></p>
       <h3 class="result-subhead">💞 恋愛の傾向</h3>
       <p id="result-love" class="result-desc"></p>
+      <h3 class="result-subhead">🤝 人間関係の傾向</h3>
+      <p id="result-relationships" class="result-desc"></p>
       <h3 class="result-subhead">🌙 生まれ持った背景</h3>
       <p id="result-background" class="result-desc"></p>
       <p id="result-advice" class="result-advice"></p>
-      <p id="result-pillars" class="result-pillars"></p>
       <a id="lucky-link" class="lucky-item" href="#" target="_blank" rel="noopener">
         <span id="lucky-emoji" class="lucky-emoji"></span>
         <span class="lucky-text">
