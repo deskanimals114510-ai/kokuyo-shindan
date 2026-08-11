@@ -319,7 +319,7 @@ document.getElementById('btn-share-line').addEventListener('click', shareResultL
 
 // ===== アクセス解析(任意) =====
 // GA4の測定IDが決まったらここに設定してください(空文字の間は何も読み込みません、追加コストなし)
-const GA_MEASUREMENT_ID = '';
+const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
 if (GA_MEASUREMENT_ID) {
   const gaScript = document.createElement('script');
   gaScript.async = true;
