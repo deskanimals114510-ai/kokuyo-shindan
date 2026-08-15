@@ -248,3 +248,85 @@ body {
 @media (min-width: 520px) {
   .card { padding: 48px 40px 40px; }
 }
+
+/* ---- 日主タイプ別解説ページ(/nichishu/) ---- */
+.type-page-note {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 20px 0;
+}
+.type-nav {
+  margin: 24px 0 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+}
+.type-nav-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  margin: 0 0 10px;
+}
+.type-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.type-nav-link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: "Shippori Mincho", serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(212, 175, 106, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 4px;
+}
+.type-nav-link.active {
+  background: var(--gold);
+  color: var(--bg1);
+  border-color: transparent;
+}
+.type-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.type-hub-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: 16px;
+  padding: 18px 10px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.type-hub-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.type-hub-emoji { font-size: 1.8rem; }
+.type-hub-code {
+  font-family: "Shippori Mincho", serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--gold-bright);
+}
+.type-hub-title {
+  font-size: 0.72rem;
+  color: var(--text-sub);
+}

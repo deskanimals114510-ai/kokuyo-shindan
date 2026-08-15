@@ -2,8 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/kinoe.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/kinoto.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/hinoe.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/hinoto.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/tsuchinoe.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/tsuchinoto.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/kanoe.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/kanoto.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/mizunoe.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://deskanimals114510-ai.github.io/kokuyo-shindan/nichishu/mizunoto.html</loc><lastmod>2026-08-15</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
 </urlset>
