@@ -338,14 +338,14 @@ function restart() {
 
 function shareResult() {
   if (!lastResult) return;
-  const text = `黒曜先生に占われました。\n${lastResult.type.line}\n#黒曜診断 #四柱推命`;
+  const text = `黒曜先生に占われました。\n${lastResult.type.line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`;
   const url = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(resultUrl());
   window.open(url, '_blank', 'noopener');
 }
 
 function shareResultLine() {
   if (!lastResult) return;
-  const text = `黒曜先生に占われました。${lastResult.type.line}`;
+  const text = `黒曜先生に占われました。${lastResult.type.line}\nあなたも占われてみなさい→`;
   const url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(resultUrl()) + '&text=' + encodeURIComponent(text);
   window.open(url, '_blank', 'noopener');
 }
