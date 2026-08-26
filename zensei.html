@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前世診断 - 黒曜先生が視るあなたの前世 | 黒曜診断</title>
+<meta name="description" content="生年月日から、占い師「黒曜先生」があなたの前世を視る無料診断。四柱推命の年干10タイプ+十二支の隠し味で、あなただけの前世ストーリーを鑑定します。">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="前世診断 - 黒曜先生が視るあなたの前世">
+<meta property="og:description" content="生年月日から、占い師「黒曜先生」があなたの前世を視る無料診断。四柱推命の年干10タイプ+十二支の隠し味で、あなただけの前世ストーリーを鑑定します。">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/zensei.html">
+<link rel="canonical" href="https://deskanimals114510-ai.github.io/kokuyo-shindan/zensei.html">
+<meta property="og:image" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="前世診断 - 黒曜先生が視るあなたの前世">
+<meta name="twitter:description" content="生年月日から、占い師「黒曜先生」があなたの前世を視る無料診断。四柱推命の年干10タイプ+十二支の隠し味で鑑定します。">
+<meta name="twitter:image" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"前世診断 - 黒曜先生が視るあなたの前世","description":"生年月日から、占い師「黒曜先生」があなたの前世を視る無料診断。四柱推命の年干10タイプ+十二支の隠し味で鑑定します。","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/zensei.html","inLanguage":"ja","isPartOf":{"@type":"WebSite","name":"黒曜診断","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/"},"author":{"@type":"Organization","name":"Desk Animals Lab"},"image":"https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"黒曜診断","item":"https://deskanimals114510-ai.github.io/kokuyo-shindan/"},{"@type":"ListItem","position":2,"name":"前世診断","item":"https://deskanimals114510-ai.github.io/kokuyo-shindan/zensei.html"}]}</script>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true">
+  <span class="star">✦</span><span class="star">✧</span><span class="star">✦</span>
+  <span class="star">✧</span><span class="star">✦</span><span class="star">✧</span>
+  <span class="star">✦</span><span class="star">✧</span>
+</div>
+
+<div id="app">
+
+  <!-- スタート画面 -->
+  <section id="screen-start" class="screen active">
+    <div class="card">
+      <div class="emoji">🌙</div>
+      <span class="eyebrow">黒曜診断 番外編・前世診断</span>
+      <h1>前世診断</h1>
+      <p class="lead">占い師「黒曜先生」が、あなたの生年月日から<br><span class="accent">前世の記憶</span>を視ます。</p>
+      <label for="birthdate" class="field-label">生年月日を入力</label>
+      <input type="date" id="birthdate" class="date-input" min="1920-01-01">
+      <button id="btn-start" class="btn-primary">前世を視てもらう ✦</button>
+      <p class="sub">生まれた年の干支から、あなたの前世を鑑定します。エンタメ目的のコンテンツです</p>
+    </div>
+  </section>
+
+  <!-- 鑑定中画面 -->
+  <section id="screen-loading" class="screen">
+    <div class="loading-wrap">
+      <div class="loading-emoji">🌙</div>
+      <p class="loading-text">黒曜先生が、前世の記憶をたぐり寄せています…</p>
+    </div>
+  </section>
+
+  <!-- 結果画面 -->
+  <section id="screen-result" class="screen">
+    <div class="result-card">
+      <span class="eyebrow">前世診断 RESULT</span>
+      <span id="result-type-label" class="spinoff-type-label"></span>
+      <h2 id="result-title" class="result-line"></h2>
+      <div id="result-episodes"></div>
+      <h3 class="result-subhead">🌫️ その記憶に漂う情景</h3>
+      <p id="result-flavor" class="spinoff-flavor"></p>
+      <p id="result-final-line" class="spinoff-quote"></p>
+    </div>
+    <div id="result-card-preview" class="result-card-preview"></div>
+    <p class="result-card-preview-hint">画像を長押し(スマホ)または右クリックで保存できます</p>
+    <div class="result-actions">
+      <button id="btn-share" class="btn-primary">Xでシェア ✦</button>
+      <button id="btn-share-line" class="btn-secondary btn-line">LINEでシェア</button>
+      <button id="btn-copy-url" class="btn-secondary">結果URLをコピー 🔗</button>
+      <button id="btn-restart" class="btn-secondary">もう一度視てもらう</button>
+    </div>
+    <div class="result-actions result-actions-card">
+      <button id="btn-save-card" class="btn-secondary">結果カードを保存 🖼️</button>
+    </div>
+    <div class="result-actions">
+      <a class="spinoff-cross-link" href="shugorei.html">🕊️ あなたの守護霊も視てもらう</a>
+    </div>
+    <div class="follow-links">
+      <p class="follow-label">🔮 本格鑑定も気になるなら</p>
+      <div class="follow-btns">
+        <a class="follow-link" href="index.html">黒曜診断(本格四柱推命)</a>
+      </div>
+    </div>
+    <div class="follow-links">
+      <p class="follow-label">🐹 Desk Animalsをフォローする</p>
+      <div class="follow-btns">
+        <a class="follow-link" href="https://x.com/deskanimalslab" target="_blank" rel="noopener">X</a>
+        <a class="follow-link" href="https://www.instagram.com/desk.animals114510/" target="_blank" rel="noopener">Instagram</a>
+        <a class="follow-link" href="https://www.tiktok.com/@desk.animals" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>本診断はエンタメ目的のコンテンツです。四柱推命の年干をベースにした創作ストーリーであり、実在の歴史・人物とは関係ありません。科学的な診断や実際の鑑定に代わるものではありません。</p>
+    <p>生年月日は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。</p>
+    <p><a href="index.html" style="color:var(--text-sub);">黒曜診断トップへ戻る</a> ・ <a href="shugorei.html" style="color:var(--text-sub);">守護霊診断はこちら</a></p>
+  </footer>
+
+</div>
+<script src="spinoff-common.js"></script>
+<script src="spinoff-branch-flavor.js"></script>
+<script src="zensei-data.js"></script>
+<script src="zensei.js"></script>
+</body>
+</html>

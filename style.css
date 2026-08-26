@@ -342,3 +342,105 @@ body {
   font-size: 0.72rem;
   color: var(--text-sub);
 }
+
+/* ---- スピンオフ診断(前世診断・守護霊診断)共通 ---- */
+.spinoff-intro { font-size: 0.82rem; line-height: 1.8; color: var(--text-sub); }
+.spinoff-type-label {
+  display: inline-block;
+  font-family: "Cinzel", "Shippori Mincho", serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  background: rgba(212, 175, 106, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 10px;
+}
+.spinoff-episode {
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--text);
+  text-align: left;
+  margin: 0 0 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border);
+}
+.spinoff-episode:last-of-type { border-bottom: none; }
+.spinoff-flavor {
+  font-size: 0.82rem;
+  line-height: 1.85;
+  color: var(--text-sub);
+  text-align: left;
+  font-style: italic;
+  background: rgba(138, 111, 214, 0.08);
+  border-left: 3px solid var(--purple);
+  padding: 10px 14px;
+  margin: 4px 0 18px;
+  border-radius: 0 10px 10px 0;
+}
+.spinoff-quote {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.8;
+  color: var(--gold-bright);
+  text-align: center;
+  margin: 6px 0 20px;
+  padding: 18px 16px;
+  background: rgba(212, 175, 106, 0.07);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.spinoff-guardian-block { text-align: left; margin-bottom: 4px; }
+.spinoff-guardian-name {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--gold-bright);
+  margin: 4px 0 14px;
+  text-align: center;
+}
+.spinoff-voiceline {
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: var(--gold-bright);
+  text-align: left;
+  margin: 0 0 16px;
+}
+.result-card-preview {
+  margin: 4px 0 18px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  min-height: 100px;
+}
+.result-card-preview img { display: block; width: 100%; height: auto; }
+.result-card-preview-hint {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  margin: -12px 0 20px;
+  opacity: 0.8;
+}
+.result-actions-card .btn-secondary {
+  font-size: 0.86rem;
+  padding: 11px 22px;
+  opacity: 0.92;
+}
+.spinoff-cross-link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--gold-bright);
+  background: rgba(212, 175, 106, 0.08);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 13px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+.spinoff-cross-link:hover { border-color: var(--gold); }
