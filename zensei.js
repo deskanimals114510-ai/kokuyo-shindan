@@ -30,6 +30,8 @@ function zenseiApplyResult(stemIdx, branchIdx) {
   document.getElementById('result-flavor').textContent = flavor;
   document.getElementById('result-final-line').textContent = type.finalLine;
 
+  spinoffApplyLucky(stemIdx);
+
   spinoffShowScreen('screen-result');
 
   const cardOpts = {

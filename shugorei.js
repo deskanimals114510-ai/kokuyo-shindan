@@ -24,6 +24,8 @@ function shugoreiApplyResult(stemIdx, branchIdx) {
   document.getElementById('result-quote').textContent = type.quoteLine;
   document.getElementById('result-advice').textContent = '【黒曜先生からひとこと】' + type.advice;
 
+  spinoffApplyLucky(stemIdx);
+
   spinoffShowScreen('screen-result');
 
   const cardOpts = {

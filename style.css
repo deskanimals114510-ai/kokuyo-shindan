@@ -430,6 +430,19 @@ body {
   padding: 11px 22px;
   opacity: 0.92;
 }
+.spinoff-lucky-hitokoto {
+  font-family: "Shippori Mincho", serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.8;
+  color: var(--gold-bright);
+  text-align: left;
+  margin: 20px 0 10px;
+}
+.lucky-price {
+  font-size: 0.68rem;
+  color: var(--text-sub);
+}
 .spinoff-cross-link {
   display: block;
   text-align: center;

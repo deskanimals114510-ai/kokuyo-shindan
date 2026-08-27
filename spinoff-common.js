@@ -268,6 +268,49 @@ async function spinoffDownloadCard(btnId, filename, opts) {
   }
 }
 
+// ===== ラッキーアイテム(Amazonアフィリエイト) =====
+// 黒曜診断本体(script.js)のDAY_MASTER_TYPES[n].luckyと同一のemoji/name/keywordを、
+// 年干インデックス(0=甲…9=癸)をキーに値だけ独立して転記したもの(本体は一切改変しない・importもしない)。
+// キーワードは本体側で既に目視検証済みのため、ここでの追加調査は不要。
+// price: Amazon実勢の目安価格帯(新規追加)。hitokoto: 黒曜先生トーンの一言コピー、
+// 年干が持つ気質アーキタイプ(大樹/草花/太陽…)に紐づけているので、前世診断・守護霊診断どちらの結果にも使い回せる。
+const SPINOFF_AFFILIATE_TAG = 'tinywonders-22';
+
+function spinoffAffiliateUrl(keyword) {
+  const base = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}`;
+  return SPINOFF_AFFILIATE_TAG ? `${base}&tag=${encodeURIComponent(SPINOFF_AFFILIATE_TAG)}` : base;
+}
+
+const SPINOFF_LUCKY = [
+  { emoji: '🪴', name: '観葉植物', keyword: '観葉植物 卓上 ミニ', price: '¥1,500〜3,000', hitokoto: 'まっすぐな気を保ちたいなら、こういうものを傍に置いておきなさい。' },
+  { emoji: '🍵', name: 'ハーブティーセット', keyword: 'ハーブティー ギフトセット', price: '¥1,500〜3,000', hitokoto: '踏まれた心を戻すには、まず一杯のお茶からよ。' },
+  { emoji: '🕶️', name: 'サングラス', keyword: 'サングラス おしゃれ', price: '¥2,000〜5,000', hitokoto: '眩しすぎるあなたには、少し陰を作る道具が要るわ。' },
+  { emoji: '🕯️', name: 'アロマキャンドル', keyword: 'アロマキャンドル ギフト', price: '¥1,500〜3,000', hitokoto: '静かな灯りを、自分のためにも一つ灯しなさい。' },
+  { emoji: '☕', name: '陶器のマグカップ', keyword: '陶器 マグカップ', price: '¥1,000〜2,500', hitokoto: '動じない器には、あなたを支える器を持たせなさい。' },
+  { emoji: '👝', name: 'ポーチ・小物入れ', keyword: 'ポーチ おしゃれ 収納', price: '¥1,500〜3,000', hitokoto: '与えてばかりのあなたには、自分だけの持ち場を作りなさい。' },
+  { emoji: '🥤', name: 'ステンレスタンブラー', keyword: 'ステンレスタンブラー おしゃれ', price: '¥1,500〜3,500', hitokoto: '研ぎ澄ました心を、少し冷ましてやりなさい。' },
+  { emoji: '💍', name: 'アクセサリー', keyword: 'アクセサリー シンプル', price: '¥1,500〜4,000', hitokoto: '磨いてきた自分に、ふさわしい飾りを一つ。' },
+  { emoji: '🧳', name: '旅行用ポーチ', keyword: 'トラベルポーチ 旅行 収納', price: '¥1,500〜3,000', hitokoto: '自由に漂うあなたには、身軽な旅の道具を。' },
+  { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上', price: '¥2,000〜4,000', hitokoto: '静かな気配には、静かに満ちる香りを添えなさい。' },
+];
+
+// 前世診断・守護霊診断の結果画面に、年干インデックスからラッキーアイテムカードを差し込む共通処理
+// (両ページのHTMLはid="lucky-link"/"lucky-emoji"/"lucky-name"/"lucky-price"/"lucky-hitokoto"を持つ前提)
+function spinoffApplyLucky(stemIdx) {
+  const item = SPINOFF_LUCKY[stemIdx];
+  const link = document.getElementById('lucky-link');
+  if (!link || !item) return;
+  link.href = spinoffAffiliateUrl(item.keyword);
+  const emojiEl = document.getElementById('lucky-emoji');
+  if (emojiEl) emojiEl.textContent = item.emoji;
+  const nameEl = document.getElementById('lucky-name');
+  if (nameEl) nameEl.textContent = item.name + 'を見てみる';
+  const priceEl = document.getElementById('lucky-price');
+  if (priceEl) priceEl.textContent = '目安 ' + item.price;
+  const hitokotoEl = document.getElementById('lucky-hitokoto');
+  if (hitokotoEl) hitokotoEl.textContent = item.hitokoto;
+}
+
 // ===== アクセス解析(黒曜診断本体と同一のGA4測定ID) =====
 (function spinoffLoadGA() {
   const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
