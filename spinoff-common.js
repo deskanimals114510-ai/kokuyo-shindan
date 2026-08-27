@@ -230,6 +230,8 @@ async function spinoffRenderCardPreview(previewId, opts) {
     const img = document.createElement('img');
     img.src = canvas.toDataURL('image/png');
     img.alt = 'result card preview';
+    img.width = canvas.width;
+    img.height = canvas.height;
     preview.appendChild(img);
   } catch (e) {
     console.error('結果カードプレビューの生成に失敗しました', e);
