@@ -378,7 +378,10 @@ document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl)
 // ===== アクセス解析(任意) =====
 // GA4の測定IDが決まったらここに設定してください(空文字の間は何も読み込みません、追加コストなし)
 const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
-if (GA_MEASUREMENT_ID) {
+// ローカル開発サーバー(_devserver.ps1)からのアクセスを除外するガード。
+// これがないと動作確認のたびに本番GA4にダミーのpageview/eventが記録されてしまう(2026-08-28判明)。
+const isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+if (GA_MEASUREMENT_ID && !isLocalDev) {
   const gaScript = document.createElement('script');
   gaScript.async = true;
   gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;

@@ -314,7 +314,8 @@ function spinoffApplyLucky(stemIdx) {
 // ===== アクセス解析(黒曜診断本体と同一のGA4測定ID) =====
 (function spinoffLoadGA() {
   const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
-  if (!GA_MEASUREMENT_ID) return;
+  const isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+  if (!GA_MEASUREMENT_ID || isLocalDev) return;
   const gaScript = document.createElement('script');
   gaScript.async = true;
   gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
