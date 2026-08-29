@@ -464,3 +464,10 @@ body {
   border-radius: 14px;
   box-shadow: 0 10px 26px rgba(212, 175, 106, 0.28);
 }
+
+.shugorei-hero-img {
+  display: block;
+  margin: 0 auto 14px;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(212, 175, 106, 0.28);
+}

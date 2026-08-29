@@ -17,6 +17,9 @@ function shugoreiApplyResult(stemIdx, branchIdx) {
   const stemReading = SPINOFF_STEM_READING[stemIdx];
   document.getElementById('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
   document.getElementById('result-name').textContent = type.name;
+  const guardianImg = document.getElementById('result-guardian-img');
+  guardianImg.src = `img/shugorei/${type.slug}.jpg`;
+  guardianImg.alt = `守護霊「${type.name}」のイメージイラスト`;
   document.getElementById('result-appearance').textContent = type.appearance;
   document.getElementById('result-nature').textContent = type.nature;
   document.getElementById('result-blessing').textContent = type.blessing;
