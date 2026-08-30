@@ -247,8 +247,8 @@ function affiliateUrl(keyword) {
 }
 const AFFILIATE_TAG = 'tinywonders-22';
 
-// ===== JA/EN切替(2026-08-30、着手。相性診断の先例と同じく「毎日5本ずつ」ペースでFable翻訳中。
-// 未翻訳の日主はgetDayMasterType()がJA版へ自動フォールバックし、pending注記を表示する) =====
+// ===== JA/EN切替(2026-08-30着手、2026-08-30完了。10日主全てFable翻訳済み。
+// isPendingTranslationの仕組み自体は将来の追加日主/フィールドのために維持) =====
 let LANG = 'ja';
 
 // Fable(claude-fable-5)による書き起こし。line/desc/work/love/relationships/adviceの6項目×10日主=60本。
@@ -294,7 +294,46 @@ const DAY_MASTER_TYPES_EN = {
     relationships: `In relationships, you may not say much, but that unshakable calm makes people lean on you naturally. The catch: you're no good at closing the distance yourself, so you end up waiting. The truth is you're quietly watching, taking your time to judge whether someone deserves your trust — aren't you. And once someone is inside your circle, your loyalty stands like the mountain itself. If you want people to know how deep that shelter runs, reach out first once in a while. That alone will set things in motion.`,
     advice: `Your defenses are solid enough already. All that's left is one step — outward, on your own.`,
   },
-  // 5(己)〜9(癸)は次回以降、日を分けて追記していく。
+  5: {
+    line: `You are Tsuchinoto — the rich field that raises every seed sown in it.`,
+    desc: `You have a born gift for raising people and holding them up. Far more people than you realize have been saved by an offhand word or a small kindness of yours. Like soil that grows crops without saying a word, you give without asking anything back — that's the measure of you. But listen — even soil goes thin. You keep feeding everyone else; when did you last till your own ground? One of these nights, mid-celebration of someone else's harvest, the question will hit you: "Where is my life in all this?" Take just two parts in ten of the love you pour into others and turn it on yourself. The richer your field grows, the greater the harvests you can raise.`,
+    work: `At work, you show your true worth in the roles that raise, support, and hold things together — teaching, mentoring, the backbone jobs nobody sees. But that habit of handing your credit to others costs you recognition you've earned. State your results with your own mouth. That isn't bragging — it's reporting.`,
+    love: `In love, giving is what makes you happy. But fuss over someone too much and you stop being a lover and become a guardian. A relationship that's all "let me do that for you" is not an equal one. Say what you want out loud. Only when you can be the one leaning does the scale finally balance.`,
+    relationships: `With people, you've settled deep into the listener's seat, the supporter's seat. You can't say no when someone needs you, and before you know it you're everyone's help desk. But when you're the one running dry, nobody notices — because you always look fine. Learn to say "actually, I'm worn out" and "not today." Showing weakness is proof that you trust someone. The person you hand it to will be glad you did.`,
+    advice: `A field that only gives will one day go barren. Let someone till you for a change.`,
+  },
+  6: {
+    line: `You are Kanoe — a blade honed until not a trace of cloud remains.`,
+    desc: `You cannot leave a vague thing vague. White or black, right or wrong. In a world full of hedging, that clarity and that speed of decision are a rare kind of strength — what everyone else swallows, you say first. But listen — the sharper the blade, the more it wounds when you don't choose where to swing it. Hasn't your "right" been cutting away someone's "circumstances" all along? A blade's true worth isn't decided by what it cuts. It's decided by what it chooses not to cut. When to draw, and when to keep it sheathed — the day you can tell the difference is the day you become the real thing.`,
+    work: `At work, you shine exactly where decision and action are demanded — negotiations, the moments when the rot has to be cut out. Your judgment there bows to no one, and an organization that muddles along will grate on you badly. But remember: the same hard truth can be medicine or a blade, depending on how it's said. Care about the cleanness of the cut, too.`,
+    love: `In love, you play it dead straight — no games. You say exactly what you think, so some read it as honesty and some step back from the edge. With the one you love, of all people, set the blade down and touch with bare hands. Soft words work better than you give them credit for.`,
+    relationships: `With people, you speak your mind, so the line between friend and foe gets drawn sharp. Good. That's a far more trusted way to live than pleasing everyone. There are even people who want your blunt words — that's how little your words lie. But the gratitude you owe your own side? You've barely said it, have you. The things you want to protect — name them out loud.`,
+    advice: `A truly strong blade is rarely drawn.`,
+  },
+  7: {
+    line: `You are Kanoto — a gem born of countless rounds of polishing.`,
+    desc: `You carry a sharp eye for beauty and a delicate sensitivity in the same body. You're the first to spot the tiny flaw everyone else walks past, and you demand perfection down to the last detail — a severity you turn on yourself before anyone. You bruise easily, yet you'd rather die than let the bruise show. That pride and that fragility living side by side is the complicated part of you. But listen — a gem shines because of what was ground away. The very scratch you're ashamed of has become the facet that scatters light most beautifully. You don't need to be flawless. Grade yourself at half the strictness you grade everyone else.`,
+    work: `At work, you shine in fields where precision and taste decide everything. Your refusal to tolerate sloppy work will make your name on quality alone. But your bar sits so high that you leave yourself — and everyone around you — gasping. Sometimes it takes courage to ship at eighty percent. Find it.`,
+    love: `In love, your ideals run high and you don't compromise cheaply. There are nights you want to be honest, but pride grabs the words first and hands you something cold to say instead. Listen — with the one person you can show weakness to, wear nothing but yourself. The real value is in the stone before the polish.`,
+    relationships: `In friendship, you choose few and go deep. Because you don't open up to just anyone, people call you hard to approach — don't be ashamed of that. Gems don't lie around on the roadside. The ones who've actually gotten close know you're warmer-hearted and more loyal than anyone. Taking time to open up isn't a flaw; it's proof of how seriously you face people. No hurry. Choose the ones worth polishing against, at your own pace.`,
+    advice: `Stop being ashamed of your scratches. They're what set the angle of your shine.`,
+  },
+  8: {
+    line: `You are Mizunoe — the ocean that answers to no shore and runs all the way to the horizon.`,
+    desc: `You're built on a grand scale, and you love freedom above all else. Staying in one place, settling for one right answer — it's simply not in your nature. The way you stride past common sense, in thought and in action, is a pull no one around you can imitate. But listen — a tide that rises also pulls out. That restless ebb and flow of yours can curdle into "you can never get a hold of that one." The size of your vessel is real. Which is exactly why it's such a waste — how rarely you've dropped anchor and seen one thing all the way through. Water that only keeps flowing fills nothing. Just once, choose the harbor you'll pour all of yourself into.`,
+    work: `At work, you live on change and stimulation, not routine. Spinning several things at once, thinking past the edge of the map — those are your weapons. But your worst enemy is the habit of getting bored and letting go right before something takes off. Your credibility is built one finished thing at a time. Count them.`,
+    love: `In love, you're a free spirit who can't stand a leash. Chased, you pull back; released, you want to chase — a troublesome tide, and your partner is left wondering if you're serious at all. If you want your freedom, pay for it in words. Drop the anchor of one sentence — "I'm not going anywhere" — and it will hold your freedom in place.`,
+    relationships: `With people, you're easy company for anyone, and your connections spread wide as open water. But you steer neatly around going deep, don't you. Somewhere in you is a quiet fear of leaning on any one person. Listen — every ocean has its deep places, and it is far too lonely for not one soul to know yours. The ones you trust — invite them in past the shallows.`,
+    advice: `You have the breadth. Now the depth. Try lowering your anchor in one harbor.`,
+  },
+  9: {
+    line: `You are Mizunoto — the dew that soaks into the earth without a sound.`,
+    desc: `You say little and watch everything. Those eyes see through the feelings people think they've hidden, catch the faintest shift in the air of a room. Sharp intuition and deep intelligence — that is your wellspring. But dew is so quiet that no one notices it's there. Inside you sits a lake's worth of insight that has never once been put into words. Stop waiting to be understood without speaking. As long as you stay silent, that intelligence gets treated as if it doesn't exist. The stiller the water, the deeper a single drop rings when it finally falls. Don't hoard that drop.`,
+    work: `At work, you prove your worth where deep thinking is the whole job — research, analysis, the quiet engine room behind every plan. The answers you produce run ten steps ahead of the loud voices in the room. But silence carries nothing to anyone. In your next meeting, be the one who speaks first — just once. Watch how the room looks at you after.`,
+    love: `In love, you hide what you really feel and wait to be read. But hear me — in love, a feeling left unspoken gets treated exactly like a feeling that doesn't exist. Instead of hoping for a hundred guesses, hand over one word. That quiet sentence of yours soaks in far deeper than you imagine.`,
+    relationships: `With people, you're the listener who draws out what others never meant to say. Everyone wants to be heard by you — and yet you've never found the one who hears you. That's because you never leave an opening to talk about yourself. Stay the mystery, and no one will ever be able to hold you up. With the ones you trust, let your rain fall.`,
+    advice: `"They'll understand without my saying it" is a fantasy. The drops that matter most — let them fall out loud.`,
+  },
 };
 
 const LUCKY_NAME_EN = [
