@@ -16,6 +16,36 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100vh; }
 
+.lang-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.lang-btn {
+  font-family: "Cinzel", "Shippori Mincho", serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.lang-btn.active {
+  background: linear-gradient(135deg, var(--gold), var(--purple));
+  color: var(--bg1);
+  border-color: transparent;
+}
+.lang-note {
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  font-style: italic;
+  margin: 6px 0 10px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

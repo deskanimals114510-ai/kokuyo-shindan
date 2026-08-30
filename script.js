@@ -247,6 +247,150 @@ function affiliateUrl(keyword) {
 }
 const AFFILIATE_TAG = 'tinywonders-22';
 
+// ===== JA/EN切替(2026-08-30、着手。相性診断の先例と同じく「毎日5本ずつ」ペースでFable翻訳中。
+// 未翻訳の日主はgetDayMasterType()がJA版へ自動フォールバックし、pending注記を表示する) =====
+let LANG = 'ja';
+
+// Fable(claude-fable-5)による書き起こし。line/desc/work/love/relationships/adviceの6項目×10日主=60本。
+// title/readingは翻訳対象外(干支そのものなので不変)、luckyの商品名はLUCKY_NAME_ENで別途対応。
+const DAY_MASTER_TYPES_EN = {
+  0: {
+    line: `You are Kinoe — the great tree that drives its trunk straight up toward the sky.`,
+    desc: `You can't stand anything crooked, and once you've decided something is right, you don't budge. That unshakability is exactly what gives the people around you a sense of safety and direction. Just as people gather in the shade of a great tree, they naturally gather around you. But listen — the thicker the trunk, the more surely a tree snaps in a storm if it never learned to bend. Your weakness is your strength itself. You're used to being leaned on, but you have no idea how to lean on anyone. Putting down roots doesn't mean standing alone. It means sharing soil with others who hold you up. Lower your branches once in a while and rest your weight on someone. The day you can do that is the day you truly grow tall.`,
+    work: `At work, you thrive when you're clearing your own path, not waiting for orders. The more freedom you're given, the more you deliver — so don't be afraid of leadership or striking out on your own. But you have a habit of charging straight ahead until you can no longer hear the voices around you. Whatever you do, don't turn around one day to find nobody there.`,
+    love: `In love, once you fall, you go straight ahead without a sideways glance. Playing games? You couldn't if you tried. That sincerity is your greatest weapon, but push and push and your partner will run out of breath. Learn the kindness of stopping now and then to match their stride.`,
+    relationships: `In relationships, you say what you mean and keep every promise, so people trust you — "if it's coming from them, it must be true." But you have a habit of measuring everyone against your own yardstick of what's right. People carry their own circumstances and their own weaknesses. The day you can accept that without passing judgment, your shade becomes a resting place for far more people. Forget wide and shallow — treasure the few whose roots you can truly entwine with yours.`,
+    advice: `The tree that can bend outlives the tree that won't break. Don't mistake stubbornness for a strong core.`,
+  },
+  1: {
+    line: `You are Kinoto — the wildflower that gets trampled and stands right back up by morning.`,
+    desc: `You look delicate at first glance, but the truth is you're tougher than anyone. You don't fight the gale — you lie low, and when the storm passes, you lift your face again. That suppleness is your wisdom for surviving. Transplant you into any soil and before anyone notices, you've taken root — that adaptability is a gift. But here's the thing: you're so good at fitting in that there are moments you lose sight of how you actually want to bloom. Kindness that only ever yields eventually becomes a convenience for others to exploit. Even a blade of grass that won't break carries a quiet stubbornness. Every so often, defy the wind and bloom in your own color.`,
+    work: `At work, you become indispensable as the one who fills the gaps in a team. Reading the room and moving things forward without ruffling feathers is a genuine talent. But if you keep stepping back even when someone asks for your opinion, all that work stays invisible. When the moment matters, say it out loud and say it plainly.`,
+    love: `In love, you take on your partner's colors so easily that one day you look up and can't find yourself. A relationship where all you do is read their moods will wither you in the end. Find someone who doesn't leave when they see the real you — better yet, someone who waters you. That's the one worth choosing.`,
+    relationships: `In relationships, you have the knack of getting along with anyone without making waves. Hardly anyone dislikes you — but no one truly gets close to you either. You know exactly the distance I'm talking about. Separate the people you accommodate from the people you trust with your real feelings. Your softness is not something to sell cheap. Show your deepest roots only to the few who've earned it.`,
+    advice: `Yielding and giving up are not the same thing. Where it truly matters, dig in and hold your ground.`,
+  },
+  2: {
+    line: `You are Hinoe — the midday sun that lights up everything it touches.`,
+    desc: `You have a natural radiance that can't be hidden no matter how you try. Every emotion shows right on your face, and that openness brightens the hearts around you. You've felt it — the air in a room changes the moment you walk in. But listen: the sun never lets anyone watch it set. The brighter you shine in public, the harder the silence of your nights alone hits you. You burn hot and cool fast, too — because deep down, you're anxious unless you're always blazing. But to keep shining, you need time to rest. Don't feel guilty about recharging where no one can see you. The shadows are part of you. You're the sun either way.`,
+    work: `At work, you come into your own when you're out front — presenting, promoting, lighting up the room. Sales, planning, anything on a stage: perfect fit. But hand you plain, unglamorous grunt work and your fuel runs out on the spot. It's the power to see the unflashy work through to the end that makes your shine the real thing.`,
+    love: `In love, you're the lightning-strike type — love at first sight. You catch fire fast, and you cool off just as fast. Somewhere along the way, you've made a partner wonder, "Do you really love me?" What's being tested in you isn't the blaze at the start — it's the patience to keep lighting up the ordinary days.`,
+    relationships: `In relationships, you always end up at the center of the circle. Walls with strangers might as well not exist for you — you warm up to anyone instantly. But your brightness is so dazzling that almost no one notices your shadows. Someone once said, "You look like you don't have a care in the world," and it stung a little, didn't it. Secure at least one person you can fall apart in front of. That person is your lifeline.`,
+    advice: `There is no sun that never sets. Resting is part of shining.`,
+  },
+  3: {
+    line: `You are Hinoto — the lamplight that burns most beautifully in the dark.`,
+    desc: `Behind that quiet exterior, you hide a flame no one can put out. Your senses are razor-sharp — you pick up every subtle shift in the hearts around you, down to the finest detail. That's why you bruise easily, and why you tire faster than anyone. People may say they can't tell what you're thinking, but the truth is you think deeper and feel deeper than anyone else in the room. You don't need to light up the whole world like the sun. A lamp's light exists to guide the feet of one person lost in the dark. That is your calling. But heat kept locked inside gets treated as if it doesn't exist. Even a tenth of what you feel — put it into words and actions where people can see it.`,
+    work: `At work, you're built for deep expertise — digging patiently into one field — or careful work in small, close teams. You're the type who quietly stacks up trust rather than grabbing the spotlight. Forcing yourself to play the social butterfly drains you to the core, so choose an environment that protects the way you burn.`,
+    love: `In love, it takes you a long time to open the door — but once you open it for someone, you devote yourself deeply, quietly, and for the long haul. The trouble is your habit of bottling up every frustration and lonely moment until one day the flame simply goes out and you want to walk away. Learn to let it out in small doses.`,
+    relationships: `Your relationships run narrow and deep. The bonds you share with the few you truly trust have an intensity no one else can imitate. In a big crowd, though, your presence thins out like lamplight in a bright room. Don't you dare call that a flaw. Your worth shines in the quiet of one-on-one. Don't force yourself toward the center of the circle — stay beside the one person who needs your fire.`,
+    advice: `That sensitivity of yours isn't weakness — it's sharpness. Don't smother yourself playing numb.`,
+  },
+  4: {
+    line: `You are Tsuchinoe — the serene mountain that hasn't moved in a thousand years.`,
+    desc: `You were born with a stability that no ordinary storm can shake. The more everyone else panics, the more your stillness becomes their anchor. "I feel safe when you're around" — you've heard it all your life. But a mountain that never moves is also a mountain that never moves itself. Haven't you sunk your roots so deep into familiar places and familiar ways that taking a step toward change has started to feel like a chore? Here's what you should know: once you truly make up your mind, your power to act is beyond anyone's imitation. You're the type who can quietly make a decision that leaves everyone gasping, "Them? Really?" Use that power for offense, not just defense.`,
+    work: `At work, you shine in the long game. Steady, brick-by-brick work and positions of real responsibility suit you down to the ground. A workplace that flip-flops on direction, or one that worships speed above all, will only grind you down. But you do have a habit of testing the bridge so many times that the chance walks past you. Once in a while, have the nerve to cross without knocking.`,
+    love: `In love, you're the steady type who builds trust over time. Flings hold no interest for you — you want stability you can settle into. The trouble is you're terrible at putting feelings into words, so your partner ends up asking, "How do you actually feel about me?" A mountain can stay silent and never move — but a human heart, left without words, drifts away.`,
+    relationships: `In relationships, you may not say much, but that unshakable calm makes people lean on you naturally. The catch: you're no good at closing the distance yourself, so you end up waiting. The truth is you're quietly watching, taking your time to judge whether someone deserves your trust — aren't you. And once someone is inside your circle, your loyalty stands like the mountain itself. If you want people to know how deep that shelter runs, reach out first once in a while. That alone will set things in motion.`,
+    advice: `Your defenses are solid enough already. All that's left is one step — outward, on your own.`,
+  },
+  // 5(己)〜9(癸)は次回以降、日を分けて追記していく。
+};
+
+const LUCKY_NAME_EN = [
+  'Potted Plant', 'Herbal Tea Set', 'Sunglasses', 'Aroma Candle', 'Ceramic Mug',
+  'Pouch / Accessory Case', 'Stainless Tumbler', 'Accessory', 'Travel Pouch', 'Humidifier / Aroma Diffuser',
+];
+
+function getDayMasterType(stemIdx) {
+  const ja = DAY_MASTER_TYPES[stemIdx];
+  if (LANG !== 'en') return { ...ja, isPendingTranslation: false };
+  const en = DAY_MASTER_TYPES_EN[stemIdx];
+  if (en) return { ...ja, ...en, isPendingTranslation: false };
+  return { ...ja, isPendingTranslation: true };
+}
+
+const UI_TEXT = {
+  ja: {
+    pageTitle: '黒曜診断 - 四柱推命で生年月日から無料鑑定',
+    pageDescription: '生年月日から四柱推命ベースで占う無料診断。占い師「黒曜先生」があなたの本質をズバッと一言で言い切ります。',
+    eyebrowStart: '四柱推命ベース・無料鑑定',
+    startTitle: '黒曜診断',
+    startLeadHtml: '占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span>',
+    nichishuLink: '📖 占う前に、日主10タイプ一覧を見る',
+    labelBirthdate: '生年月日を入力',
+    labelBirthtime: '生まれた時刻(わかれば・任意)',
+    startBtn: '占ってもらう ✦',
+    startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
+    loadingText: '黒曜先生が、生まれた日を読み解いています…',
+    subheadWork: '💼 仕事・お金の傾向',
+    subheadLove: '💞 恋愛の傾向',
+    subheadRelationships: '🤝 人間関係の傾向',
+    subheadBackground: '🌙 生まれ持った背景',
+    pendingTranslationNote: '',
+    adviceLabel: '【黒曜先生からひとこと】',
+    luckyLabel: '🔮 黒曜先生おすすめの開運アイテム',
+    luckySeeMore: (name) => `${name}を見てみる`,
+    shareBtn: 'Xでシェア ✦',
+    lineBtn: 'LINEでシェア',
+    copyUrlBtn: '結果URLをコピー 🔗',
+    copiedLabel: 'コピーしました ✓',
+    restartBtn: 'もう一度占う',
+    gogyoLink: '🔮 お相手との五行相性を見る',
+    followLabel1: '🔮 性格診断で、自分をもっと知ってみなさい',
+    followLinkQuiz: '性格・恋愛・仕事タイプ診断',
+    followLabel2: '🌙 黒曜先生の番外編も視てもらいなさい',
+    followLinkZensei: '前世診断',
+    followLinkShugorei: '守護霊診断',
+    followLabel3: '🐹 Desk Animalsをフォローする',
+    footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。',
+    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、月柱の算出には節気の近似日付を使用しており、実際の暦とは前後1日程度ずれる場合があります。23時以降生まれの方は日柱の算出に翌日の干支を用いる「遅子時」の考え方を採用していますが、流派により扱いが異なる点にご留意ください。科学的な診断や実際の鑑定に代わるものではありません。',
+    footerPrivacy: '生年月日・時刻は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。',
+    footerNichishuLink: '日主10タイプ一覧を見る',
+    shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`,
+    shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→`,
+  },
+  en: {
+    pageTitle: 'Kokuyo Fortune Reading - A Free BaZi Reading From Your Birth Date',
+    pageDescription: 'A free BaZi (Four Pillars of Destiny) fortune reading based on your birth date. Fortune-teller Kokuyo-sensei sums up your true nature in one blunt line.',
+    eyebrowStart: 'BaZi-Based Free Reading',
+    startTitle: 'Kokuyo Fortune Reading',
+    startLeadHtml: 'Fortune-teller Kokuyo-sensei reads your birth date and<br>sums up your true nature <span class="accent">in one line.</span>',
+    nichishuLink: '📖 Browse the 10 Day-Master Types First',
+    labelBirthdate: 'Enter Your Birth Date',
+    labelBirthtime: 'Birth Time (optional, if known)',
+    startBtn: 'Get Your Reading ✦',
+    startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
+    loadingText: 'Kokuyo-sensei is reading the day you were born…',
+    subheadWork: '💼 Career & Money',
+    subheadLove: '💞 Love',
+    subheadRelationships: '🤝 Relationships',
+    subheadBackground: '🌙 What Shaped You',
+    pendingTranslationNote: '🌐 English write-up for this type is coming soon — shown in Japanese for now.',
+    adviceLabel: '【A word from Kokuyo-sensei】',
+    luckyLabel: "🔮 Kokuyo-sensei's Lucky Pick",
+    luckySeeMore: (name) => `Shop ${name}`,
+    shareBtn: 'Share on X ✦',
+    lineBtn: 'Share on LINE',
+    copyUrlBtn: 'Copy Result URL 🔗',
+    copiedLabel: 'Copied ✓',
+    restartBtn: 'Try Again',
+    gogyoLink: "🔮 Check Your Match's Element Compatibility",
+    followLabel1: '🔮 Get to know yourself better',
+    followLinkQuiz: 'Personality / Love / Career Type Quiz',
+    followLabel2: '🌙 More readings from Kokuyo-sensei',
+    followLinkZensei: 'Past Life Reading',
+    followLinkShugorei: 'Guardian Spirit Reading',
+    followLabel3: '🐹 Follow Desk Animals',
+    footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee.',
+    footerDisclaimer: "This reading is for entertainment purposes only. It's based on BaZi (Four Pillars of Destiny) principles, but the month-pillar boundaries use approximate solar-term dates that can be off by about a day from the actual calendar. Births after 11pm use the traditional \"late zi-hour\" convention (the next day's stem/branch), though this varies by school of thought. It is not a substitute for a scientific assessment or a professional reading.",
+    footerPrivacy: "Your birth date and time are used only for this reading and are never sent to or stored on a server (everything is calculated on your own device).",
+    footerNichishuLink: 'Browse the 10 Day-Master Types',
+    shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n#KokuyoFortuneReading #BaZi`,
+    shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →`,
+  },
+};
+
 // ===== 画面制御 =====
 let lastResult = null;
 
@@ -312,7 +456,8 @@ function resultUrl() {
 }
 
 function applyResult(pillars) {
-  const type = DAY_MASTER_TYPES[pillars.day.stemIdx];
+  const t = UI_TEXT[LANG];
+  const type = getDayMasterType(pillars.day.stemIdx);
   lastResult = { pillars, type };
 
   document.getElementById('result-line').textContent = type.line;
@@ -321,12 +466,21 @@ function applyResult(pillars) {
   document.getElementById('result-love').textContent = type.love;
   document.getElementById('result-relationships').textContent = type.relationships;
   document.getElementById('result-background').textContent = buildBackgroundText(pillars);
-  document.getElementById('result-advice').textContent = '【黒曜先生からひとこと】' + type.advice;
+  document.getElementById('result-advice').textContent = t.adviceLabel + type.advice;
+
+  const pendingNoteEl = document.getElementById('result-pending-note');
+  if (type.isPendingTranslation) {
+    pendingNoteEl.textContent = t.pendingTranslationNote;
+    pendingNoteEl.style.display = 'block';
+  } else {
+    pendingNoteEl.style.display = 'none';
+  }
 
   const luckyLink = document.getElementById('lucky-link');
   luckyLink.href = affiliateUrl(type.lucky.keyword);
   document.getElementById('lucky-emoji').textContent = type.lucky.emoji;
-  document.getElementById('lucky-name').textContent = type.lucky.name + 'を見てみる';
+  const luckyName = LANG === 'en' ? LUCKY_NAME_EN[pillars.day.stemIdx] : type.lucky.name;
+  document.getElementById('lucky-name').textContent = t.luckySeeMore(luckyName);
 
   showScreen('screen-result');
 }
@@ -338,27 +492,80 @@ function restart() {
 
 function shareResult() {
   if (!lastResult) return;
-  const text = `黒曜先生に占われました。\n${lastResult.type.line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`;
+  const t = UI_TEXT[LANG];
+  const text = t.shareText(lastResult.type.line);
   const url = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(resultUrl());
   window.open(url, '_blank', 'noopener');
 }
 
 function shareResultLine() {
   if (!lastResult) return;
-  const text = `黒曜先生に占われました。${lastResult.type.line}\nあなたも占われてみなさい→`;
+  const t = UI_TEXT[LANG];
+  const text = t.shareTextLine(lastResult.type.line);
   const url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(resultUrl()) + '&text=' + encodeURIComponent(text);
   window.open(url, '_blank', 'noopener');
 }
 
 function copyResultUrl() {
   if (!lastResult) return;
+  const t = UI_TEXT[LANG];
   const btn = document.getElementById('btn-copy-url');
   navigator.clipboard.writeText(resultUrl()).then(() => {
     const original = btn.textContent;
-    btn.textContent = 'コピーしました ✓';
+    btn.textContent = t.copiedLabel;
     setTimeout(() => { btn.textContent = original; }, 2000);
   });
 }
+
+// ===== JA/EN切替UI =====
+function applyLangUI() {
+  const t = UI_TEXT[LANG];
+  document.title = t.pageTitle;
+  const metaDescEl = document.querySelector('meta[name="description"]');
+  if (metaDescEl) metaDescEl.setAttribute('content', t.pageDescription);
+  document.getElementById('start-eyebrow').textContent = t.eyebrowStart;
+  document.getElementById('start-title').textContent = t.startTitle;
+  document.getElementById('start-lead').innerHTML = t.startLeadHtml;
+  document.getElementById('nichishu-link').textContent = t.nichishuLink;
+  document.getElementById('label-birthdate').textContent = t.labelBirthdate;
+  document.getElementById('label-birthtime').textContent = t.labelBirthtime;
+  document.getElementById('btn-start').textContent = t.startBtn;
+  document.getElementById('start-sub').textContent = t.startSub;
+  document.getElementById('loading-text').textContent = t.loadingText;
+  document.getElementById('subhead-work').textContent = t.subheadWork;
+  document.getElementById('subhead-love').textContent = t.subheadLove;
+  document.getElementById('subhead-relationships').textContent = t.subheadRelationships;
+  document.getElementById('subhead-background').textContent = t.subheadBackground;
+  document.getElementById('lucky-label').childNodes[0].nodeValue = t.luckyLabel;
+  document.getElementById('btn-share').textContent = t.shareBtn;
+  document.getElementById('btn-share-line').textContent = t.lineBtn;
+  document.getElementById('btn-copy-url').textContent = t.copyUrlBtn;
+  document.getElementById('btn-restart').textContent = t.restartBtn;
+  document.getElementById('gogyo-link').textContent = t.gogyoLink;
+  document.getElementById('follow-label-1').textContent = t.followLabel1;
+  document.getElementById('follow-link-quiz').textContent = t.followLinkQuiz;
+  document.getElementById('follow-label-2').textContent = t.followLabel2;
+  document.getElementById('follow-link-zensei').textContent = t.followLinkZensei;
+  document.getElementById('follow-link-shugorei').textContent = t.followLinkShugorei;
+  document.getElementById('follow-label-3').textContent = t.followLabel3;
+  document.getElementById('footer-pr').textContent = t.footerPr;
+  document.getElementById('footer-disclaimer').textContent = t.footerDisclaimer;
+  document.getElementById('footer-privacy').textContent = t.footerPrivacy;
+  document.getElementById('footer-nichishu-link').textContent = t.footerNichishuLink;
+  document.documentElement.lang = LANG;
+  // 結果画面が表示中に切り替えた場合、鑑定結果(言語依存のテキスト)を再計算してから再描画する
+  if (lastResult) {
+    applyResult(lastResult.pillars);
+  }
+}
+function setLang(lang) {
+  LANG = lang;
+  document.getElementById('btn-lang-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+  applyLangUI();
+}
+document.getElementById('btn-lang-ja').addEventListener('click', () => setLang('ja'));
+document.getElementById('btn-lang-en').addEventListener('click', () => setLang('en'));
 
 document.getElementById('btn-start').addEventListener('click', startDivination);
 document.getElementById('btn-restart').addEventListener('click', restart);

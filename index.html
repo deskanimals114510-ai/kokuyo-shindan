@@ -45,17 +45,21 @@
   <!-- スタート画面 -->
   <section id="screen-start" class="screen active">
     <div class="card">
+      <div class="lang-toggle">
+        <button id="btn-lang-ja" class="lang-btn active">日本語</button>
+        <button id="btn-lang-en" class="lang-btn">English</button>
+      </div>
       <div class="emoji">🔮</div>
-      <span class="eyebrow">四柱推命ベース・無料鑑定</span>
-      <h1>黒曜診断</h1>
-      <p class="lead">占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span></p>
-      <a class="follow-link" href="nichishu/" style="display:inline-block;margin-bottom:22px;">📖 占う前に、日主10タイプ一覧を見る</a>
-      <label for="birthdate" class="field-label">生年月日を入力</label>
+      <span id="start-eyebrow" class="eyebrow">四柱推命ベース・無料鑑定</span>
+      <h1 id="start-title">黒曜診断</h1>
+      <p id="start-lead" class="lead">占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span></p>
+      <a id="nichishu-link" class="follow-link" href="nichishu/" style="display:inline-block;margin-bottom:22px;">📖 占う前に、日主10タイプ一覧を見る</a>
+      <label id="label-birthdate" for="birthdate" class="field-label">生年月日を入力</label>
       <input type="date" id="birthdate" class="date-input" min="1920-01-01">
-      <label for="birthtime" class="field-label">生まれた時刻(わかれば・任意)</label>
+      <label id="label-birthtime" for="birthtime" class="field-label">生まれた時刻(わかれば・任意)</label>
       <input type="time" id="birthtime" class="date-input">
       <button id="btn-start" class="btn-primary">占ってもらう ✦</button>
-      <p class="sub">生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります</p>
+      <p id="start-sub" class="sub">生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります</p>
     </div>
   </section>
 
@@ -63,7 +67,7 @@
   <section id="screen-loading" class="screen">
     <div class="loading-wrap">
       <div class="loading-emoji">🔮</div>
-      <p class="loading-text">黒曜先生が、生まれた日を読み解いています…</p>
+      <p id="loading-text" class="loading-text">黒曜先生が、生まれた日を読み解いています…</p>
     </div>
   </section>
 
@@ -73,19 +77,20 @@
       <span class="eyebrow">RESULT</span>
       <h2 id="result-line" class="result-line"></h2>
       <p id="result-desc" class="result-desc"></p>
-      <h3 class="result-subhead">💼 仕事・お金の傾向</h3>
+      <h3 id="subhead-work" class="result-subhead">💼 仕事・お金の傾向</h3>
       <p id="result-work" class="result-desc"></p>
-      <h3 class="result-subhead">💞 恋愛の傾向</h3>
+      <h3 id="subhead-love" class="result-subhead">💞 恋愛の傾向</h3>
       <p id="result-love" class="result-desc"></p>
-      <h3 class="result-subhead">🤝 人間関係の傾向</h3>
+      <h3 id="subhead-relationships" class="result-subhead">🤝 人間関係の傾向</h3>
       <p id="result-relationships" class="result-desc"></p>
-      <h3 class="result-subhead">🌙 生まれ持った背景</h3>
+      <h3 id="subhead-background" class="result-subhead">🌙 生まれ持った背景</h3>
       <p id="result-background" class="result-desc"></p>
+      <p id="result-pending-note" class="lang-note" style="display:none;"></p>
       <p id="result-advice" class="result-advice"></p>
       <a id="lucky-link" class="lucky-item" href="#" target="_blank" rel="noopener">
         <span id="lucky-emoji" class="lucky-emoji"></span>
         <span class="lucky-text">
-          <span class="lucky-label">🔮 黒曜先生おすすめの開運アイテム<span class="pr-tag">PR</span></span>
+          <span id="lucky-label" class="lucky-label">🔮 黒曜先生おすすめの開運アイテム<span class="pr-tag">PR</span></span>
           <span id="lucky-name" class="lucky-name"></span>
         </span>
         <span class="lucky-arrow">›</span>
@@ -98,23 +103,23 @@
       <button id="btn-restart" class="btn-secondary">もう一度占う</button>
     </div>
     <div class="result-actions">
-      <a class="btn-primary" href="https://deskanimals114510-ai.github.io/aisho-shindan/gogyo.html" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;">🔮 お相手との五行相性を見る</a>
+      <a id="gogyo-link" class="btn-primary" href="https://deskanimals114510-ai.github.io/aisho-shindan/gogyo.html" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;">🔮 お相手との五行相性を見る</a>
     </div>
     <div class="follow-links">
-      <p class="follow-label">🔮 性格診断で、自分をもっと知ってみなさい</p>
+      <p id="follow-label-1" class="follow-label">🔮 性格診断で、自分をもっと知ってみなさい</p>
       <div class="follow-btns">
-        <a class="follow-link" href="https://deskanimals114510-ai.github.io/personality-type-quiz/" target="_blank" rel="noopener">性格・恋愛・仕事タイプ診断</a>
+        <a id="follow-link-quiz" class="follow-link" href="https://deskanimals114510-ai.github.io/personality-type-quiz/" target="_blank" rel="noopener">性格・恋愛・仕事タイプ診断</a>
       </div>
     </div>
     <div class="follow-links">
-      <p class="follow-label">🌙 黒曜先生の番外編も視てもらいなさい</p>
+      <p id="follow-label-2" class="follow-label">🌙 黒曜先生の番外編も視てもらいなさい</p>
       <div class="follow-btns">
-        <a class="follow-link" href="zensei.html">前世診断</a>
-        <a class="follow-link" href="shugorei.html">守護霊診断</a>
+        <a id="follow-link-zensei" class="follow-link" href="zensei.html">前世診断</a>
+        <a id="follow-link-shugorei" class="follow-link" href="shugorei.html">守護霊診断</a>
       </div>
     </div>
     <div class="follow-links">
-      <p class="follow-label">🐹 Desk Animalsをフォローする</p>
+      <p id="follow-label-3" class="follow-label">🐹 Desk Animalsをフォローする</p>
       <div class="follow-btns">
         <a class="follow-link" href="https://x.com/deskanimalslab" target="_blank" rel="noopener">X</a>
         <a class="follow-link" href="https://www.instagram.com/desk.animals114510/" target="_blank" rel="noopener">Instagram</a>
@@ -124,10 +129,10 @@
   </section>
 
   <footer class="site-footer">
-    <p>🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。</p>
-    <p>本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、月柱の算出には節気の近似日付を使用しており、実際の暦とは前後1日程度ずれる場合があります。23時以降生まれの方は日柱の算出に翌日の干支を用いる「遅子時」の考え方を採用していますが、流派により扱いが異なる点にご留意ください。科学的な診断や実際の鑑定に代わるものではありません。</p>
-    <p>生年月日・時刻は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。</p>
-    <p><a href="nichishu/" style="color:var(--text-sub);">日主10タイプ一覧を見る</a></p>
+    <p id="footer-pr">🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。</p>
+    <p id="footer-disclaimer">本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、月柱の算出には節気の近似日付を使用しており、実際の暦とは前後1日程度ずれる場合があります。23時以降生まれの方は日柱の算出に翌日の干支を用いる「遅子時」の考え方を採用していますが、流派により扱いが異なる点にご留意ください。科学的な診断や実際の鑑定に代わるものではありません。</p>
+    <p id="footer-privacy">生年月日・時刻は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。</p>
+    <p><a id="footer-nichishu-link" href="nichishu/" style="color:var(--text-sub);">日主10タイプ一覧を見る</a></p>
   </footer>
 
 </div>
