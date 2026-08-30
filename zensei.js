@@ -17,6 +17,9 @@ function zenseiApplyResult(stemIdx, branchIdx) {
   const stemReading = SPINOFF_STEM_READING[stemIdx];
   document.getElementById('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
   document.getElementById('result-title').textContent = `あなたの前世は、${type.title}だった。`;
+  const zenseiImg = document.getElementById('result-zensei-img');
+  zenseiImg.src = `img/zensei/${type.slug}.jpg`;
+  zenseiImg.alt = `前世「${type.title}」のイメージイラスト`;
 
   const episodesEl = document.getElementById('result-episodes');
   episodesEl.innerHTML = '';
