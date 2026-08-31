@@ -36,6 +36,7 @@ function zenseiApplyResult(stemIdx, branchIdx) {
   spinoffApplyLucky(stemIdx);
 
   spinoffShowScreen('screen-result');
+  spinoffFocusHeading('result-title');
 
   const cardOpts = {
     eyebrow: '前世診断',
@@ -53,19 +54,27 @@ function zenseiApplyResult(stemIdx, branchIdx) {
 function zenseiStart() {
   const input = document.getElementById('birthdate');
   if (!input.value) {
-    input.focus();
+    spinoffShowFieldError('birthdate', 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
     return;
   }
+  spinoffClearFieldError('birthdate', 'birthdate-error');
   const [y, m, d] = input.value.split('-').map(Number);
   spinoffShowScreen('screen-loading');
   setTimeout(() => {
-    const pillar = spinoffComputeYearPillar(y, m, d);
-    zenseiApplyResult(pillar.stemIdx, pillar.branchIdx);
+    try {
+      const pillar = spinoffComputeYearPillar(y, m, d);
+      zenseiApplyResult(pillar.stemIdx, pillar.branchIdx);
+    } catch (e) {
+      console.error('前世診断の生成に失敗しました', e);
+      spinoffShowScreen('screen-start');
+      spinoffShowFieldError('birthdate', 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
+    }
   }, 1400);
 }
 
 function zenseiRestart() {
   document.getElementById('birthdate').value = '';
+  spinoffClearFieldError('birthdate', 'birthdate-error');
   spinoffShowScreen('screen-start');
 }
 

@@ -29,6 +29,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+// ?r=結果URLでの直接アクセス時、start→result描画のちらつき(CLS/LCP遅延)を防ぐため、
+// CSS適用前にどちらの画面を初期表示するか<html>のクラスで確定させる。
+if (/[?&]r=/.test(location.search)) {
+  document.documentElement.className += ' deep-link-result';
+}
+</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"黒曜診断","description":"生年月日から四柱推命ベースで占う無料診断。占い師「黒曜先生」があなたの本質をズバッと一言で言い切ります。","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/","inLanguage":"ja"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://deskanimals114510-ai.github.io/kokuyo-shindan/#organization","name":"Desk Animals Lab","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/","logo":{"@type":"ImageObject","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg","width":1200,"height":630},"sameAs":["https://x.com/deskanimalslab","https://www.instagram.com/desk.animals114510/","https://www.tiktok.com/@desk.animals"]}</script>
 </head>
@@ -40,7 +47,7 @@
   <span class="star">✦</span><span class="star">✧</span>
 </div>
 
-<div id="app">
+<main id="app">
 
   <!-- スタート画面 -->
   <section id="screen-start" class="screen active">
@@ -54,8 +61,13 @@
       <h1 id="start-title">黒曜診断</h1>
       <p id="start-lead" class="lead">占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span></p>
       <a id="nichishu-link" class="follow-link" href="nichishu/" style="display:inline-block;margin-bottom:22px;">📖 占う前に、日主10タイプ一覧を見る</a>
-      <label id="label-birthdate" for="birthdate" class="field-label">生年月日を入力</label>
-      <input type="date" id="birthdate" class="date-input" min="1920-01-01">
+      <label id="label-birthdate" for="birth-year" class="field-label">生年月日を入力</label>
+      <div class="date-select-group">
+        <select id="birth-year" class="date-input date-select" aria-label="生まれた年"><option value="">年</option></select>
+        <select id="birth-month" class="date-input date-select" aria-label="生まれた月"><option value="">月</option></select>
+        <select id="birth-day" class="date-input date-select" aria-label="生まれた日"><option value="">日</option></select>
+      </div>
+      <p id="birthdate-error" class="field-error" role="alert" style="display:none;"></p>
       <label id="label-birthtime" for="birthtime" class="field-label">生まれた時刻(わかれば・任意)</label>
       <input type="time" id="birthtime" class="date-input">
       <button id="btn-start" class="btn-primary">占ってもらう ✦</button>
@@ -67,7 +79,7 @@
   <section id="screen-loading" class="screen">
     <div class="loading-wrap">
       <div class="loading-emoji">🔮</div>
-      <p id="loading-text" class="loading-text">黒曜先生が、生まれた日を読み解いています…</p>
+      <p id="loading-text" class="loading-text" role="status" aria-live="polite">黒曜先生が、生まれた日を読み解いています…</p>
     </div>
   </section>
 
@@ -92,6 +104,7 @@
         <span class="lucky-text">
           <span id="lucky-label" class="lucky-label">🔮 黒曜先生おすすめの開運アイテム<span class="pr-tag">PR</span></span>
           <span id="lucky-name" class="lucky-name"></span>
+          <span id="lucky-reason" class="lucky-reason"></span>
         </span>
         <span class="lucky-arrow">›</span>
       </a>
@@ -130,12 +143,12 @@
 
   <footer class="site-footer">
     <p id="footer-pr">🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。</p>
-    <p id="footer-disclaimer">本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、月柱の算出には節気の近似日付を使用しており、実際の暦とは前後1日程度ずれる場合があります。23時以降生まれの方は日柱の算出に翌日の干支を用いる「遅子時」の考え方を採用していますが、流派により扱いが異なる点にご留意ください。科学的な診断や実際の鑑定に代わるものではありません。</p>
-    <p id="footer-privacy">生年月日・時刻は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。</p>
+    <p id="footer-disclaimer">本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。</p>
+    <p id="footer-privacy">生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。</p>
     <p><a id="footer-nichishu-link" href="nichishu/" style="color:var(--text-sub);">日主10タイプ一覧を見る</a></p>
   </footer>
 
-</div>
+</main>
 <script src="script.js"></script>
 </body>
 </html>

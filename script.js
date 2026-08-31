@@ -114,101 +114,101 @@ const DAY_MASTER_TYPES = {
     title: '大樹', reading: 'きのえ',
     line: 'あなたは、甲(きのえ)。天へ一直線に幹を伸ばす大樹よ。',
     desc: '曲がったことが大嫌いで、一度「こうだ」と決めたら簡単には折れない。その揺るがなさが、周りに安心と方向を与えているのよ。大樹の下に人が集まるように、あなたの周りには自然と人が寄ってくるはず。ただね、幹が太い木ほど、しなることを知らないと嵐で折れるの。あなたの弱点は、強さそのもの。頼られることには慣れているのに、頼ることを知らないでしょう。根を張るというのは、一人で立つことじゃない。支え合う土を持つことよ。たまには枝を下ろして、誰かに寄りかかりなさい。それができた時、あなたは本当の意味で大きくなるわ。',
-    work: '仕事では、指示を待つより自分で切り拓く立場で伸びるタイプ。裁量を持たせれば持たせるほど成果を出すから、リーダーや独立の道を恐れないことね。ただし、まっすぐ進むあまり周りの声が耳に入らなくなる癖がある。振り返ったら誰もいなかった、なんて事態だけは避けなさい。',
-    love: '恋愛は、好きになったら脇目もふらず一直線。駆け引きなんて器用な真似はできないでしょう。その誠実さは何よりの武器だけど、押す一方では相手が息切れするわ。時には立ち止まって、相手の歩幅に合わせる優しさを覚えなさい。',
-    relationships: '人間関係では、裏表がなく約束を違えないから、「あの人が言うなら」と信頼を集めるタイプ。ただ、自分の正しさを物差しにして人を測る癖があるわね。人にはそれぞれの事情と弱さがあるの。それを裁かずに受け止められた時、あなたの木陰はもっと多くの人の休み場所になるわ。広く浅くより、深く根を絡ませ合える少数を大事にしなさい。',
+    work: '指示を待つより自分で切り拓く立場で伸びるタイプ。裁量を持たせれば持たせるほど成果を出すから、リーダーや独立の道を恐れないことね。ただし、まっすぐ進むあまり周りの声が耳に入らなくなる癖がある。振り返ったら誰もいなかった、なんて事態だけは避けなさい。',
+    love: '好きになったら脇目もふらず一直線。駆け引きなんて器用な真似はできないでしょう。その誠実さは何よりの武器だけど、押す一方では相手が息切れするわ。時には立ち止まって、相手の歩幅に合わせる優しさを覚えなさい。',
+    relationships: '裏表がなく約束を違えないから、「あの人が言うなら」と信頼を集めるタイプ。ただ、自分の正しさを物差しにして人を測る癖があるわね。人にはそれぞれの事情と弱さがあるの。それを裁かずに受け止められた時、あなたの木陰はもっと多くの人の休み場所になるわ。広く浅くより、深く根を絡ませ合える少数を大事にしなさい。',
     advice: '折れない木より、しなれる木の方が長く生きるのよ。強情と芯の強さを、履き違えないことね。',
-    lucky: { emoji: '🪴', name: '観葉植物', keyword: '観葉植物 卓上 ミニ' },
+    lucky: { emoji: '🪴', name: '観葉植物', keyword: '観葉植物 卓上 ミニ', reason: 'まっすぐな気を保ちたいなら、こういうものを傍に置いておきなさい。' },
   },
   1: { // 乙
     title: '草花', reading: 'きのと',
     line: 'あなたは、乙(きのと)。踏まれても翌朝には立ち上がる草花よ。',
     desc: '一見か弱そうに見えて、その実、誰よりも粘り強い人。強風には逆らわず身を伏せて、嵐が過ぎればまた顔を上げる。そのしなやかさこそ、あなたの生き抜く知恵よ。どんな環境に植え替えられても、いつの間にか根づいてしまう適応力は天賦のもの。ただね、周りに合わせることが上手すぎて、「本当は自分がどう咲きたいのか」を見失う瞬間があるでしょう。譲ってばかりの優しさは、いつしか周りに甘えられるだけの都合の良さに変わるの。折れない草には、静かな意地があるものよ。時には風に逆らって、あなた自身の色で咲きなさい。',
-    work: '仕事では、チームの隙間を埋める調整役として、なくてはならない存在になるタイプ。空気を読み、角を立てずに物事を進める力は立派な才能よ。ただ、意見を求められた場面でまで一歩引いていると、その働きは誰にも見えないまま。ここぞという時は、はっきり言葉にしなさい。',
-    love: '恋愛では、相手の色に染まりやすく、気づけば自分を見失っているタイプ。顔色をうかがうだけの関係は、いずれあなたを枯らすわよ。素のあなたを見せても離れない相手、むしろ水をくれる相手。選ぶべきは、そういう人よ。',
-    relationships: '人間関係では、誰とでも波風を立てずにやっていける器用さがあるタイプ。嫌われることがほとんどない代わりに、誰とも本当には深まらない。その距離の取り方に、心当たりがあるでしょう。合わせる相手と、本音を預ける相手は分けなさい。あなたの柔らかさは、安売りするものじゃないの。信じられる少数にだけ、根の深いところを見せればいいのよ。',
+    work: 'チームの隙間を埋める調整役として、なくてはならない存在になるタイプ。空気を読み、角を立てずに物事を進める力は立派な才能よ。ただ、意見を求められた場面でまで一歩引いていると、その働きは誰にも見えないまま。ここぞという時は、はっきり言葉にしなさい。',
+    love: '相手の色に染まりやすく、気づけば自分を見失っているタイプ。顔色をうかがうだけの関係は、いずれあなたを枯らすわよ。素のあなたを見せても離れない相手、むしろ水をくれる相手。選ぶべきは、そういう人よ。',
+    relationships: '誰とでも波風を立てずにやっていける器用さがあるタイプ。嫌われることがほとんどない代わりに、誰とも本当には深まらない。その距離の取り方に、心当たりがあるでしょう。合わせる相手と、本音を預ける相手は分けなさい。あなたの柔らかさは、安売りするものじゃないの。信じられる少数にだけ、根の深いところを見せればいいのよ。',
     advice: '譲るのと、諦めるのは別物よ。ここだけは、と思う場所では我を通しなさい。',
-    lucky: { emoji: '🍵', name: 'ハーブティーセット', keyword: 'ハーブティー ギフトセット' },
+    lucky: { emoji: '🍵', name: 'ハーブティーセット', keyword: 'ハーブティー ギフトセット', reason: '踏まれた心を戻すには、まず一杯のお茶からよ。' },
   },
   2: { // 丙
     title: '太陽', reading: 'ひのえ',
     line: 'あなたは、丙(ひのえ)。何もかも照らし出す真昼の太陽よ。',
     desc: '隠そうとしても隠しきれない、生まれつきの華がある人。喜怒哀楽がそのまま顔に出て、その裏表のなさが周りの心まで明るくするの。あなたが部屋に入るだけで空気が変わる、そんな経験があるでしょう。ただね、太陽は沈むところを人に見せないもの。人前で輝くほどに、一人になった夜の静けさが応えるはずよ。熱しやすく冷めやすいのも、常に燃えていないと不安だから。でも、照らし続けるためには、自分を休ませる時間が要るの。誰も見ていない場所で充電することを、後ろめたく思わないことね。翳りも含めて、あなたは太陽なのよ。',
-    work: '仕事では、人前に立つ・発信する・場を沸かせる役割で本領を発揮するわ。営業や企画、表舞台の仕事とは相性抜群よ。ただ、日の当たらない地道な作業になると、途端に燃料切れを起こすでしょう。派手さのない仕事をやり切る力こそ、あなたの輝きを本物にするの。',
-    love: '恋愛は、一目惚れの電撃型。燃え上がるのは早いけれど、冷めるのも早い。相手を「本当に愛されているの?」と不安にさせた経験があるはずよ。恋の始まりの熱より、日常を照らし続ける根気。あなたに試されるのは、そこね。',
-    relationships: '人間関係では、気づけば輪の中心にいるタイプ。初対面の壁など無いに等しく、誰とでもすぐ打ち解けられるわ。ただ、その明るさが眩しすぎて、あなたの陰の部分に気づく人は少ないの。「悩みなんて無さそう」と言われて、少し寂しかったことがあるでしょう。弱音を見せられる相手を、一人でいいから確保しておきなさい。それがあなたの命綱になるのよ。',
+    work: '人前に立つ・発信する・場を沸かせる役割で本領を発揮するわ。営業や企画、表舞台の仕事とは相性抜群よ。ただ、日の当たらない地道な作業になると、途端に燃料切れを起こすでしょう。派手さのない仕事をやり切る力こそ、あなたの輝きを本物にするの。',
+    love: '一目惚れの電撃型。燃え上がるのは早いけれど、冷めるのも早い。相手を「本当に愛されているの?」と不安にさせた経験があるはずよ。恋の始まりの熱より、日常を照らし続ける根気。あなたに試されるのは、そこね。',
+    relationships: '気づけば輪の中心にいるタイプ。初対面の壁など無いに等しく、誰とでもすぐ打ち解けられるわ。ただ、その明るさが眩しすぎて、あなたの陰の部分に気づく人は少ないの。「悩みなんて無さそう」と言われて、少し寂しかったことがあるでしょう。弱音を見せられる相手を、一人でいいから確保しておきなさい。それがあなたの命綱になるのよ。',
     advice: '沈まない太陽はないの。休むことも、輝きのうちよ。',
-    lucky: { emoji: '🕶️', name: 'サングラス', keyword: 'サングラス おしゃれ' },
+    lucky: { emoji: '🕶️', name: 'サングラス', keyword: 'サングラス おしゃれ', reason: '眩しすぎるあなたには、少し陰を作る道具が要るわ。' },
   },
   3: { // 丁
     title: '灯火', reading: 'ひのと',
     line: 'あなたは、丁(ひのと)。闇の中でこそ美しく揺れる灯火よ。',
     desc: '物静かな佇まいの奥に、誰にも消せない炎を隠している人。感受性が鋭く、人の心の機微を細部まで感じ取ってしまう。だから傷つきやすいし、人一倍疲れやすいのよ。周りには「何を考えているかわからない」と言われても、実際はその場の誰よりも深く考え、深く感じている。太陽のように万人を照らす必要はないの。灯火の光は、暗闇にいる誰か一人の足元を照らすためにあるもの。それがあなたの役目よ。ただ、内に秘めた熱は、表に出さなければ無いのと同じに扱われてしまう。想いの一割でいいから、言葉と行動にして見せなさい。',
-    work: '仕事では、一つの分野をじっくり掘り下げる専門的な仕事や、少人数で丁寧に取り組む仕事が向いているわ。派手に目立つより、静かに信頼を積み上げていくタイプ。無理に社交的な役回りを演じると芯から消耗するから、自分の燃え方を守れる環境を選びなさい。',
-    love: '恋愛では、心の扉を開くまでに時間がかかる分、一度開いた相手には深く、静かに、長く尽くすタイプ。ただ、不満や寂しさを溜め込んで、ある日ふっと火が消えるように離れたくなる癖があるでしょう。小出しに吐き出すことを覚えなさい。',
-    relationships: '人間関係は、狭く、深く。心を許した数人との絆は、他の誰にも真似できない濃さを持つわ。一方で、大人数の集まりでは灯りが薄まるように存在感が消えるでしょう。でも、それを欠点だと思わないことね。あなたの価値は、一対一の静けさの中でこそ光るの。無理に輪の中心を目指すより、あなたの火を必要としている一人のそばにいなさい。',
+    work: '一つの分野をじっくり掘り下げる専門的な仕事や、少人数で丁寧に取り組む仕事が向いているわ。派手に目立つより、静かに信頼を積み上げていくタイプ。無理に社交的な役回りを演じると芯から消耗するから、自分の燃え方を守れる環境を選びなさい。',
+    love: '心の扉を開くまでに時間がかかる分、一度開いた相手には深く、静かに、長く尽くすタイプ。ただ、不満や寂しさを溜め込んで、ある日ふっと火が消えるように離れたくなる癖があるでしょう。小出しに吐き出すことを覚えなさい。',
+    relationships: '狭く、深く。心を許した数人との絆は、他の誰にも真似できない濃さを持つわ。一方で、大人数の集まりでは灯りが薄まるように存在感が消えるでしょう。でも、それを欠点だと思わないことね。あなたの価値は、一対一の静けさの中でこそ光るの。無理に輪の中心を目指すより、あなたの火を必要としている一人のそばにいなさい。',
     advice: 'その繊細さは弱さじゃない、感度の高さよ。鈍感なふりで自分を殺さないことね。',
-    lucky: { emoji: '🕯️', name: 'アロマキャンドル', keyword: 'アロマキャンドル ギフト' },
+    lucky: { emoji: '🕯️', name: 'アロマキャンドル', keyword: 'アロマキャンドル ギフト', reason: '静かな灯りを、自分のためにも一つ灯しなさい。' },
   },
   4: { // 戊
     title: '山', reading: 'つちのえ',
     line: 'あなたは、戊(つちのえ)。千年動かぬ、悠然たる山よ。',
     desc: '多少の嵐ではびくともしない、生まれついての安定感がある人。周りが浮き足立つ場面ほど、あなたの静けさが皆の錨になるの。「あの人がいると安心する」、そう言われてきたでしょう。ただ、動かない山は、裏を返せば自分からは動かない山でもある。慣れた場所、慣れたやり方に根を下ろしすぎて、変化への一歩が億劫になっていないかしら。でもね、あなたが一度腹を決めた時の実行力は、誰にも真似できないほど大きいのよ。周りが「まさかあの人が」と驚く決断を、静かに下せる人。その力を、守りだけでなく攻めにも使いなさい。',
-    work: '仕事では、長期戦でこそ光るタイプ。コツコツ積み上げる仕事や、責任を預かる管理的な立場が性に合うわ。方針がころころ変わる職場や、スピード一辺倒の環境は消耗するだけ。ただ、石橋を叩きすぎて好機を逃す癖があるわね。たまには叩かずに渡る勇気も持ちなさい。',
-    love: '恋愛は、時間をかけて信頼を積む堅実型。浮ついた関係には興味がなく、腰を据えた安定を求めるタイプよ。ただ、想いを言葉にするのが苦手で、「私のこと、どう思っているの?」と相手を不安にさせがち。山は黙っていても動かないけれど、人の心は言葉がないと離れていくのよ。',
-    relationships: '人間関係では、口数は少なくとも、その動じなさで自然と頼られるタイプ。ただ、自分から歩み寄るのは苦手で、待ちの姿勢になりがちね。実はじっくり相手を観察して、信頼に足る人かを静かに見極めているのでしょう。一度懐に入れた相手への義理堅さは、山のごとし。その懐の深さをもっと知ってもらうためにも、たまには自分から声をかけなさい。それだけで関係は動き出すわ。',
+    work: '長期戦でこそ光るタイプ。コツコツ積み上げる仕事や、責任を預かる管理的な立場が性に合うわ。方針がころころ変わる職場や、スピード一辺倒の環境は消耗するだけ。ただ、石橋を叩きすぎて好機を逃す癖があるわね。たまには叩かずに渡る勇気も持ちなさい。',
+    love: '時間をかけて信頼を積む堅実型。浮ついた関係には興味がなく、腰を据えた安定を求めるタイプよ。ただ、想いを言葉にするのが苦手で、「私のこと、どう思っているの?」と相手を不安にさせがち。山は黙っていても動かないけれど、人の心は言葉がないと離れていくのよ。',
+    relationships: '口数は少なくとも、その動じなさで自然と頼られるタイプ。ただ、自分から歩み寄るのは苦手で、待ちの姿勢になりがちね。実はじっくり相手を観察して、信頼に足る人かを静かに見極めているのでしょう。一度懐に入れた相手への義理堅さは、山のごとし。その懐の深さをもっと知ってもらうためにも、たまには自分から声をかけなさい。それだけで関係は動き出すわ。',
     advice: '守りの固さは十分よ。あとは一歩、自分から外へ踏み出すだけね。',
-    lucky: { emoji: '☕', name: '陶器のマグカップ', keyword: '陶器 マグカップ' },
+    lucky: { emoji: '☕', name: '陶器のマグカップ', keyword: '陶器 マグカップ', reason: '動じない器には、あなたを支える器を持たせなさい。' },
   },
   5: { // 己
     title: '田畑', reading: 'つちのと',
     line: 'あなたは、己(つちのと)。蒔かれた種を残らず育て上げる、豊かな田畑よ。',
     desc: '人を育て、支えることに天性の才を持つ人。あなたの何気ない一言や手助けに救われた人は、あなたが思っているより、ずっと多いのよ。土が黙って作物を育てるように、見返りを求めず尽くせるのがあなたの器。ただね、土だって痩せるの。栄養を与え続けるばかりで、自分自身を耕すことを忘れていないかしら。誰かの実りを喜んでいるうちに、ふと「自分の人生はどこにあるの」と虚しくなる夜が来るはずよ。人に注ぐ愛情の二割でいい、自分に向けなさい。あなたという畑が肥えてこそ、育てられる実りも大きくなるのだから。',
-    work: '仕事では、育てる・支える・まとめる役割で真価を発揮するタイプ。教育や人材育成、サポート職、縁の下の要となる仕事と相性がいいわ。ただ、手柄を人に譲る癖のせいで、正当な評価を取りこぼしがち。成果は自分の口で伝えなさい。それは自慢ではなく、報告よ。',
-    love: '恋愛では、尽くすことに幸せを感じるタイプ。ただ、世話を焼きすぎると、恋人ではなく保護者になってしまうわよ。「してあげる」ばかりの関係は、対等とは言えない。あなたの望みも口に出しなさい。甘える側に回れて初めて、釣り合いが取れるのよ。',
-    relationships: '人間関係では、聞き役・支え役が板についているタイプ。頼られると断れず、気づけば皆の相談窓口になっているでしょう。でも、あなた自身が弱った時、周りは案外気づかないの。いつも元気そうに見えるからよ。「実は疲れている」「今日は無理」と言えるようになりなさい。弱さを見せるのは、相手を信頼している証。それを渡された相手は、むしろ嬉しいものよ。',
+    work: '育てる・支える・まとめる役割で真価を発揮するタイプ。教育や人材育成、サポート職、縁の下の要となる仕事と相性がいいわ。ただ、手柄を人に譲る癖のせいで、正当な評価を取りこぼしがち。成果は自分の口で伝えなさい。それは自慢ではなく、報告よ。',
+    love: '尽くすことに幸せを感じるタイプ。ただ、世話を焼きすぎると、恋人ではなく保護者になってしまうわよ。「してあげる」ばかりの関係は、対等とは言えない。あなたの望みも口に出しなさい。甘える側に回れて初めて、釣り合いが取れるのよ。',
+    relationships: '聞き役・支え役が板についているタイプ。頼られると断れず、気づけば皆の相談窓口になっているでしょう。でも、あなた自身が弱った時、周りは案外気づかないの。いつも元気そうに見えるからよ。「実は疲れている」「今日は無理」と言えるようになりなさい。弱さを見せるのは、相手を信頼している証。それを渡された相手は、むしろ嬉しいものよ。',
     advice: '与えるだけの畑は、いつか痩せるの。あなたも誰かに耕されなさい。',
-    lucky: { emoji: '👝', name: 'ポーチ・小物入れ', keyword: 'ポーチ おしゃれ 収納' },
+    lucky: { emoji: '👝', name: 'ポーチ・小物入れ', keyword: 'ポーチ おしゃれ 収納', reason: '与えてばかりのあなたには、自分だけの持ち場を作りなさい。' },
   },
   6: { // 庚
     title: '刃', reading: 'かのえ',
     line: 'あなたは、庚(かのえ)。曇りなく研ぎ澄まされた刃よ。',
     desc: '曖昧なものを曖昧なままにしておけない、切れ味鋭い人。白か黒か、正しいか間違いか。その明快さと決断の速さは、迷いだらけの世の中で得がたい強さよ。皆が言いよどむことを、あなたは真っ先に口にできる。ただね、よく切れる刃ほど、振るう場所を選ばなければ人を傷つけるの。あなたの「正しさ」は、いつも誰かの「事情」を切り捨てていないかしら。刃の本当の価値は、何を切るかではなく、何を切らずにおくかで決まるのよ。抜くべき時と、鞘に収めておくべき時。その見極めができた時、あなたは本物になるわ。',
-    work: '仕事では、決断と実行が求められる局面でこそ輝くタイプ。交渉ごとや、膿を出し切るべき場面での判断力は誰にも負けないわ。なあなあで進む組織には強い苛立ちを感じるでしょう。ただ、正論は言い方ひとつで薬にも刃にもなる。切り口の美しさにも、こだわりなさい。',
-    love: '恋愛では、駆け引き抜きの直球勝負。思ったことをそのまま口にするから、誠実と取られることもあれば、鋭すぎると距離を置かれることもあるでしょう。好きな相手にこそ、刃を置いて素手で触れなさい。優しい言葉は、あなたが思うより効くのよ。',
-    relationships: '人間関係では、はっきり物を言う分、敵と味方がくっきり分かれるタイプ。でも、それでいいの。八方美人より、よほど信頼される生き方よ。あなたに苦言を呈してほしいと願う人すらいるはず。それだけ、言葉に嘘がないということだから。ただ、味方への感謝は案外伝えていないでしょう。守りたいものの名前は、口に出して言いなさい。',
+    work: '決断と実行が求められる局面でこそ輝くタイプ。交渉ごとや、膿を出し切るべき場面での判断力は誰にも負けないわ。なあなあで進む組織には強い苛立ちを感じるでしょう。ただ、正論は言い方ひとつで薬にも刃にもなる。切り口の美しさにも、こだわりなさい。',
+    love: '駆け引き抜きの直球勝負。思ったことをそのまま口にするから、誠実と取られることもあれば、鋭すぎると距離を置かれることもあるでしょう。好きな相手にこそ、刃を置いて素手で触れなさい。優しい言葉は、あなたが思うより効くのよ。',
+    relationships: 'はっきり物を言う分、敵と味方がくっきり分かれるタイプ。でも、それでいいの。八方美人より、よほど信頼される生き方よ。あなたに苦言を呈してほしいと願う人すらいるはず。それだけ、言葉に嘘がないということだから。ただ、味方への感謝は案外伝えていないでしょう。守りたいものの名前は、口に出して言いなさい。',
     advice: '本当に強い刃は、めったに抜かれないものよ。',
-    lucky: { emoji: '🥤', name: 'ステンレスタンブラー', keyword: 'ステンレスタンブラー おしゃれ' },
+    lucky: { emoji: '🥤', name: 'ステンレスタンブラー', keyword: 'ステンレスタンブラー おしゃれ', reason: '研ぎ澄ました心を、少し冷ましてやりなさい。' },
   },
   7: { // 辛
     title: '宝石', reading: 'かのと',
     line: 'あなたは、辛(かのと)。幾多の研磨に耐えて生まれた宝石よ。',
     desc: '鋭い美意識と、繊細な感性を併せ持つ人。人が見過ごす小さな綻びに真っ先に気づき、細部まで完璧を求めてしまう。その厳しさは、まず誰より自分自身に向かうでしょう。傷つきやすいのに、傷ついた顔を人に見せたくない。プライドの高さと打たれ弱さが同居しているのが、あなたの複雑なところよ。でもね、宝石が輝くのは、削られた過去があるからなの。あなたが恥じているその傷こそ、光を美しく乱反射させる面になっている。完璧である必要はないわ。他人に向ける採点の、半分の甘さで自分を採点しなさい。',
-    work: '仕事では、細部の精度が問われる仕事や、美的センスを活かせる分野で光るタイプ。雑な仕事が許せない性分は、品質そのものであなたの名を高めるわ。ただ、基準が高すぎて、自分も周りも息切れさせがち。「八割で出す」勇気も、時には必要よ。',
-    love: '恋愛では、理想が高く、簡単には妥協しないタイプ。素直になりたいのに、プライドが先に立って可愛げのない一言を選んでしまう夜があるでしょう。でもね、弱さを見せられる相手にだけは、飾らないあなたでいなさい。磨く前の素肌にこそ、本当の価値があるのよ。',
-    relationships: '人間関係は、選び抜いた少数と深く。誰にでも心を開かないから「近寄りがたい」と言われがちだけど、恥じることはないわ。宝石は、路傍に転がっていないものよ。実際に打ち解けた相手は、あなたが誰より情に厚く、義理堅いことを知っているはず。心を開くのに時間がかかるのは欠点ではなく、それだけ本気で人と向き合う証。焦らず、あなたの速度で磨き合える相手を選びなさい。',
+    work: '細部の精度が問われる仕事や、美的センスを活かせる分野で光るタイプ。雑な仕事が許せない性分は、品質そのものであなたの名を高めるわ。ただ、基準が高すぎて、自分も周りも息切れさせがち。「八割で出す」勇気も、時には必要よ。',
+    love: '理想が高く、簡単には妥協しないタイプ。素直になりたいのに、プライドが先に立って可愛げのない一言を選んでしまう夜があるでしょう。でもね、弱さを見せられる相手にだけは、飾らないあなたでいなさい。磨く前の素肌にこそ、本当の価値があるのよ。',
+    relationships: '選び抜いた少数と、深く。誰にでも心を開かないから「近寄りがたい」と言われがちだけど、恥じることはないわ。宝石は、路傍に転がっていないものよ。実際に打ち解けた相手は、あなたが誰より情に厚く、義理堅いことを知っているはず。心を開くのに時間がかかるのは欠点ではなく、それだけ本気で人と向き合う証。焦らず、あなたの速度で磨き合える相手を選びなさい。',
     advice: '傷を恥じないことね。その傷が、あなたの輝きの角度を作ったのよ。',
-    lucky: { emoji: '💍', name: 'アクセサリー', keyword: 'アクセサリー シンプル' },
+    lucky: { emoji: '💍', name: 'アクセサリー', keyword: 'アクセサリー シンプル', reason: '磨いてきた自分に、ふさわしい飾りを一つ。' },
   },
   8: { // 壬
     title: '大海', reading: 'みずのえ',
     line: 'あなたは、壬(みずのえ)。岸に縛られず地平まで広がる大海よ。',
     desc: 'スケールが大きく、何より自由を愛する人。一つの場所、一つの正解に留まることが性に合わないでしょう。常識の枠を平然と越えていく発想力と行動力は、周りには真似のできない魅力よ。ただね、海は満ちれば引くもの。その気まぐれな潮の満ち引きが、「あの人は掴めない」という不信に変わることもあるはずよ。器の大きさは本物。だからこそ惜しいの、一つの場所に腰を据えてやり抜いた経験の少なさが。流れ続けるだけの水は、何も満たせないわ。一度でいいから、あなたの全部を注ぎ込む港を決めてみなさい。',
-    work: '仕事では、決まりきった毎日より、変化と刺激のある環境で生きるタイプ。複数の物事を同時に回す器用さと、常識外れの発想力が武器よ。ただし、軌道に乗る手前で飽きて手放す癖が最大の敵。始めたことを最後まで見届けた数だけ、あなたの信用は積み上がるの。',
-    love: '恋愛では、束縛が何より苦手な自由人。追われると引き、離れられると追いたくなる困った性分でしょう。相手は「本気なの?」と不安なはずよ。自由でいたいなら、その分、言葉の錨を打ちなさい。「大丈夫、離れない」の一言が、あなたの自由を守るのよ。',
-    relationships: '人間関係では、誰とでも気さくにやれる社交性の持ち主。人脈は海のように広がるけれど、深入りは巧みに避けているでしょう。特定の誰かに寄りかかることを、無意識に恐れているのよ。でもね、どんな大海にも深いところがあるように、あなたの深部を知る人が一人もいないのは寂しすぎるわ。信頼できる相手には、浅瀬より奥へ招き入れなさい。',
+    work: '決まりきった毎日より、変化と刺激のある環境で生きるタイプ。複数の物事を同時に回す器用さと、常識外れの発想力が武器よ。ただし、軌道に乗る手前で飽きて手放す癖が最大の敵。始めたことを最後まで見届けた数だけ、あなたの信用は積み上がるの。',
+    love: '束縛が何より苦手な自由人。追われると引き、離れられると追いたくなる困った性分でしょう。相手は「本気なの?」と不安なはずよ。自由でいたいなら、その分、言葉の錨を打ちなさい。「大丈夫、離れない」の一言が、あなたの自由を守るのよ。',
+    relationships: '誰とでも気さくにやれる社交性の持ち主。人脈は海のように広がるけれど、深入りは巧みに避けているでしょう。特定の誰かに寄りかかることを、無意識に恐れているのよ。でもね、どんな大海にも深いところがあるように、あなたの深部を知る人が一人もいないのは寂しすぎるわ。信頼できる相手には、浅瀬より奥へ招き入れなさい。',
     advice: '広さは十分。次は深さよ。一つの港に、錨を下ろしてごらんなさい。',
-    lucky: { emoji: '🧳', name: '旅行用ポーチ', keyword: 'トラベルポーチ 旅行 収納' },
+    lucky: { emoji: '🧳', name: '旅行用ポーチ', keyword: 'トラベルポーチ 旅行 収納', reason: '自由に漂うあなたには、身軽な旅の道具を。' },
   },
   9: { // 癸
     title: '雨露', reading: 'みずのと',
     line: 'あなたは、癸(みずのと)。音もなく大地に染み入る雨露よ。',
     desc: '多くを語らず、静かに周りを観察している人。その瞳は、人が隠したつもりの本音や、場の空気のわずかな変化まで見抜いているでしょう。鋭い直感と深い知性。それがあなたの水源よ。ただ、雨露は静かすぎて、そこにあることに誰も気づかないの。あなたの中には、言葉にされないまま眠っている洞察が湖ほど溜まっているはずよ。「察してもらう」のを待つのは、もうやめなさい。あなたが黙っている限り、その知性は無いものと同じに扱われる。静かな水ほど、口を開いた時の一滴が深く響くもの。その一滴を、惜しまないことね。',
-    work: '仕事では、調査・分析・企画の裏側など、深く考える仕事で真価を発揮するタイプ。あなたの出す答えの質は、声の大きい人たちの十歩先を行っているはずよ。ただ、黙っていては誰にも届かない。会議で一度、あなたから口火を切ってごらんなさい。周りの目が変わるわ。',
-    love: '恋愛では、本音を見せず、察してもらうのを待ちがちなタイプ。でもね、言わない想いは、無い想いと同じに扱われるのが恋というものよ。百の察しを期待するより、一つの言葉を渡しなさい。あなたの静かな一言は、思うよりずっと深く相手に染みるわ。',
-    relationships: '人間関係では、聞き上手で、相手の本音を自然と引き出してしまうタイプ。皆あなたに話を聞いてほしがるのに、あなたの話を聞いてくれる人には出会えていないでしょう。それはあなたが、自分の話をする隙を与えていないからよ。謎めいた人のままでは、誰もあなたを支えられないの。信頼できる相手には、あなたの雨を降らせてみなさい。',
+    work: '調査・分析・企画の裏側など、深く考える仕事で真価を発揮するタイプ。あなたの出す答えの質は、声の大きい人たちの十歩先を行っているはずよ。ただ、黙っていては誰にも届かない。会議で一度、あなたから口火を切ってごらんなさい。周りの目が変わるわ。',
+    love: '本音を見せず、察してもらうのを待ちがちなタイプ。でもね、言わない想いは、無い想いと同じに扱われるのが恋というものよ。百の察しを期待するより、一つの言葉を渡しなさい。あなたの静かな一言は、思うよりずっと深く相手に染みるわ。',
+    relationships: '聞き上手で、相手の本音を自然と引き出してしまうタイプ。皆あなたに話を聞いてほしがるのに、あなたの話を聞いてくれる人には出会えていないでしょう。それはあなたが、自分の話をする隙を与えていないからよ。謎めいた人のままでは、誰もあなたを支えられないの。信頼できる相手には、あなたの雨を降らせてみなさい。',
     advice: '黙っていても伝わる、は幻想よ。大事な一滴ほど、声にして落としなさい。',
-    lucky: { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上' },
+    lucky: { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上', reason: '静かな気配には、静かに満ちる香りを添えなさい。' },
   },
 };
 
@@ -341,6 +341,20 @@ const LUCKY_NAME_EN = [
   'Pouch / Accessory Case', 'Stainless Tumbler', 'Accessory', 'Travel Pouch', 'Humidifier / Aroma Diffuser',
 ];
 
+// lucky.reasonのEN版(日主インデックス0-9、JAのreasonと対応する黒曜先生の一言)
+const LUCKY_REASON_EN = [
+  "If you want to keep that straight-growing spirit of yours, keep one of these close.",
+  "To bring a trampled heart back, start with a single cup of tea.",
+  "Someone as dazzling as you needs a little shade of your own making.",
+  "Light one of these quietly, for yourself, for once.",
+  "An unshakable vessel deserves a vessel that holds it up in turn.",
+  "You who only ever give — carve out one corner that's yours alone.",
+  "Let that honed-sharp mind of yours cool down a little.",
+  "You've polished yourself this far — give yourself an ornament worthy of it.",
+  "A spirit as free as yours needs travel gear light enough to match.",
+  "A quiet presence deserves a scent that fills the room just as quietly.",
+];
+
 function getDayMasterType(stemIdx) {
   const ja = DAY_MASTER_TYPES[stemIdx];
   if (LANG !== 'en') return { ...ja, isPendingTranslation: false };
@@ -362,6 +376,8 @@ const UI_TEXT = {
     startBtn: '占ってもらう ✦',
     startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
     loadingText: '黒曜先生が、生まれた日を読み解いています…',
+    errorRequired: '生年月日を、年・月・日すべて選んでから占ってもらいなさい。',
+    errorGeneric: '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。',
     subheadWork: '💼 仕事・お金の傾向',
     subheadLove: '💞 恋愛の傾向',
     subheadRelationships: '🤝 人間関係の傾向',
@@ -383,8 +399,8 @@ const UI_TEXT = {
     followLinkShugorei: '守護霊診断',
     followLabel3: '🐹 Desk Animalsをフォローする',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。',
-    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、月柱の算出には節気の近似日付を使用しており、実際の暦とは前後1日程度ずれる場合があります。23時以降生まれの方は日柱の算出に翌日の干支を用いる「遅子時」の考え方を採用していますが、流派により扱いが異なる点にご留意ください。科学的な診断や実際の鑑定に代わるものではありません。',
-    footerPrivacy: '生年月日・時刻は診断のためだけに使用し、サーバーへの送信・保存は一切行いません(すべてお使いの端末内で計算しています)。',
+    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
+    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。',
     footerNichishuLink: '日主10タイプ一覧を見る',
     shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`,
     shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→`,
@@ -401,6 +417,8 @@ const UI_TEXT = {
     startBtn: 'Get Your Reading ✦',
     startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
     loadingText: 'Kokuyo-sensei is reading the day you were born…',
+    errorRequired: 'Choose a year, month, and day before asking for your reading.',
+    errorGeneric: 'Something went wrong mid-reading. Give it another try.',
     subheadWork: '💼 Career & Money',
     subheadLove: '💞 Love',
     subheadRelationships: '🤝 Relationships',
@@ -422,8 +440,8 @@ const UI_TEXT = {
     followLinkShugorei: 'Guardian Spirit Reading',
     followLabel3: '🐹 Follow Desk Animals',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee.',
-    footerDisclaimer: "This reading is for entertainment purposes only. It's based on BaZi (Four Pillars of Destiny) principles, but the month-pillar boundaries use approximate solar-term dates that can be off by about a day from the actual calendar. Births after 11pm use the traditional \"late zi-hour\" convention (the next day's stem/branch), though this varies by school of thought. It is not a substitute for a scientific assessment or a professional reading.",
-    footerPrivacy: "Your birth date and time are used only for this reading and are never sent to or stored on a server (everything is calculated on your own device).",
+    footerDisclaimer: "This reading is for entertainment purposes only. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
+    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n#KokuyoFortuneReading #BaZi`,
     shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →`,
@@ -433,32 +451,112 @@ const UI_TEXT = {
 // ===== 画面制御 =====
 let lastResult = null;
 
-// 未来日を選べないよう、生年月日の上限を「今日」に動的設定(ハードコードすると年をまたいで壊れるため)
-(function setMaxBirthdate() {
-  const today = new Date();
-  const iso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-  document.getElementById('birthdate').max = iso;
-})();
+// 生年月日入力(年/月/日の3セレクト)。ネイティブtype="date"のドラムロールスクロール負担を避けるための構成。
+function populateBirthdateSelects() {
+  const yearSel = document.getElementById('birth-year');
+  const monthSel = document.getElementById('birth-month');
+  const daySel = document.getElementById('birth-day');
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 1920; y--) {
+    const opt = document.createElement('option');
+    opt.value = String(y);
+    opt.textContent = String(y);
+    yearSel.appendChild(opt);
+  }
+  for (let m = 1; m <= 12; m++) {
+    const opt = document.createElement('option');
+    opt.value = String(m);
+    opt.textContent = String(m);
+    monthSel.appendChild(opt);
+  }
+  refreshDayOptions();
+  yearSel.addEventListener('change', refreshDayOptions);
+  monthSel.addEventListener('change', refreshDayOptions);
+}
+
+function daysInMonth(year, month) {
+  if (!year || !month) return 31;
+  return new Date(Number(year), Number(month), 0).getDate();
+}
+
+function refreshDayOptions() {
+  const yearSel = document.getElementById('birth-year');
+  const monthSel = document.getElementById('birth-month');
+  const daySel = document.getElementById('birth-day');
+  const prevValue = daySel.value;
+  const max = daysInMonth(yearSel.value, monthSel.value);
+  daySel.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = '日';
+  daySel.appendChild(placeholder);
+  for (let d = 1; d <= max; d++) {
+    const opt = document.createElement('option');
+    opt.value = String(d);
+    opt.textContent = String(d);
+    daySel.appendChild(opt);
+  }
+  if (prevValue && Number(prevValue) <= max) daySel.value = prevValue;
+}
+populateBirthdateSelects();
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
+function showBirthdateError(message) {
+  const t = UI_TEXT[LANG];
+  const errorEl = document.getElementById('birthdate-error');
+  errorEl.textContent = message || t.errorRequired;
+  errorEl.style.display = 'block';
+  ['birth-year', 'birth-month', 'birth-day'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.add('invalid');
+    el.setAttribute('aria-invalid', 'true');
+  });
+}
+
+function clearBirthdateError() {
+  const errorEl = document.getElementById('birthdate-error');
+  errorEl.style.display = 'none';
+  ['birth-year', 'birth-month', 'birth-day'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('invalid');
+    el.removeAttribute('aria-invalid');
+  });
+}
+
+function focusResultHeading() {
+  const heading = document.getElementById('result-line');
+  heading.setAttribute('tabindex', '-1');
+  heading.focus();
+}
+
 function startDivination() {
-  const input = document.getElementById('birthdate');
-  if (!input.value) {
-    input.focus();
+  const y = document.getElementById('birth-year').value;
+  const m = document.getElementById('birth-month').value;
+  const d = document.getElementById('birth-day').value;
+  if (!y || !m || !d) {
+    showBirthdateError();
     return;
   }
-  const [y, m, d] = input.value.split('-').map(Number);
+  clearBirthdateError();
   const timeInput = document.getElementById('birthtime');
   let hour = null;
   if (timeInput.value) {
     hour = Number(timeInput.value.split(':')[0]);
   }
   showScreen('screen-loading');
-  setTimeout(() => renderResult(y, m, d, hour), 1400);
+  setTimeout(() => {
+    try {
+      renderResult(Number(y), Number(m), Number(d), hour);
+    } catch (e) {
+      console.error('鑑定の生成に失敗しました', e);
+      showScreen('screen-start');
+      showBirthdateError(UI_TEXT[LANG].errorGeneric);
+    }
+  }, 1400);
 }
 
 function renderResult(y, m, d, hour) {
@@ -467,25 +565,28 @@ function renderResult(y, m, d, hour) {
 }
 
 // 生年月日そのものではなく、干支インデックスだけをURLに載せて結果を再現するための符号化
-// (birthdateをそのままURLに残さないためのプライバシー配慮)
+// (birthdateをそのままURLに残さないためのプライバシー配慮)。末尾1文字は現在の表示言語(j/e)。
 function buildResultCode(pillars) {
   const y = STEMS.indexOf(pillars.year.stem);
   const m = STEMS.indexOf(pillars.month.stem);
   const h = pillars.hour ? STEMS.indexOf(pillars.hour.stem) : 'x';
-  return `${pillars.day.stemIdx}${y}${m}${h}`;
+  const langChar = LANG === 'en' ? 'e' : 'j';
+  return `${pillars.day.stemIdx}${y}${m}${h}${langChar}`;
 }
 
 function decodeResultCode(code) {
-  if (!/^[0-9][0-9][0-9]([0-9]|x)$/.test(code)) return null;
+  if (!/^[0-9][0-9][0-9]([0-9]|x)[je]?$/.test(code)) return null;
   const dayIdx = Number(code[0]);
   const yearIdx = Number(code[1]);
   const monthIdx = Number(code[2]);
   const hourPart = code[3];
+  const langChar = code[4];
   return {
     day: { stem: STEMS[dayIdx], branch: '', stemIdx: dayIdx },
     year: { stem: STEMS[yearIdx], branch: '' },
     month: { stem: STEMS[monthIdx], branch: '' },
     hour: hourPart === 'x' ? null : { stem: STEMS[Number(hourPart)], branch: '' },
+    lang: langChar === 'e' ? 'en' : (langChar === 'j' ? 'ja' : null),
   };
 }
 
@@ -520,12 +621,20 @@ function applyResult(pillars) {
   document.getElementById('lucky-emoji').textContent = type.lucky.emoji;
   const luckyName = LANG === 'en' ? LUCKY_NAME_EN[pillars.day.stemIdx] : type.lucky.name;
   document.getElementById('lucky-name').textContent = t.luckySeeMore(luckyName);
+  const luckyReason = LANG === 'en' ? LUCKY_REASON_EN[pillars.day.stemIdx] : type.lucky.reason;
+  document.getElementById('lucky-reason').textContent = luckyReason || '';
 
   showScreen('screen-result');
+  focusResultHeading();
 }
 
 function restart() {
-  document.getElementById('birthdate').value = '';
+  document.getElementById('birth-year').value = '';
+  document.getElementById('birth-month').value = '';
+  document.getElementById('birth-day').value = '';
+  refreshDayOptions();
+  document.getElementById('birthtime').value = '';
+  clearBirthdateError();
   showScreen('screen-start');
 }
 
@@ -613,11 +722,18 @@ document.getElementById('btn-share-line').addEventListener('click', shareResultL
 document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl);
 
 // 結果URL(?r=符号)で直接開かれた場合は、その場で同じ結果を再現して表示する
+// (符号の末尾1文字に埋め込まれた表示言語も復元する。旧形式の符号(言語なし)は従来通りja扱い)
 (function loadFromResultCode() {
   const code = new URLSearchParams(location.search).get('r');
   if (!code) return;
   const pillars = decodeResultCode(code);
   if (!pillars) return;
+  if (pillars.lang) {
+    LANG = pillars.lang;
+    document.getElementById('btn-lang-ja').classList.toggle('active', LANG === 'ja');
+    document.getElementById('btn-lang-en').classList.toggle('active', LANG === 'en');
+    applyLangUI();
+  }
   applyResult(pillars);
 })();
 
@@ -635,5 +751,6 @@ if (GA_MEASUREMENT_ID && !isLocalDev) {
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID);
+  // 結果URL(?r=符号)がそのままGoogleへ送信されないよう、クエリ文字列を除いたURLで計測する
+  gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
 }

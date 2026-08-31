@@ -11,6 +11,7 @@
   --card-bg: rgba(26, 19, 48, 0.72);
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
   --shadow-lift: 0 16px 44px rgba(0, 0, 0, 0.6);
+  --error: #ff6b81;
 }
 
 * { box-sizing: border-box; }
@@ -109,6 +110,9 @@ body {
 
 .screen { display: none; flex: 1; flex-direction: column; }
 .screen.active { display: flex; }
+/* ?r=結果URLでの直接アクセス時、start画面を経由せず最初からresult画面を表示する(CLS/LCP対策、<head>のインラインスクリプトでhtmlに付与) */
+html.deep-link-result #screen-start.active { display: none; }
+html.deep-link-result #screen-result { display: flex; }
 
 .eyebrow {
   display: inline-block;
@@ -162,6 +166,31 @@ body {
   color: var(--text);
   margin-bottom: 20px;
   color-scheme: dark;
+}
+.date-select-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0;
+}
+.date-select-group .date-input {
+  width: auto;
+  flex: 1;
+  margin-bottom: 0;
+  min-width: 0;
+}
+.date-input.invalid {
+  border-color: var(--error);
+}
+.field-error {
+  color: var(--error);
+  font-size: 0.78rem;
+  text-align: left;
+  margin: 8px 0 20px;
+}
+.lucky-reason {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  font-style: italic;
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--gold), #b8863f);

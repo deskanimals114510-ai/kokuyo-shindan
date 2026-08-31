@@ -54,6 +54,38 @@ function spinoffShowScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
+// 生年月日未入力エラーの表示/解除(前世診断・守護霊診断共通)
+function spinoffShowFieldError(inputId, errorId, message) {
+  const errorEl = document.getElementById(errorId);
+  const inputEl = document.getElementById(inputId);
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+  }
+  if (inputEl) {
+    inputEl.classList.add('invalid');
+    inputEl.setAttribute('aria-invalid', 'true');
+  }
+}
+
+function spinoffClearFieldError(inputId, errorId) {
+  const errorEl = document.getElementById(errorId);
+  const inputEl = document.getElementById(inputId);
+  if (errorEl) errorEl.style.display = 'none';
+  if (inputEl) {
+    inputEl.classList.remove('invalid');
+    inputEl.removeAttribute('aria-invalid');
+  }
+}
+
+// 結果表示後、支援技術・キーボード操作の両方に画面遷移を伝えるためフォーカスを移動する
+function spinoffFocusHeading(id) {
+  const heading = document.getElementById(id);
+  if (!heading) return;
+  heading.setAttribute('tabindex', '-1');
+  heading.focus();
+}
+
 function spinoffCopyResultUrl(btnId, url) {
   const btn = document.getElementById(btnId);
   navigator.clipboard.writeText(url).then(() => {
@@ -323,5 +355,6 @@ function spinoffApplyLucky(stemIdx) {
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID);
+  // 結果URL(?r=符号)がそのままGoogleへ送信されないよう、クエリ文字列を除いたURLで計測する
+  gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
 })();
