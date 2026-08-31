@@ -20,14 +20,15 @@ html, body { margin: 0; min-height: 100vh; }
 .lang-toggle {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
   margin-bottom: 14px;
 }
 .lang-btn {
   font-family: "Cinzel", "Shippori Mincho", serif;
   font-size: 0.74rem;
   font-weight: 700;
-  padding: 5px 14px;
+  padding: 11px 16px;
+  min-height: 44px;
   border-radius: 999px;
   border: 1.5px solid var(--border);
   background: transparent;
@@ -61,6 +62,7 @@ html, body { margin: 0; min-height: 100vh; }
 
 body {
   font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+  font-weight: 500;
   background: radial-gradient(circle at 50% 0%, var(--bg3) 0%, var(--bg2) 45%, var(--bg1) 100%);
   color: var(--text);
   position: relative;
@@ -221,10 +223,12 @@ html.deep-link-result #screen-result { display: flex; }
   margin-top: 10px;
 }
 .btn-secondary:hover { background: rgba(212, 175, 106, 0.16); }
-.card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; opacity: 0.8; }
+.card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; }
+.privacy-note { font-size: 0.72rem; color: var(--text-sub); text-align: left; margin: -12px 0 20px; }
 
 /* ---- 鑑定中画面 ---- */
 #screen-loading { align-items: center; justify-content: center; text-align: center; }
+.loading-wrap { min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .loading-emoji { font-size: 2.8rem; animation: spin 2.4s linear infinite; filter: drop-shadow(0 0 16px rgba(212,175,106,0.6)); }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .loading-text { color: var(--text-sub); margin-top: 16px; font-size: 0.92rem; }
@@ -264,14 +268,18 @@ html.deep-link-result #screen-result { display: flex; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-radius: 14px;
-  background: rgba(212, 175, 106, 0.08);
-  border: 1.5px dashed var(--gold);
+  background: linear-gradient(135deg, rgba(212, 175, 106, 0.22), rgba(138, 111, 214, 0.14));
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 8px 22px rgba(212, 175, 106, 0.22);
   text-decoration: none;
-  transition: background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.lucky-item:hover { background: rgba(212, 175, 106, 0.16); }
+.lucky-item:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(212, 175, 106, 0.32); }
+.lucky-remind { text-align: center; margin: 14px 0 0; }
+.lucky-remind a { font-size: 0.76rem; color: var(--gold-bright); text-decoration: none; }
+.lucky-remind a:hover { text-decoration: underline; }
 .lucky-emoji { font-size: 1.6rem; flex: none; }
 .lucky-text { flex: 1; display: flex; flex-direction: column; gap: 3px; text-align: left; }
 .lucky-label { font-size: 0.66rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
@@ -300,8 +308,12 @@ html.deep-link-result #screen-result { display: flex; }
   text-align: center;
 }
 .follow-label { font-size: 0.74rem; color: var(--text-sub); margin: 0 0 8px; }
-.follow-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.follow-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .follow-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
   font-size: 0.74rem;
   font-weight: 700;
   color: var(--gold-bright);
@@ -314,7 +326,10 @@ html.deep-link-result #screen-result { display: flex; }
 .follow-link:hover { border-color: var(--gold); }
 
 .site-footer { max-width: 480px; margin: 0 auto; padding: 20px 20px 32px; position: relative; z-index: 1; }
-.site-footer p { font-size: 0.66rem; line-height: 1.7; color: var(--text-sub); margin: 0 0 8px; text-align: center; opacity: 0.85; }
+.site-footer p { font-size: 0.72rem; line-height: 1.7; color: var(--text-sub); margin: 0 0 8px; text-align: center; }
+.footer-link { color: var(--text-sub); }
+.btn-primary-link { display: block; text-decoration: none; text-align: center; box-sizing: border-box; }
+.link-spaced-top { display: inline-block; margin-top: 18px; }
 
 @media (min-width: 520px) {
   .card { padding: 48px 40px 40px; }
@@ -348,6 +363,11 @@ html.deep-link-result #screen-result { display: flex; }
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+}
+@media (max-width: 375px) {
+  .type-nav-grid, .type-hub-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .type-nav-link {
   display: block;
@@ -403,7 +423,6 @@ html.deep-link-result #screen-result { display: flex; }
 }
 
 /* ---- スピンオフ診断(前世診断・守護霊診断)共通 ---- */
-.spinoff-intro { font-size: 0.82rem; line-height: 1.8; color: var(--text-sub); }
 .spinoff-type-label {
   display: inline-block;
   font-family: "Cinzel", "Shippori Mincho", serif;
@@ -460,13 +479,6 @@ html.deep-link-result #screen-result { display: flex; }
   color: var(--gold-bright);
   margin: 4px 0 14px;
   text-align: center;
-}
-.spinoff-voiceline {
-  font-size: 0.92rem;
-  line-height: 1.85;
-  color: var(--gold-bright);
-  text-align: left;
-  margin: 0 0 16px;
 }
 .result-card-preview {
   margin: 4px 0 18px;
@@ -529,4 +541,19 @@ html.deep-link-result #screen-result { display: flex; }
   margin: 0 auto 14px;
   border-radius: 14px;
   box-shadow: 0 10px 26px rgba(212, 175, 106, 0.28);
+}
+
+/* ---- キーボードフォーカス視認性(暗色背景上でもはっきり見えるよう明示指定) ---- */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.lang-btn:focus-visible,
+.follow-link:focus-visible,
+.lucky-item:focus-visible,
+.type-hub-card:focus-visible,
+.type-nav-link:focus-visible,
+.spinoff-cross-link:focus-visible,
+.lucky-remind a:focus-visible,
+.date-input:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 2px;
 }

@@ -153,7 +153,7 @@ const DAY_MASTER_TYPES = {
   4: { // 戊
     title: '山', reading: 'つちのえ',
     line: 'あなたは、戊(つちのえ)。千年動かぬ、悠然たる山よ。',
-    desc: '多少の嵐ではびくともしない、生まれついての安定感がある人。周りが浮き足立つ場面ほど、あなたの静けさが皆の錨になるの。「あの人がいると安心する」、そう言われてきたでしょう。ただ、動かない山は、裏を返せば自分からは動かない山でもある。慣れた場所、慣れたやり方に根を下ろしすぎて、変化への一歩が億劫になっていないかしら。でもね、あなたが一度腹を決めた時の実行力は、誰にも真似できないほど大きいのよ。周りが「まさかあの人が」と驚く決断を、静かに下せる人。その力を、守りだけでなく攻めにも使いなさい。',
+    desc: '多少の嵐ではびくともしない、生まれついての安定感がある人。周りが浮き足立つ場面ほど、あなたの静けさが皆の支えになるの。「あの人がいると安心する」、そう言われてきたでしょう。ただ、動かない山は、裏を返せば自分からは動かない山でもある。慣れた場所、慣れたやり方に居座りすぎて、変化への一歩が億劫になっていないかしら。でもね、あなたが一度腹を決めた時の実行力は、誰にも真似できないほど大きいのよ。周りが「まさかあの人が」と驚く決断を、静かに下せる人。その力を、守りだけでなく攻めにも使いなさい。',
     work: '長期戦でこそ光るタイプ。コツコツ積み上げる仕事や、責任を預かる管理的な立場が性に合うわ。方針がころころ変わる職場や、スピード一辺倒の環境は消耗するだけ。ただ、石橋を叩きすぎて好機を逃す癖があるわね。たまには叩かずに渡る勇気も持ちなさい。',
     love: '時間をかけて信頼を積む堅実型。浮ついた関係には興味がなく、腰を据えた安定を求めるタイプよ。ただ、想いを言葉にするのが苦手で、「私のこと、どう思っているの?」と相手を不安にさせがち。山は黙っていても動かないけれど、人の心は言葉がないと離れていくのよ。',
     relationships: '口数は少なくとも、その動じなさで自然と頼られるタイプ。ただ、自分から歩み寄るのは苦手で、待ちの姿勢になりがちね。実はじっくり相手を観察して、信頼に足る人かを静かに見極めているのでしょう。一度懐に入れた相手への義理堅さは、山のごとし。その懐の深さをもっと知ってもらうためにも、たまには自分から声をかけなさい。それだけで関係は動き出すわ。',
@@ -257,81 +257,81 @@ const DAY_MASTER_TYPES_EN = {
   0: {
     line: `You are Kinoe — the great tree that drives its trunk straight up toward the sky.`,
     desc: `You can't stand anything crooked, and once you've decided something is right, you don't budge. That unshakability is exactly what gives the people around you a sense of safety and direction. Just as people gather in the shade of a great tree, they naturally gather around you. But listen — the thicker the trunk, the more surely a tree snaps in a storm if it never learned to bend. Your weakness is your strength itself. You're used to being leaned on, but you have no idea how to lean on anyone. Putting down roots doesn't mean standing alone. It means sharing soil with others who hold you up. Lower your branches once in a while and rest your weight on someone. The day you can do that is the day you truly grow tall.`,
-    work: `At work, you thrive when you're clearing your own path, not waiting for orders. The more freedom you're given, the more you deliver — so don't be afraid of leadership or striking out on your own. But you have a habit of charging straight ahead until you can no longer hear the voices around you. Whatever you do, don't turn around one day to find nobody there.`,
-    love: `In love, once you fall, you go straight ahead without a sideways glance. Playing games? You couldn't if you tried. That sincerity is your greatest weapon, but push and push and your partner will run out of breath. Learn the kindness of stopping now and then to match their stride.`,
+    work: `Career-wise, you thrive when you're clearing your own path, not waiting for orders. The more freedom you're given, the more you deliver — so don't be afraid of leadership or striking out on your own. But you have a habit of charging straight ahead until you can no longer hear the voices around you. Whatever you do, don't turn around one day to find nobody there.`,
+    love: `Once you fall in love, you go straight ahead without a sideways glance. Playing games? You couldn't if you tried. That sincerity is your greatest weapon, but push and push and your partner will run out of breath. Learn the kindness of stopping now and then to match their stride.`,
     relationships: `In relationships, you say what you mean and keep every promise, so people trust you — "if it's coming from them, it must be true." But you have a habit of measuring everyone against your own yardstick of what's right. People carry their own circumstances and their own weaknesses. The day you can accept that without passing judgment, your shade becomes a resting place for far more people. Forget wide and shallow — treasure the few whose roots you can truly entwine with yours.`,
     advice: `The tree that can bend outlives the tree that won't break. Don't mistake stubbornness for a strong core.`,
   },
   1: {
     line: `You are Kinoto — the wildflower that gets trampled and stands right back up by morning.`,
     desc: `You look delicate at first glance, but the truth is you're tougher than anyone. You don't fight the gale — you lie low, and when the storm passes, you lift your face again. That suppleness is your wisdom for surviving. Transplant you into any soil and before anyone notices, you've taken root — that adaptability is a gift. But here's the thing: you're so good at fitting in that there are moments you lose sight of how you actually want to bloom. Kindness that only ever yields eventually becomes a convenience for others to exploit. Even a blade of grass that won't break carries a quiet stubbornness. Every so often, defy the wind and bloom in your own color.`,
-    work: `At work, you become indispensable as the one who fills the gaps in a team. Reading the room and moving things forward without ruffling feathers is a genuine talent. But if you keep stepping back even when someone asks for your opinion, all that work stays invisible. When the moment matters, say it out loud and say it plainly.`,
-    love: `In love, you take on your partner's colors so easily that one day you look up and can't find yourself. A relationship where all you do is read their moods will wither you in the end. Find someone who doesn't leave when they see the real you — better yet, someone who waters you. That's the one worth choosing.`,
-    relationships: `In relationships, you have the knack of getting along with anyone without making waves. Hardly anyone dislikes you — but no one truly gets close to you either. You know exactly the distance I'm talking about. Separate the people you accommodate from the people you trust with your real feelings. Your softness is not something to sell cheap. Show your deepest roots only to the few who've earned it.`,
+    work: `On the job, you become indispensable as the one who fills the gaps in a team. Reading the room and moving things forward without ruffling feathers is a genuine talent. But if you keep stepping back even when someone asks for your opinion, all that work stays invisible. When the moment matters, say it out loud and say it plainly.`,
+    love: `You take on your partner's colors so easily in love that one day you look up and can't find yourself. A relationship where all you do is read their moods will wither you in the end. Find someone who doesn't leave when they see the real you — better yet, someone who waters you. That's the one worth choosing.`,
+    relationships: `In relationships, you have the knack of getting along with anyone without making waves. Hardly anyone dislikes you — but no one truly gets close to you either. You already know exactly that distance you keep. Separate the people you accommodate from the people you trust with your real feelings. Your softness is not something to sell cheap. Show your deepest roots only to the few who've earned it.`,
     advice: `Yielding and giving up are not the same thing. Where it truly matters, dig in and hold your ground.`,
   },
   2: {
     line: `You are Hinoe — the midday sun that lights up everything it touches.`,
     desc: `You have a natural radiance that can't be hidden no matter how you try. Every emotion shows right on your face, and that openness brightens the hearts around you. You've felt it — the air in a room changes the moment you walk in. But listen: the sun never lets anyone watch it set. The brighter you shine in public, the harder the silence of your nights alone hits you. You burn hot and cool fast, too — because deep down, you're anxious unless you're always blazing. But to keep shining, you need time to rest. Don't feel guilty about recharging where no one can see you. The shadows are part of you. You're the sun either way.`,
-    work: `At work, you come into your own when you're out front — presenting, promoting, lighting up the room. Sales, planning, anything on a stage: perfect fit. But hand you plain, unglamorous grunt work and your fuel runs out on the spot. It's the power to see the unflashy work through to the end that makes your shine the real thing.`,
-    love: `In love, you're the lightning-strike type — love at first sight. You catch fire fast, and you cool off just as fast. Somewhere along the way, you've made a partner wonder, "Do you really love me?" What's being tested in you isn't the blaze at the start — it's the patience to keep lighting up the ordinary days.`,
+    work: `Put you out front — presenting, promoting, lighting up the room — and you come into your own. Sales, planning, anything on a stage: perfect fit. But hand you plain, unglamorous grunt work and your fuel runs out on the spot. It's the power to see the unflashy work through to the end that makes your shine the real thing.`,
+    love: `Love, for you, is the lightning-strike type — love at first sight. You catch fire fast, and you cool off just as fast. Somewhere along the way, you've made a partner wonder, "Do you really love me?" What's being tested in you isn't the blaze at the start — it's the patience to keep lighting up the ordinary days.`,
     relationships: `In relationships, you always end up at the center of the circle. Walls with strangers might as well not exist for you — you warm up to anyone instantly. But your brightness is so dazzling that almost no one notices your shadows. Someone once said, "You look like you don't have a care in the world," and it stung a little, didn't it. Secure at least one person you can fall apart in front of. That person is your lifeline.`,
     advice: `There is no sun that never sets. Resting is part of shining.`,
   },
   3: {
     line: `You are Hinoto — the lamplight that burns most beautifully in the dark.`,
     desc: `Behind that quiet exterior, you hide a flame no one can put out. Your senses are razor-sharp — you pick up every subtle shift in the hearts around you, down to the finest detail. That's why you bruise easily, and why you tire faster than anyone. People may say they can't tell what you're thinking, but the truth is you think deeper and feel deeper than anyone else in the room. You don't need to light up the whole world like the sun. A lamp's light exists to guide the feet of one person lost in the dark. That is your calling. But heat kept locked inside gets treated as if it doesn't exist. Even a tenth of what you feel — put it into words and actions where people can see it.`,
-    work: `At work, you're built for deep expertise — digging patiently into one field — or careful work in small, close teams. You're the type who quietly stacks up trust rather than grabbing the spotlight. Forcing yourself to play the social butterfly drains you to the core, so choose an environment that protects the way you burn.`,
-    love: `In love, it takes you a long time to open the door — but once you open it for someone, you devote yourself deeply, quietly, and for the long haul. The trouble is your habit of bottling up every frustration and lonely moment until one day the flame simply goes out and you want to walk away. Learn to let it out in small doses.`,
+    work: `Deep expertise is where you're built to shine at work — digging patiently into one field — or careful work in small, close teams. You're the type who quietly stacks up trust rather than grabbing the spotlight. Forcing yourself to play the social butterfly drains you to the core, so choose an environment that protects the way you burn.`,
+    love: `It takes you a long time to open the door in love — but once you open it for someone, you devote yourself deeply, quietly, and for the long haul. The trouble is your habit of bottling up every frustration and lonely moment until one day the flame simply goes out and you want to walk away. Learn to let it out in small doses.`,
     relationships: `Your relationships run narrow and deep. The bonds you share with the few you truly trust have an intensity no one else can imitate. In a big crowd, though, your presence thins out like lamplight in a bright room. Don't you dare call that a flaw. Your worth shines in the quiet of one-on-one. Don't force yourself toward the center of the circle — stay beside the one person who needs your fire.`,
     advice: `That sensitivity of yours isn't weakness — it's sharpness. Don't smother yourself playing numb.`,
   },
   4: {
     line: `You are Tsuchinoe — the serene mountain that hasn't moved in a thousand years.`,
-    desc: `You were born with a stability that no ordinary storm can shake. The more everyone else panics, the more your stillness becomes their anchor. "I feel safe when you're around" — you've heard it all your life. But a mountain that never moves is also a mountain that never moves itself. Haven't you sunk your roots so deep into familiar places and familiar ways that taking a step toward change has started to feel like a chore? Here's what you should know: once you truly make up your mind, your power to act is beyond anyone's imitation. You're the type who can quietly make a decision that leaves everyone gasping, "Them? Really?" Use that power for offense, not just defense.`,
-    work: `At work, you shine in the long game. Steady, brick-by-brick work and positions of real responsibility suit you down to the ground. A workplace that flip-flops on direction, or one that worships speed above all, will only grind you down. But you do have a habit of testing the bridge so many times that the chance walks past you. Once in a while, have the nerve to cross without knocking.`,
-    love: `In love, you're the steady type who builds trust over time. Flings hold no interest for you — you want stability you can settle into. The trouble is you're terrible at putting feelings into words, so your partner ends up asking, "How do you actually feel about me?" A mountain can stay silent and never move — but a human heart, left without words, drifts away.`,
+    desc: `You were born with a stability that no ordinary storm can shake. The more everyone else panics, the more your stillness becomes their support. "I feel safe when you're around" — you've heard it all your life. But a mountain that never moves is also a mountain that never moves itself. Haven't you planted yourself so firmly in familiar places and familiar ways that taking a step toward change has started to feel like a chore? Here's what you should know: once you truly make up your mind, your power to act is beyond anyone's imitation. You're the type who can quietly make a decision that leaves everyone gasping, "Them? Really?" Use that power for offense, not just defense.`,
+    work: `The long game is where you shine at work. Steady, brick-by-brick work and positions of real responsibility suit you down to the ground. A workplace that flip-flops on direction, or one that worships speed above all, will only grind you down. But you do have a habit of testing the bridge so many times that the chance walks past you. Once in a while, have the nerve to cross without knocking.`,
+    love: `You're the steady type in love, building trust over time. Flings hold no interest for you — you want stability you can settle into. The trouble is you're terrible at putting feelings into words, so your partner ends up asking, "How do you actually feel about me?" A mountain can stay silent and never move — but a human heart, left without words, drifts away.`,
     relationships: `In relationships, you may not say much, but that unshakable calm makes people lean on you naturally. The catch: you're no good at closing the distance yourself, so you end up waiting. The truth is you're quietly watching, taking your time to judge whether someone deserves your trust — aren't you. And once someone is inside your circle, your loyalty stands like the mountain itself. If you want people to know how deep that shelter runs, reach out first once in a while. That alone will set things in motion.`,
     advice: `Your defenses are solid enough already. All that's left is one step — outward, on your own.`,
   },
   5: {
     line: `You are Tsuchinoto — the rich field that raises every seed sown in it.`,
     desc: `You have a born gift for raising people and holding them up. Far more people than you realize have been saved by an offhand word or a small kindness of yours. Like soil that grows crops without saying a word, you give without asking anything back — that's the measure of you. But listen — even soil goes thin. You keep feeding everyone else; when did you last till your own ground? One of these nights, mid-celebration of someone else's harvest, the question will hit you: "Where is my life in all this?" Take just two parts in ten of the love you pour into others and turn it on yourself. The richer your field grows, the greater the harvests you can raise.`,
-    work: `At work, you show your true worth in the roles that raise, support, and hold things together — teaching, mentoring, the backbone jobs nobody sees. But that habit of handing your credit to others costs you recognition you've earned. State your results with your own mouth. That isn't bragging — it's reporting.`,
-    love: `In love, giving is what makes you happy. But fuss over someone too much and you stop being a lover and become a guardian. A relationship that's all "let me do that for you" is not an equal one. Say what you want out loud. Only when you can be the one leaning does the scale finally balance.`,
-    relationships: `With people, you've settled deep into the listener's seat, the supporter's seat. You can't say no when someone needs you, and before you know it you're everyone's help desk. But when you're the one running dry, nobody notices — because you always look fine. Learn to say "actually, I'm worn out" and "not today." Showing weakness is proof that you trust someone. The person you hand it to will be glad you did.`,
+    work: `Where you show your true worth is in the roles that raise, support, and hold things together — teaching, mentoring, the backbone jobs nobody sees. But that habit of handing your credit to others costs you recognition you've earned. State your results with your own mouth. That isn't bragging — it's reporting.`,
+    love: `Giving is what makes you happy in love. But fuss over someone too much and you stop being a lover and become a guardian. A relationship that's all "let me do that for you" is not an equal one. Say what you want out loud. Only when you can be the one leaning does the scale finally balance.`,
+    relationships: `In relationships, you've settled deep into the listener's seat, the supporter's seat. You can't say no when someone needs you, and before you know it you're everyone's help desk. But when you're the one running dry, nobody notices — because you always look fine. Learn to say "actually, I'm worn out" and "not today." Showing weakness is proof that you trust someone. The person you hand it to will be glad you did.`,
     advice: `A field that only gives will one day go barren. Let someone till you for a change.`,
   },
   6: {
     line: `You are Kanoe — a blade honed until not a trace of cloud remains.`,
     desc: `You cannot leave a vague thing vague. White or black, right or wrong. In a world full of hedging, that clarity and that speed of decision are a rare kind of strength — what everyone else swallows, you say first. But listen — the sharper the blade, the more it wounds when you don't choose where to swing it. Hasn't your "right" been cutting away someone's "circumstances" all along? A blade's true worth isn't decided by what it cuts. It's decided by what it chooses not to cut. When to draw, and when to keep it sheathed — the day you can tell the difference is the day you become the real thing.`,
-    work: `At work, you shine exactly where decision and action are demanded — negotiations, the moments when the rot has to be cut out. Your judgment there bows to no one, and an organization that muddles along will grate on you badly. But remember: the same hard truth can be medicine or a blade, depending on how it's said. Care about the cleanness of the cut, too.`,
-    love: `In love, you play it dead straight — no games. You say exactly what you think, so some read it as honesty and some step back from the edge. With the one you love, of all people, set the blade down and touch with bare hands. Soft words work better than you give them credit for.`,
-    relationships: `With people, you speak your mind, so the line between friend and foe gets drawn sharp. Good. That's a far more trusted way to live than pleasing everyone. There are even people who want your blunt words — that's how little your words lie. But the gratitude you owe your own side? You've barely said it, have you. The things you want to protect — name them out loud.`,
+    work: `Decision and action are where you shine at work — negotiations, the moments when the rot has to be cut out. Your judgment there bows to no one, and an organization that muddles along will grate on you badly. But remember: the same hard truth can be medicine or a blade, depending on how it's said. Care about the cleanness of the cut, too.`,
+    love: `You play it dead straight in love — no games. You say exactly what you think, so some read it as honesty and some step back from the edge. With the one you love, of all people, set the blade down and touch with bare hands. Soft words work better than you give them credit for.`,
+    relationships: `In relationships, you speak your mind, so the line between friend and foe gets drawn sharp. Good. That's a far more trusted way to live than pleasing everyone. There are even people who want your blunt words — that's how little your words lie. But the gratitude you owe your own side? You've barely said it, have you. The things you want to protect — name them out loud.`,
     advice: `A truly strong blade is rarely drawn.`,
   },
   7: {
     line: `You are Kanoto — a gem born of countless rounds of polishing.`,
     desc: `You carry a sharp eye for beauty and a delicate sensitivity in the same body. You're the first to spot the tiny flaw everyone else walks past, and you demand perfection down to the last detail — a severity you turn on yourself before anyone. You bruise easily, yet you'd rather die than let the bruise show. That pride and that fragility living side by side is the complicated part of you. But listen — a gem shines because of what was ground away. The very scratch you're ashamed of has become the facet that scatters light most beautifully. You don't need to be flawless. Grade yourself at half the strictness you grade everyone else.`,
-    work: `At work, you shine in fields where precision and taste decide everything. Your refusal to tolerate sloppy work will make your name on quality alone. But your bar sits so high that you leave yourself — and everyone around you — gasping. Sometimes it takes courage to ship at eighty percent. Find it.`,
-    love: `In love, your ideals run high and you don't compromise cheaply. There are nights you want to be honest, but pride grabs the words first and hands you something cold to say instead. Listen — with the one person you can show weakness to, wear nothing but yourself. The real value is in the stone before the polish.`,
+    work: `Precision and taste decide everything in the fields where you shine at work. Your refusal to tolerate sloppy work will make your name on quality alone. But your bar sits so high that you leave yourself — and everyone around you — gasping. Sometimes it takes courage to ship at eighty percent. Find it.`,
+    love: `Your ideals run high in love, and you don't compromise cheaply. There are nights you want to be honest, but pride grabs the words first and hands you something cold to say instead. Listen — with the one person you can show weakness to, wear nothing but yourself. The real value is in the stone before the polish.`,
     relationships: `In friendship, you choose few and go deep. Because you don't open up to just anyone, people call you hard to approach — don't be ashamed of that. Gems don't lie around on the roadside. The ones who've actually gotten close know you're warmer-hearted and more loyal than anyone. Taking time to open up isn't a flaw; it's proof of how seriously you face people. No hurry. Choose the ones worth polishing against, at your own pace.`,
     advice: `Stop being ashamed of your scratches. They're what set the angle of your shine.`,
   },
   8: {
     line: `You are Mizunoe — the ocean that answers to no shore and runs all the way to the horizon.`,
     desc: `You're built on a grand scale, and you love freedom above all else. Staying in one place, settling for one right answer — it's simply not in your nature. The way you stride past common sense, in thought and in action, is a pull no one around you can imitate. But listen — a tide that rises also pulls out. That restless ebb and flow of yours can curdle into "you can never get a hold of that one." The size of your vessel is real. Which is exactly why it's such a waste — how rarely you've dropped anchor and seen one thing all the way through. Water that only keeps flowing fills nothing. Just once, choose the harbor you'll pour all of yourself into.`,
-    work: `At work, you live on change and stimulation, not routine. Spinning several things at once, thinking past the edge of the map — those are your weapons. But your worst enemy is the habit of getting bored and letting go right before something takes off. Your credibility is built one finished thing at a time. Count them.`,
-    love: `In love, you're a free spirit who can't stand a leash. Chased, you pull back; released, you want to chase — a troublesome tide, and your partner is left wondering if you're serious at all. If you want your freedom, pay for it in words. Drop the anchor of one sentence — "I'm not going anywhere" — and it will hold your freedom in place.`,
-    relationships: `With people, you're easy company for anyone, and your connections spread wide as open water. But you steer neatly around going deep, don't you. Somewhere in you is a quiet fear of leaning on any one person. Listen — every ocean has its deep places, and it is far too lonely for not one soul to know yours. The ones you trust — invite them in past the shallows.`,
+    work: `Change and stimulation are what you live on at work, not routine. Spinning several things at once, thinking past the edge of the map — those are your weapons. But your worst enemy is the habit of getting bored and letting go right before something takes off. Your credibility is built one finished thing at a time. Count them.`,
+    love: `A free spirit who can't stand a leash — that's you in love. Chased, you pull back; released, you want to chase — a troublesome tide, and your partner is left wondering if you're serious at all. If you want your freedom, pay for it in words. Drop the anchor of one sentence — "I'm not going anywhere" — and it will hold your freedom in place.`,
+    relationships: `In relationships, you're easy company for anyone, and your connections spread wide as open water. But you steer neatly around going deep, don't you. Somewhere in you is a quiet fear of leaning on any one person. Listen — every ocean has its deep places, and it is far too lonely for not one soul to know yours. The ones you trust — invite them in past the shallows.`,
     advice: `You have the breadth. Now the depth. Try lowering your anchor in one harbor.`,
   },
   9: {
     line: `You are Mizunoto — the dew that soaks into the earth without a sound.`,
     desc: `You say little and watch everything. Those eyes see through the feelings people think they've hidden, catch the faintest shift in the air of a room. Sharp intuition and deep intelligence — that is your wellspring. But dew is so quiet that no one notices it's there. Inside you sits a lake's worth of insight that has never once been put into words. Stop waiting to be understood without speaking. As long as you stay silent, that intelligence gets treated as if it doesn't exist. The stiller the water, the deeper a single drop rings when it finally falls. Don't hoard that drop.`,
-    work: `At work, you prove your worth where deep thinking is the whole job — research, analysis, the quiet engine room behind every plan. The answers you produce run ten steps ahead of the loud voices in the room. But silence carries nothing to anyone. In your next meeting, be the one who speaks first — just once. Watch how the room looks at you after.`,
-    love: `In love, you hide what you really feel and wait to be read. But hear me — in love, a feeling left unspoken gets treated exactly like a feeling that doesn't exist. Instead of hoping for a hundred guesses, hand over one word. That quiet sentence of yours soaks in far deeper than you imagine.`,
-    relationships: `With people, you're the listener who draws out what others never meant to say. Everyone wants to be heard by you — and yet you've never found the one who hears you. That's because you never leave an opening to talk about yourself. Stay the mystery, and no one will ever be able to hold you up. With the ones you trust, let your rain fall.`,
+    work: `Deep thinking is where you prove your worth at work — research, analysis, the quiet engine room behind every plan. The answers you produce run ten steps ahead of the loud voices in the room. But silence carries nothing to anyone. In your next meeting, be the one who speaks first — just once. Watch how the room looks at you after.`,
+    love: `You hide what you really feel in love, and wait to be read. But hear me — in love, a feeling left unspoken gets treated exactly like a feeling that doesn't exist. Instead of hoping for a hundred guesses, hand over one word. That quiet sentence of yours soaks in far deeper than you imagine.`,
+    relationships: `In relationships, you're the listener who draws out what others never meant to say. Everyone wants to be heard by you — and yet you've never found the one who hears you. That's because you never leave an opening to talk about yourself. Stay the mystery, and no one will ever be able to hold you up. With the ones you trust, let your rain fall.`,
     advice: `"They'll understand without my saying it" is a fantasy. The drops that matter most — let them fall out loud.`,
   },
 };
@@ -370,11 +370,12 @@ const UI_TEXT = {
     eyebrowStart: '四柱推命ベース・無料鑑定',
     startTitle: '黒曜診断',
     startLeadHtml: '占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span>',
-    nichishuLink: '📖 占う前に、日主10タイプ一覧を見る',
+    nichishuLink: '📖 占う前に、10タイプの結果例を見る',
     labelBirthdate: '生年月日を入力',
     labelBirthtime: '生まれた時刻(わかれば・任意)',
     startBtn: '占ってもらう ✦',
     startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
+    privacyNote: '🔒 入力内容は送信・保存されません',
     loadingText: '黒曜先生が、生まれた日を読み解いています…',
     errorRequired: '生年月日を、年・月・日すべて選んでから占ってもらいなさい。',
     errorGeneric: '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。',
@@ -390,7 +391,10 @@ const UI_TEXT = {
     lineBtn: 'LINEでシェア',
     copyUrlBtn: '結果URLをコピー 🔗',
     copiedLabel: 'コピーしました ✓',
+    copyFailedLabel: 'コピーできませんでした',
     restartBtn: 'もう一度占う',
+    restartBtnFirstVisit: '自分も占ってもらう ✦',
+    luckyRemindText: '🔮 開運アイテムをもう一度見る ↑',
     gogyoLink: '🔮 お相手との五行相性を見る',
     followLabel1: '🔮 性格診断で、自分をもっと知ってみなさい',
     followLinkQuiz: '性格・恋愛・仕事タイプ診断',
@@ -400,8 +404,9 @@ const UI_TEXT = {
     followLabel3: '🐹 Desk Animalsをフォローする',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。',
     footerDisclaimer: '本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
-    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。',
-    footerNichishuLink: '日主10タイプ一覧を見る',
+    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
+    footerNichishuLink: '10タイプの結果例を見る',
+    footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
     shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`,
     shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→`,
   },
@@ -416,6 +421,7 @@ const UI_TEXT = {
     labelBirthtime: 'Birth Time (optional, if known)',
     startBtn: 'Get Your Reading ✦',
     startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
+    privacyNote: '🔒 Nothing you enter is sent or stored',
     loadingText: 'Kokuyo-sensei is reading the day you were born…',
     errorRequired: 'Choose a year, month, and day before asking for your reading.',
     errorGeneric: 'Something went wrong mid-reading. Give it another try.',
@@ -431,7 +437,10 @@ const UI_TEXT = {
     lineBtn: 'Share on LINE',
     copyUrlBtn: 'Copy Result URL 🔗',
     copiedLabel: 'Copied ✓',
+    copyFailedLabel: 'Copy failed',
     restartBtn: 'Try Again',
+    restartBtnFirstVisit: 'Get Your Own Reading ✦',
+    luckyRemindText: '🔮 See the Lucky Pick Again ↑',
     gogyoLink: "🔮 Check Your Match's Element Compatibility",
     followLabel1: '🔮 Get to know yourself better',
     followLinkQuiz: 'Personality / Love / Career Type Quiz',
@@ -441,15 +450,25 @@ const UI_TEXT = {
     followLabel3: '🐹 Follow Desk Animals',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee.',
     footerDisclaimer: "This reading is for entertainment purposes only. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
-    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view.",
+    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
+    footerOperator: 'Operated by Desk Animals Lab / Contact:',
     shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n#KokuyoFortuneReading #BaZi`,
     shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →`,
   },
 };
 
+// preload+media="print"で読み込んだGoogle Fontsを実際に適用する(初期描画をブロックしないための構成)。
+// インラインonload属性はCSP(script-src 'self')でブロックされるため、外部JS側で切り替える。
+(function applyPreloadedFont() {
+  const fontLink = document.getElementById('font-link');
+  if (fontLink) fontLink.media = 'all';
+})();
+
 // ===== 画面制御 =====
 let lastResult = null;
+// 結果URL(?r=)経由でこのページを開いた(=誰かの結果を見ている)かどうか。restartボタンの文言分岐に使う。
+let isSharedView = false;
 
 // 生年月日入力(年/月/日の3セレクト)。ネイティブtype="date"のドラムロールスクロール負担を避けるための構成。
 function populateBirthdateSelects() {
@@ -581,6 +600,9 @@ function decodeResultCode(code) {
   const monthIdx = Number(code[2]);
   const hourPart = code[3];
   const langChar = code[4];
+  // 正規表現で単一桁の数字であることは保証済みだが、STEMS配列(10要素)との整合性も明示的に確認しておく
+  // (将来STEMSの要素数を変更した際にundefined参照で画面が壊れることを防ぐ安全弁)
+  if (dayIdx > 9 || yearIdx > 9 || monthIdx > 9) return null;
   return {
     day: { stem: STEMS[dayIdx], branch: '', stemIdx: dayIdx },
     year: { stem: STEMS[yearIdx], branch: '' },
@@ -618,11 +640,20 @@ function applyResult(pillars) {
 
   const luckyLink = document.getElementById('lucky-link');
   luckyLink.href = affiliateUrl(type.lucky.keyword);
+  luckyLink.removeAttribute('tabindex');
   document.getElementById('lucky-emoji').textContent = type.lucky.emoji;
   const luckyName = LANG === 'en' ? LUCKY_NAME_EN[pillars.day.stemIdx] : type.lucky.name;
   document.getElementById('lucky-name').textContent = t.luckySeeMore(luckyName);
   const luckyReason = LANG === 'en' ? LUCKY_REASON_EN[pillars.day.stemIdx] : type.lucky.reason;
   document.getElementById('lucky-reason').textContent = luckyReason || '';
+  document.getElementById('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
+
+  // 結果表示後は非表示の入力欄に生年月日・時刻を残さない(共有端末での閲覧リスク軽減)
+  document.getElementById('birth-year').value = '';
+  document.getElementById('birth-month').value = '';
+  document.getElementById('birth-day').value = '';
+  refreshDayOptions();
+  document.getElementById('birthtime').value = '';
 
   showScreen('screen-result');
   focusResultHeading();
@@ -635,6 +666,8 @@ function restart() {
   refreshDayOptions();
   document.getElementById('birthtime').value = '';
   clearBirthdateError();
+  isSharedView = false;
+  document.getElementById('btn-restart').textContent = UI_TEXT[LANG].restartBtn;
   showScreen('screen-start');
 }
 
@@ -658,11 +691,18 @@ function copyResultUrl() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
   const btn = document.getElementById('btn-copy-url');
-  navigator.clipboard.writeText(resultUrl()).then(() => {
-    const original = btn.textContent;
-    btn.textContent = t.copiedLabel;
+  const original = btn.textContent;
+  const restoreAfter = (label) => {
+    btn.textContent = label;
     setTimeout(() => { btn.textContent = original; }, 2000);
-  });
+  };
+  if (!navigator.clipboard) {
+    restoreAfter(t.copyFailedLabel);
+    return;
+  }
+  navigator.clipboard.writeText(resultUrl())
+    .then(() => restoreAfter(t.copiedLabel))
+    .catch(() => restoreAfter(t.copyFailedLabel));
 }
 
 // ===== JA/EN切替UI =====
@@ -673,6 +713,7 @@ function applyLangUI() {
   if (metaDescEl) metaDescEl.setAttribute('content', t.pageDescription);
   document.getElementById('start-eyebrow').textContent = t.eyebrowStart;
   document.getElementById('start-title').textContent = t.startTitle;
+  // startLeadHtmlはUI_TEXT内のハードコード文字列のみ(外部入力やURLパラメータ由来の値は絶対に代入しないこと)
   document.getElementById('start-lead').innerHTML = t.startLeadHtml;
   document.getElementById('nichishu-link').textContent = t.nichishuLink;
   document.getElementById('label-birthdate').textContent = t.labelBirthdate;
@@ -688,7 +729,10 @@ function applyLangUI() {
   document.getElementById('btn-share').textContent = t.shareBtn;
   document.getElementById('btn-share-line').textContent = t.lineBtn;
   document.getElementById('btn-copy-url').textContent = t.copyUrlBtn;
-  document.getElementById('btn-restart').textContent = t.restartBtn;
+  document.getElementById('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
+  document.getElementById('lucky-remind-link').textContent = t.luckyRemindText;
+  document.getElementById('privacy-note').textContent = t.privacyNote;
+  document.getElementById('footer-operator').textContent = t.footerOperator;
   document.getElementById('gogyo-link').textContent = t.gogyoLink;
   document.getElementById('follow-label-1').textContent = t.followLabel1;
   document.getElementById('follow-link-quiz').textContent = t.followLinkQuiz;
@@ -710,6 +754,8 @@ function setLang(lang) {
   LANG = lang;
   document.getElementById('btn-lang-ja').classList.toggle('active', lang === 'ja');
   document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-lang-ja').setAttribute('aria-pressed', String(lang === 'ja'));
+  document.getElementById('btn-lang-en').setAttribute('aria-pressed', String(lang === 'en'));
   applyLangUI();
 }
 document.getElementById('btn-lang-ja').addEventListener('click', () => setLang('ja'));
@@ -734,10 +780,13 @@ document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl)
     showBirthdateError('結果を読み込めませんでした。もう一度、生年月日から占ってごらんなさい。');
     return;
   }
+  isSharedView = true;
   if (pillars.lang) {
     LANG = pillars.lang;
     document.getElementById('btn-lang-ja').classList.toggle('active', LANG === 'ja');
     document.getElementById('btn-lang-en').classList.toggle('active', LANG === 'en');
+    document.getElementById('btn-lang-ja').setAttribute('aria-pressed', String(LANG === 'ja'));
+    document.getElementById('btn-lang-en').setAttribute('aria-pressed', String(LANG === 'en'));
     applyLangUI();
   }
   applyResult(pillars);

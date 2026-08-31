@@ -49,6 +49,13 @@ function spinoffSetMaxBirthdate(inputId) {
   if (el) el.max = iso;
 }
 
+// preload+media="print"で読み込んだGoogle Fontsを実際に適用する(初期描画をブロックしないための構成)。
+// インラインonload属性はCSP(script-src 'self')でブロックされるため、外部JS側で切り替える。
+(function spinoffApplyPreloadedFont() {
+  const fontLink = document.getElementById('font-link');
+  if (fontLink) fontLink.media = 'all';
+})();
+
 function spinoffShowScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -261,7 +268,7 @@ async function spinoffRenderCardPreview(previewId, opts) {
     const canvas = await spinoffBuildCardCanvas(opts);
     const img = document.createElement('img');
     img.src = canvas.toDataURL('image/png');
-    img.alt = 'result card preview';
+    img.alt = ''; // ページ内テキストと重複するプレビュー画像のため装飾扱い
     img.width = canvas.width;
     img.height = canvas.height;
     preview.appendChild(img);
@@ -333,12 +340,13 @@ function spinoffApplyLucky(stemIdx) {
   const link = document.getElementById('lucky-link');
   if (!link || !item) return;
   link.href = spinoffAffiliateUrl(item.keyword);
+  link.removeAttribute('tabindex');
   const emojiEl = document.getElementById('lucky-emoji');
   if (emojiEl) emojiEl.textContent = item.emoji;
   const nameEl = document.getElementById('lucky-name');
   if (nameEl) nameEl.textContent = item.name + 'を見てみる';
   const priceEl = document.getElementById('lucky-price');
-  if (priceEl) priceEl.textContent = '目安 ' + item.price;
+  if (priceEl) priceEl.textContent = '目安 ' + item.price + '(変動あり)';
   const hitokotoEl = document.getElementById('lucky-hitokoto');
   if (hitokotoEl) hitokotoEl.textContent = item.hitokoto;
 }
