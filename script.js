@@ -727,7 +727,13 @@ document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl)
   const code = new URLSearchParams(location.search).get('r');
   if (!code) return;
   const pillars = decodeResultCode(code);
-  if (!pillars) return;
+  if (!pillars) {
+    // 不正な結果コード。<head>のインラインスクリプトが誤って先読み表示していた場合に備え、
+    // 通常のスタート画面に戻す(CSSの`html.deep-link-result`によるresult強制表示を解除)。
+    document.documentElement.classList.remove('deep-link-result');
+    showBirthdateError('結果を読み込めませんでした。もう一度、生年月日から占ってごらんなさい。');
+    return;
+  }
   if (pillars.lang) {
     LANG = pillars.lang;
     document.getElementById('btn-lang-ja').classList.toggle('active', LANG === 'ja');

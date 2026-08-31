@@ -32,7 +32,8 @@
 <script>
 // ?r=結果URLでの直接アクセス時、start→result描画のちらつき(CLS/LCP遅延)を防ぐため、
 // CSS適用前にどちらの画面を初期表示するか<html>のクラスで確定させる。
-if (/[?&]r=/.test(location.search)) {
+// 形式チェックはscript.js側のdecodeResultCode()と同じ正規表現(壊れた/不正なrパラメータでは適用しない)。
+if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
   document.documentElement.className += ' deep-link-result';
 }
 </script>
