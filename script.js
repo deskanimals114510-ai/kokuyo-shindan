@@ -348,6 +348,8 @@ const UI_TEXT = {
     restartBtn: 'もう一度占う',
     restartBtnFirstVisit: '自分も占ってもらう ✦',
     luckyRemindText: '🔮 開運アイテムをもう一度見る ↑',
+    interestLinkText: '🔮 もっと詳しく知りたい方へ(準備中)',
+    interestThanksText: '興味を持っていただきありがとうございます。正式リリース時にX(@deskanimalslab)でお知らせします🔮',
     gogyoLink: '🔮 お相手との五行相性を見る',
     followLabel1: '🔮 性格診断で、自分をもっと知ってみなさい',
     followLinkQuiz: '性格・恋愛・仕事タイプ診断',
@@ -405,6 +407,8 @@ const UI_TEXT = {
     restartBtn: 'Try Again',
     restartBtnFirstVisit: 'Get Your Own Reading ✦',
     luckyRemindText: '🔮 See the Lucky Pick Again ↑',
+    interestLinkText: '🔮 Want an even deeper reading? (Coming soon)',
+    interestThanksText: "Thanks for your interest! We'll announce it on X (@deskanimalslab) when it's ready 🔮",
     gogyoLink: "🔮 Check Your Match's Element Compatibility",
     followLabel1: '🔮 Get to know yourself better',
     followLinkQuiz: 'Personality / Love / Career Type Quiz',
@@ -433,6 +437,8 @@ const UI_TEXT = {
 let lastResult = null;
 // 結果URL(?r=)経由でこのページを開いた(=誰かの結果を見ている)かどうか。restartボタンの文言分岐に使う。
 let isSharedView = false;
+// 有料鑑定への興味シグナル計測(No.86)。クリック後はお礼文言に差し替えて再クリックを無効化する。
+let interestPaidClicked = false;
 
 // 生年月日入力(年/月/日の3セレクト)。ネイティブtype="date"のドラムロールスクロール負担を避けるための構成。
 function populateBirthdateSelects() {
@@ -642,6 +648,17 @@ function trackShareEvent(method) {
   if (typeof gtag === 'function') gtag('event', 'share', { method });
 }
 
+// 有料鑑定への興味シグナル計測(No.86)。決済実装前の低コストな実需検証、個人情報は一切収集しない。
+function trackInterestPaidReading(e) {
+  e.preventDefault();
+  if (interestPaidClicked) return;
+  interestPaidClicked = true;
+  if (typeof gtag === 'function') gtag('event', 'interest_paid_reading');
+  $('interest-paid-link').textContent = UI_TEXT[LANG].interestThanksText;
+  $('interest-paid-link').removeAttribute('href');
+  $('interest-paid-link').style.cursor = 'default';
+}
+
 function shareResult() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
@@ -718,6 +735,7 @@ function applyLangUI() {
   $('btn-copy-url').textContent = t.copyUrlBtn;
   $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
   $('lucky-remind-link').textContent = t.luckyRemindText;
+  $('interest-paid-link').textContent = interestPaidClicked ? t.interestThanksText : t.interestLinkText;
   $('privacy-note').textContent = t.privacyNote;
   $('screen-start').setAttribute('aria-label', t.ariaScreenStart);
   $('screen-loading').setAttribute('aria-label', t.ariaScreenLoading);
@@ -767,6 +785,7 @@ $('btn-restart').addEventListener('click', restart);
 $('btn-share').addEventListener('click', shareResult);
 $('btn-share-line').addEventListener('click', shareResultLine);
 $('btn-copy-url').addEventListener('click', copyResultUrl);
+$('interest-paid-link').addEventListener('click', trackInterestPaidReading);
 // Web Share API非対応環境(主にデスクトップ)ではボタン自体を出さない
 if (navigator.share) {
   const shareNativeBtn = $('btn-share-native');
