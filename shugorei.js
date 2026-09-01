@@ -15,17 +15,17 @@ function shugoreiApplyResult(stemIdx, branchIdx) {
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
-  document.getElementById('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
-  document.getElementById('result-name').textContent = type.name;
-  const guardianImg = document.getElementById('result-guardian-img');
+  $('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
+  $('result-name').textContent = type.name;
+  const guardianImg = $('result-guardian-img');
   guardianImg.src = `img/shugorei/${type.slug}.jpg`;
   guardianImg.alt = `守護霊「${type.name}」のイメージイラスト`;
-  document.getElementById('result-appearance').textContent = type.appearance;
-  document.getElementById('result-nature').textContent = type.nature;
-  document.getElementById('result-blessing').textContent = type.blessing;
-  document.getElementById('result-flavor').textContent = flavor;
-  document.getElementById('result-quote').textContent = type.quoteLine;
-  document.getElementById('result-advice').textContent = '【黒曜先生からひとこと】' + type.advice;
+  $('result-appearance').textContent = type.appearance;
+  $('result-nature').textContent = type.nature;
+  $('result-blessing').textContent = type.blessing;
+  $('result-flavor').textContent = flavor;
+  $('result-quote').textContent = type.quoteLine;
+  $('result-advice').textContent = '【黒曜先生からひとこと】' + type.advice;
 
   spinoffApplyLucky(stemIdx);
 
@@ -40,13 +40,13 @@ function shugoreiApplyResult(stemIdx, branchIdx) {
   };
   spinoffRenderCardPreview('result-card-preview', cardOpts);
 
-  document.getElementById('btn-save-card').onclick = () => {
+  $('btn-save-card').onclick = () => {
     spinoffDownloadCard('btn-save-card', `shugorei-shindan-${stemChar}.png`, cardOpts);
   };
 }
 
 function shugoreiStart() {
-  const input = document.getElementById('birthdate');
+  const input = $('birthdate');
   if (!input.value) {
     spinoffShowFieldError('birthdate', 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
     return;
@@ -63,11 +63,11 @@ function shugoreiStart() {
       spinoffShowScreen('screen-start');
       spinoffShowFieldError('birthdate', 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
     }
-  }, 1400);
+  }, 700);
 }
 
 function shugoreiRestart() {
-  document.getElementById('birthdate').value = '';
+  $('birthdate').value = '';
   spinoffClearFieldError('birthdate', 'birthdate-error');
   spinoffShowScreen('screen-start');
 }
@@ -77,21 +77,29 @@ function shugoreiResultUrl() {
   return spinoffResultUrl('shugorei.html', shugoreiLastResult.stemIdx, shugoreiLastResult.branchIdx);
 }
 
-document.getElementById('btn-start').addEventListener('click', shugoreiStart);
-document.getElementById('btn-restart').addEventListener('click', shugoreiRestart);
-document.getElementById('btn-share').addEventListener('click', () => {
+$('btn-start').addEventListener('click', shugoreiStart);
+$('btn-restart').addEventListener('click', shugoreiRestart);
+$('btn-share').addEventListener('click', () => {
   if (!shugoreiLastResult) return;
-  const text = `黒曜先生に守護霊を視てもらいました。\nあなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→\n#黒曜診断 #守護霊診断`;
+  const text = `黒曜先生に守護霊を視てもらいました。\nあなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #守護霊診断`;
   spinoffShareX(text, shugoreiResultUrl());
 });
-document.getElementById('btn-share-line').addEventListener('click', () => {
+$('btn-share-line').addEventListener('click', () => {
   if (!shugoreiLastResult) return;
-  const text = `黒曜先生に守護霊を視てもらいました。あなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→`;
+  const text = `黒曜先生に守護霊を視てもらいました。あなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
   spinoffShareLine(text, shugoreiResultUrl());
 });
-document.getElementById('btn-copy-url').addEventListener('click', () => {
+$('btn-copy-url').addEventListener('click', () => {
   if (!shugoreiLastResult) return;
   spinoffCopyResultUrl('btn-copy-url', shugoreiResultUrl());
+});
+spinoffSetupNativeShare('btn-share-native', () => {
+  if (!shugoreiLastResult) return { title: '', text: '', url: '' };
+  return {
+    title: '黒曜診断・守護霊診断',
+    text: `黒曜先生に守護霊を視てもらいました。あなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→`,
+    url: shugoreiResultUrl(),
+  };
 });
 
 // 結果URL(?r=符号)で直接開かれた場合は、その場で同じ結果を再現して表示する
