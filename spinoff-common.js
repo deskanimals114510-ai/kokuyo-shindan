@@ -1,3 +1,12 @@
+// document.getElementById呼び出しをID単位でメモ化するヘルパー(DOM検索回数を削減するため導入)。
+// shugorei.js/zensei.jsからも共通で使う(spinoff-common.jsが先に読み込まれるため参照可能)。
+const $ = (function () {
+  const cache = {};
+  return function (id) {
+    return cache[id] || (cache[id] = document.getElementById(id));
+  };
+})();
+
 // ===== スピンオフ診断(前世診断・守護霊診断)共通エンジン =====
 // 黒曜診断本体(script.js)には一切手を加えず、年柱計算に必要な最小限のロジックのみを
 // このファイルに独立して持たせている(本体の計算式と同じ検証済みアルゴリズムを踏襲)。
@@ -45,26 +54,26 @@ function spinoffResultUrl(pageFile, stemIdx, branchIdx) {
 function spinoffSetMaxBirthdate(inputId) {
   const today = new Date();
   const iso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-  const el = document.getElementById(inputId);
+  const el = $(inputId);
   if (el) el.max = iso;
 }
 
 // preload+media="print"で読み込んだGoogle Fontsを実際に適用する(初期描画をブロックしないための構成)。
 // インラインonload属性はCSP(script-src 'self')でブロックされるため、外部JS側で切り替える。
 (function spinoffApplyPreloadedFont() {
-  const fontLink = document.getElementById('font-link');
+  const fontLink = $('font-link');
   if (fontLink) fontLink.media = 'all';
 })();
 
 function spinoffShowScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  $(id).classList.add('active');
 }
 
 // 生年月日未入力エラーの表示/解除(前世診断・守護霊診断共通)
 function spinoffShowFieldError(inputId, errorId, message) {
-  const errorEl = document.getElementById(errorId);
-  const inputEl = document.getElementById(inputId);
+  const errorEl = $(errorId);
+  const inputEl = $(inputId);
   if (errorEl) {
     errorEl.textContent = message;
     errorEl.style.display = 'block';
@@ -76,8 +85,8 @@ function spinoffShowFieldError(inputId, errorId, message) {
 }
 
 function spinoffClearFieldError(inputId, errorId) {
-  const errorEl = document.getElementById(errorId);
-  const inputEl = document.getElementById(inputId);
+  const errorEl = $(errorId);
+  const inputEl = $(inputId);
   if (errorEl) errorEl.style.display = 'none';
   if (inputEl) {
     inputEl.classList.remove('invalid');
@@ -87,15 +96,21 @@ function spinoffClearFieldError(inputId, errorId) {
 
 // 結果表示後、支援技術・キーボード操作の両方に画面遷移を伝えるためフォーカスを移動する
 function spinoffFocusHeading(id) {
-  const heading = document.getElementById(id);
+  const heading = $(id);
   if (!heading) return;
   heading.setAttribute('tabindex', '-1');
   heading.focus();
 }
 
+// シェア手段別の効果測定(gtag未読み込み時は何もしない、計測失敗が機能を止めないよう安全に呼ぶ)
+function spinoffTrackShareEvent(method) {
+  if (typeof gtag === 'function') gtag('event', 'share', { method });
+}
+
 function spinoffCopyResultUrl(btnId, url) {
-  const btn = document.getElementById(btnId);
+  const btn = $(btnId);
   navigator.clipboard.writeText(url).then(() => {
+    spinoffTrackShareEvent('copy_url');
     const original = btn.textContent;
     btn.textContent = 'コピーしました ✓';
     setTimeout(() => { btn.textContent = original; }, 2000);
@@ -105,11 +120,31 @@ function spinoffCopyResultUrl(btnId, url) {
 function spinoffShareX(text, url) {
   const shareUrl = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
   window.open(shareUrl, '_blank', 'noopener');
+  spinoffTrackShareEvent('x');
 }
 
 function spinoffShareLine(text, url) {
   const shareUrl = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
   window.open(shareUrl, '_blank', 'noopener');
+  spinoffTrackShareEvent('line');
+}
+
+// Web Share API(モバイルOSの共有シート経由)。対応環境のみ呼び出し元でボタンを表示する。
+function spinoffShareNative(title, text, url) {
+  if (!navigator.share) return;
+  navigator.share({ title, text, url }).then(() => spinoffTrackShareEvent('native')).catch(() => {});
+}
+
+// 対応環境でのみ指定ボタンを表示し、クリックでWeb Share APIを呼ぶ
+function spinoffSetupNativeShare(btnId, getShareArgs) {
+  if (!navigator.share) return;
+  const btn = $(btnId);
+  if (!btn) return;
+  btn.style.display = '';
+  btn.addEventListener('click', () => {
+    const { title, text, url } = getShareArgs();
+    spinoffShareNative(title, text, url);
+  });
 }
 
 // ===== 結果カード画像生成(Canvas、黒曜診断ダークテーマ準拠の軽量版) =====
@@ -261,7 +296,7 @@ async function spinoffBuildCardCanvas(opts) {
 }
 
 async function spinoffRenderCardPreview(previewId, opts) {
-  const preview = document.getElementById(previewId);
+  const preview = $(previewId);
   if (!preview) return;
   preview.innerHTML = '';
   try {
@@ -279,7 +314,7 @@ async function spinoffRenderCardPreview(previewId, opts) {
 }
 
 async function spinoffDownloadCard(btnId, filename, opts) {
-  const btn = document.getElementById(btnId);
+  const btn = $(btnId);
   if (!btn) return;
   const original = btn.textContent;
   btn.textContent = '生成中…';
@@ -337,32 +372,19 @@ const SPINOFF_LUCKY = [
 // (両ページのHTMLはid="lucky-link"/"lucky-emoji"/"lucky-name"/"lucky-price"/"lucky-hitokoto"を持つ前提)
 function spinoffApplyLucky(stemIdx) {
   const item = SPINOFF_LUCKY[stemIdx];
-  const link = document.getElementById('lucky-link');
+  const link = $('lucky-link');
   if (!link || !item) return;
   link.href = spinoffAffiliateUrl(item.keyword);
   link.removeAttribute('tabindex');
-  const emojiEl = document.getElementById('lucky-emoji');
+  const emojiEl = $('lucky-emoji');
   if (emojiEl) emojiEl.textContent = item.emoji;
-  const nameEl = document.getElementById('lucky-name');
+  const nameEl = $('lucky-name');
   if (nameEl) nameEl.textContent = item.name + 'を見てみる';
-  const priceEl = document.getElementById('lucky-price');
+  const priceEl = $('lucky-price');
   if (priceEl) priceEl.textContent = '目安 ' + item.price + '(変動あり)';
-  const hitokotoEl = document.getElementById('lucky-hitokoto');
+  const hitokotoEl = $('lucky-hitokoto');
   if (hitokotoEl) hitokotoEl.textContent = item.hitokoto;
 }
 
-// ===== アクセス解析(黒曜診断本体と同一のGA4測定ID) =====
-(function spinoffLoadGA() {
-  const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
-  const isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
-  if (!GA_MEASUREMENT_ID || isLocalDev) return;
-  const gaScript = document.createElement('script');
-  gaScript.async = true;
-  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(gaScript);
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  // 結果URL(?r=符号)がそのままGoogleへ送信されないよう、クエリ文字列を除いたURLで計測する
-  gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
-})();
+// ===== アクセス解析 =====
+// GA4読み込みは analytics.js に一本化(shugorei.html/zensei.htmlでspinoff-common.jsより先に読み込む)。
