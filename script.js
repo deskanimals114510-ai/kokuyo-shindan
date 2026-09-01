@@ -1,3 +1,12 @@
+// document.getElementById呼び出しをID単位でメモ化するヘルパー(言語切替1クリックで
+// 約38回発生するDOM検索を削減するため導入)。要素そのものの参照は再生成されないID構成が前提。
+const $ = (function () {
+  const cache = {};
+  return function (id) {
+    return cache[id] || (cache[id] = document.getElementById(id));
+  };
+})();
+
 // ===== 干支計算エンジン =====
 // 検証済み基準日: 2007-01-01 = 乙未日(60干支インデックス31)
 // 出典: 儒略日ベースの日干支計算式 (JDN+49) mod 60 の実例より逆算
@@ -118,7 +127,7 @@ const DAY_MASTER_TYPES = {
     love: '好きになったら脇目もふらず一直線。駆け引きなんて器用な真似はできないでしょう。その誠実さは何よりの武器だけど、押す一方では相手が息切れするわ。時には立ち止まって、相手の歩幅に合わせる優しさを覚えなさい。',
     relationships: '裏表がなく約束を違えないから、「あの人が言うなら」と信頼を集めるタイプ。ただ、自分の正しさを物差しにして人を測る癖があるわね。人にはそれぞれの事情と弱さがあるの。それを裁かずに受け止められた時、あなたの木陰はもっと多くの人の休み場所になるわ。広く浅くより、深く根を絡ませ合える少数を大事にしなさい。',
     advice: '折れない木より、しなれる木の方が長く生きるのよ。強情と芯の強さを、履き違えないことね。',
-    lucky: { emoji: '🪴', name: '観葉植物', keyword: '観葉植物 卓上 ミニ', reason: 'まっすぐな気を保ちたいなら、こういうものを傍に置いておきなさい。' },
+    lucky: { emoji: '🪴', name: '観葉植物', keyword: '観葉植物 卓上 ミニ', price: '¥1,500〜3,000', reason: 'まっすぐな気を保ちたいなら、こういうものを傍に置いておきなさい。' },
   },
   1: { // 乙
     title: '草花', reading: 'きのと',
@@ -127,18 +136,18 @@ const DAY_MASTER_TYPES = {
     work: 'チームの隙間を埋める調整役として、なくてはならない存在になるタイプ。空気を読み、角を立てずに物事を進める力は立派な才能よ。ただ、意見を求められた場面でまで一歩引いていると、その働きは誰にも見えないまま。ここぞという時は、はっきり言葉にしなさい。',
     love: '相手の色に染まりやすく、気づけば自分を見失っているタイプ。顔色をうかがうだけの関係は、いずれあなたを枯らすわよ。素のあなたを見せても離れない相手、むしろ水をくれる相手。選ぶべきは、そういう人よ。',
     relationships: '誰とでも波風を立てずにやっていける器用さがあるタイプ。嫌われることがほとんどない代わりに、誰とも本当には深まらない。その距離の取り方に、心当たりがあるでしょう。合わせる相手と、本音を預ける相手は分けなさい。あなたの柔らかさは、安売りするものじゃないの。信じられる少数にだけ、根の深いところを見せればいいのよ。',
-    advice: '譲るのと、諦めるのは別物よ。ここだけは、と思う場所では我を通しなさい。',
-    lucky: { emoji: '🍵', name: 'ハーブティーセット', keyword: 'ハーブティー ギフトセット', reason: '踏まれた心を戻すには、まず一杯のお茶からよ。' },
+    advice: '譲るのと、諦めるのは別物よ。ここだけは、と思う場所では我を通しなさい。踏まれても、根っこまでは譲らないことね。',
+    lucky: { emoji: '🍵', name: 'ハーブティーセット', keyword: 'ハーブティー ギフトセット', price: '¥1,500〜3,000', reason: '踏まれた心を戻すには、まず一杯のお茶からよ。' },
   },
   2: { // 丙
     title: '太陽', reading: 'ひのえ',
     line: 'あなたは、丙(ひのえ)。何もかも照らし出す真昼の太陽よ。',
     desc: '隠そうとしても隠しきれない、生まれつきの華がある人。喜怒哀楽がそのまま顔に出て、その裏表のなさが周りの心まで明るくするの。あなたが部屋に入るだけで空気が変わる、そんな経験があるでしょう。ただね、太陽は沈むところを人に見せないもの。人前で輝くほどに、一人になった夜の静けさが応えるはずよ。熱しやすく冷めやすいのも、常に燃えていないと不安だから。でも、照らし続けるためには、自分を休ませる時間が要るの。誰も見ていない場所で充電することを、後ろめたく思わないことね。翳りも含めて、あなたは太陽なのよ。',
     work: '人前に立つ・発信する・場を沸かせる役割で本領を発揮するわ。営業や企画、表舞台の仕事とは相性抜群よ。ただ、日の当たらない地道な作業になると、途端に燃料切れを起こすでしょう。派手さのない仕事をやり切る力こそ、あなたの輝きを本物にするの。',
-    love: '一目惚れの電撃型。燃え上がるのは早いけれど、冷めるのも早い。相手を「本当に愛されているの?」と不安にさせた経験があるはずよ。恋の始まりの熱より、日常を照らし続ける根気。あなたに試されるのは、そこね。',
+    love: '一目惚れの、真夏の太陽型。燃え上がるのは早いけれど、冷めるのも早い。相手を「本当に愛されているの?」と不安にさせた経験があるはずよ。恋の始まりの熱より、日常を照らし続ける根気。あなたに試されるのは、そこね。',
     relationships: '気づけば輪の中心にいるタイプ。初対面の壁など無いに等しく、誰とでもすぐ打ち解けられるわ。ただ、その明るさが眩しすぎて、あなたの陰の部分に気づく人は少ないの。「悩みなんて無さそう」と言われて、少し寂しかったことがあるでしょう。弱音を見せられる相手を、一人でいいから確保しておきなさい。それがあなたの命綱になるのよ。',
     advice: '沈まない太陽はないの。休むことも、輝きのうちよ。',
-    lucky: { emoji: '🕶️', name: 'サングラス', keyword: 'サングラス おしゃれ', reason: '眩しすぎるあなたには、少し陰を作る道具が要るわ。' },
+    lucky: { emoji: '🕶️', name: 'サングラス', keyword: 'サングラス おしゃれ', price: '¥2,000〜5,000', reason: '眩しすぎるあなたには、少し陰を作る道具が要るわ。' },
   },
   3: { // 丁
     title: '灯火', reading: 'ひのと',
@@ -147,8 +156,8 @@ const DAY_MASTER_TYPES = {
     work: '一つの分野をじっくり掘り下げる専門的な仕事や、少人数で丁寧に取り組む仕事が向いているわ。派手に目立つより、静かに信頼を積み上げていくタイプ。無理に社交的な役回りを演じると芯から消耗するから、自分の燃え方を守れる環境を選びなさい。',
     love: '心の扉を開くまでに時間がかかる分、一度開いた相手には深く、静かに、長く尽くすタイプ。ただ、不満や寂しさを溜め込んで、ある日ふっと火が消えるように離れたくなる癖があるでしょう。小出しに吐き出すことを覚えなさい。',
     relationships: '狭く、深く。心を許した数人との絆は、他の誰にも真似できない濃さを持つわ。一方で、大人数の集まりでは灯りが薄まるように存在感が消えるでしょう。でも、それを欠点だと思わないことね。あなたの価値は、一対一の静けさの中でこそ光るの。無理に輪の中心を目指すより、あなたの火を必要としている一人のそばにいなさい。',
-    advice: 'その繊細さは弱さじゃない、感度の高さよ。鈍感なふりで自分を殺さないことね。',
-    lucky: { emoji: '🕯️', name: 'アロマキャンドル', keyword: 'アロマキャンドル ギフト', reason: '静かな灯りを、自分のためにも一つ灯しなさい。' },
+    advice: 'その繊細さは弱さじゃない、感度の高さよ。鈍感なふりで自分を殺さないことね。灯は灯のまま、燃えていていいのよ。',
+    lucky: { emoji: '🕯️', name: 'アロマキャンドル', keyword: 'アロマキャンドル ギフト', price: '¥1,500〜3,000', reason: '静かな灯りを、自分のためにも一つ灯しなさい。' },
   },
   4: { // 戊
     title: '山', reading: 'つちのえ',
@@ -158,7 +167,7 @@ const DAY_MASTER_TYPES = {
     love: '時間をかけて信頼を積む堅実型。浮ついた関係には興味がなく、腰を据えた安定を求めるタイプよ。ただ、想いを言葉にするのが苦手で、「私のこと、どう思っているの?」と相手を不安にさせがち。山は黙っていても動かないけれど、人の心は言葉がないと離れていくのよ。',
     relationships: '口数は少なくとも、その動じなさで自然と頼られるタイプ。ただ、自分から歩み寄るのは苦手で、待ちの姿勢になりがちね。実はじっくり相手を観察して、信頼に足る人かを静かに見極めているのでしょう。一度懐に入れた相手への義理堅さは、山のごとし。その懐の深さをもっと知ってもらうためにも、たまには自分から声をかけなさい。それだけで関係は動き出すわ。',
     advice: '守りの固さは十分よ。あとは一歩、自分から外へ踏み出すだけね。',
-    lucky: { emoji: '☕', name: '陶器のマグカップ', keyword: '陶器 マグカップ', reason: '動じない器には、あなたを支える器を持たせなさい。' },
+    lucky: { emoji: '☕', name: '陶器のマグカップ', keyword: '陶器 マグカップ', price: '¥1,000〜2,500', reason: '動じない器には、あなたを支える器を持たせなさい。' },
   },
   5: { // 己
     title: '田畑', reading: 'つちのと',
@@ -168,7 +177,7 @@ const DAY_MASTER_TYPES = {
     love: '尽くすことに幸せを感じるタイプ。ただ、世話を焼きすぎると、恋人ではなく保護者になってしまうわよ。「してあげる」ばかりの関係は、対等とは言えない。あなたの望みも口に出しなさい。甘える側に回れて初めて、釣り合いが取れるのよ。',
     relationships: '聞き役・支え役が板についているタイプ。頼られると断れず、気づけば皆の相談窓口になっているでしょう。でも、あなた自身が弱った時、周りは案外気づかないの。いつも元気そうに見えるからよ。「実は疲れている」「今日は無理」と言えるようになりなさい。弱さを見せるのは、相手を信頼している証。それを渡された相手は、むしろ嬉しいものよ。',
     advice: '与えるだけの畑は、いつか痩せるの。あなたも誰かに耕されなさい。',
-    lucky: { emoji: '👝', name: 'ポーチ・小物入れ', keyword: 'ポーチ おしゃれ 収納', reason: '与えてばかりのあなたには、自分だけの持ち場を作りなさい。' },
+    lucky: { emoji: '👝', name: 'ポーチ・小物入れ', keyword: 'ポーチ おしゃれ 収納', price: '¥1,500〜3,000', reason: '与えてばかりのあなたには、自分だけの持ち場を作りなさい。' },
   },
   6: { // 庚
     title: '刃', reading: 'かのえ',
@@ -177,8 +186,8 @@ const DAY_MASTER_TYPES = {
     work: '決断と実行が求められる局面でこそ輝くタイプ。交渉ごとや、膿を出し切るべき場面での判断力は誰にも負けないわ。なあなあで進む組織には強い苛立ちを感じるでしょう。ただ、正論は言い方ひとつで薬にも刃にもなる。切り口の美しさにも、こだわりなさい。',
     love: '駆け引き抜きの直球勝負。思ったことをそのまま口にするから、誠実と取られることもあれば、鋭すぎると距離を置かれることもあるでしょう。好きな相手にこそ、刃を置いて素手で触れなさい。優しい言葉は、あなたが思うより効くのよ。',
     relationships: 'はっきり物を言う分、敵と味方がくっきり分かれるタイプ。でも、それでいいの。八方美人より、よほど信頼される生き方よ。あなたに苦言を呈してほしいと願う人すらいるはず。それだけ、言葉に嘘がないということだから。ただ、味方への感謝は案外伝えていないでしょう。守りたいものの名前は、口に出して言いなさい。',
-    advice: '本当に強い刃は、めったに抜かれないものよ。',
-    lucky: { emoji: '🥤', name: 'ステンレスタンブラー', keyword: 'ステンレスタンブラー おしゃれ', reason: '研ぎ澄ました心を、少し冷ましてやりなさい。' },
+    advice: '本当に強い刃は、めったに抜かれないものよ。鞘に収めていても、その輝きは曇らないの。',
+    lucky: { emoji: '🥤', name: 'ステンレスタンブラー', keyword: 'ステンレスタンブラー おしゃれ', price: '¥1,500〜3,500', reason: '研ぎ澄ました心を、少し冷ましてやりなさい。' },
   },
   7: { // 辛
     title: '宝石', reading: 'かのと',
@@ -188,7 +197,7 @@ const DAY_MASTER_TYPES = {
     love: '理想が高く、簡単には妥協しないタイプ。素直になりたいのに、プライドが先に立って可愛げのない一言を選んでしまう夜があるでしょう。でもね、弱さを見せられる相手にだけは、飾らないあなたでいなさい。磨く前の素肌にこそ、本当の価値があるのよ。',
     relationships: '選び抜いた少数と、深く。誰にでも心を開かないから「近寄りがたい」と言われがちだけど、恥じることはないわ。宝石は、路傍に転がっていないものよ。実際に打ち解けた相手は、あなたが誰より情に厚く、義理堅いことを知っているはず。心を開くのに時間がかかるのは欠点ではなく、それだけ本気で人と向き合う証。焦らず、あなたの速度で磨き合える相手を選びなさい。',
     advice: '傷を恥じないことね。その傷が、あなたの輝きの角度を作ったのよ。',
-    lucky: { emoji: '💍', name: 'アクセサリー', keyword: 'アクセサリー シンプル', reason: '磨いてきた自分に、ふさわしい飾りを一つ。' },
+    lucky: { emoji: '💍', name: 'アクセサリー', keyword: 'アクセサリー シンプル', price: '¥1,500〜4,000', reason: '磨いてきた自分に、ふさわしい飾りを一つ。' },
   },
   8: { // 壬
     title: '大海', reading: 'みずのえ',
@@ -198,7 +207,7 @@ const DAY_MASTER_TYPES = {
     love: '束縛が何より苦手な自由人。追われると引き、離れられると追いたくなる困った性分でしょう。相手は「本気なの?」と不安なはずよ。自由でいたいなら、その分、言葉の錨を打ちなさい。「大丈夫、離れない」の一言が、あなたの自由を守るのよ。',
     relationships: '誰とでも気さくにやれる社交性の持ち主。人脈は海のように広がるけれど、深入りは巧みに避けているでしょう。特定の誰かに寄りかかることを、無意識に恐れているのよ。でもね、どんな大海にも深いところがあるように、あなたの深部を知る人が一人もいないのは寂しすぎるわ。信頼できる相手には、浅瀬より奥へ招き入れなさい。',
     advice: '広さは十分。次は深さよ。一つの港に、錨を下ろしてごらんなさい。',
-    lucky: { emoji: '🧳', name: '旅行用ポーチ', keyword: 'トラベルポーチ 旅行 収納', reason: '自由に漂うあなたには、身軽な旅の道具を。' },
+    lucky: { emoji: '🧳', name: '旅行用ポーチ', keyword: 'トラベルポーチ 旅行 収納', price: '¥1,500〜3,000', reason: '自由に漂うあなたには、身軽な旅の道具を。' },
   },
   9: { // 癸
     title: '雨露', reading: 'みずのと',
@@ -208,7 +217,7 @@ const DAY_MASTER_TYPES = {
     love: '本音を見せず、察してもらうのを待ちがちなタイプ。でもね、言わない想いは、無い想いと同じに扱われるのが恋というものよ。百の察しを期待するより、一つの言葉を渡しなさい。あなたの静かな一言は、思うよりずっと深く相手に染みるわ。',
     relationships: '聞き上手で、相手の本音を自然と引き出してしまうタイプ。皆あなたに話を聞いてほしがるのに、あなたの話を聞いてくれる人には出会えていないでしょう。それはあなたが、自分の話をする隙を与えていないからよ。謎めいた人のままでは、誰もあなたを支えられないの。信頼できる相手には、あなたの雨を降らせてみなさい。',
     advice: '黙っていても伝わる、は幻想よ。大事な一滴ほど、声にして落としなさい。',
-    lucky: { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上', reason: '静かな気配には、静かに満ちる香りを添えなさい。' },
+    lucky: { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上', price: '¥2,000〜4,000', reason: '静かな気配には、静かに満ちる香りを添えなさい。' },
   },
 };
 
@@ -251,90 +260,23 @@ const AFFILIATE_TAG = 'tinywonders-22';
 // isPendingTranslationの仕組み自体は将来の追加日主/フィールドのために維持) =====
 let LANG = 'ja';
 
-// Fable(claude-fable-5)による書き起こし。line/desc/work/love/relationships/adviceの6項目×10日主=60本。
-// title/readingは翻訳対象外(干支そのものなので不変)、luckyの商品名はLUCKY_NAME_ENで別途対応。
-const DAY_MASTER_TYPES_EN = {
-  0: {
-    line: `You are Kinoe — the great tree that drives its trunk straight up toward the sky.`,
-    desc: `You can't stand anything crooked, and once you've decided something is right, you don't budge. That unshakability is exactly what gives the people around you a sense of safety and direction. Just as people gather in the shade of a great tree, they naturally gather around you. But listen — the thicker the trunk, the more surely a tree snaps in a storm if it never learned to bend. Your weakness is your strength itself. You're used to being leaned on, but you have no idea how to lean on anyone. Putting down roots doesn't mean standing alone. It means sharing soil with others who hold you up. Lower your branches once in a while and rest your weight on someone. The day you can do that is the day you truly grow tall.`,
-    work: `Career-wise, you thrive when you're clearing your own path, not waiting for orders. The more freedom you're given, the more you deliver — so don't be afraid of leadership or striking out on your own. But you have a habit of charging straight ahead until you can no longer hear the voices around you. Whatever you do, don't turn around one day to find nobody there.`,
-    love: `Once you fall in love, you go straight ahead without a sideways glance. Playing games? You couldn't if you tried. That sincerity is your greatest weapon, but push and push and your partner will run out of breath. Learn the kindness of stopping now and then to match their stride.`,
-    relationships: `In relationships, you say what you mean and keep every promise, so people trust you — "if it's coming from them, it must be true." But you have a habit of measuring everyone against your own yardstick of what's right. People carry their own circumstances and their own weaknesses. The day you can accept that without passing judgment, your shade becomes a resting place for far more people. Forget wide and shallow — treasure the few whose roots you can truly entwine with yours.`,
-    advice: `The tree that can bend outlives the tree that won't break. Don't mistake stubbornness for a strong core.`,
-  },
-  1: {
-    line: `You are Kinoto — the wildflower that gets trampled and stands right back up by morning.`,
-    desc: `You look delicate at first glance, but the truth is you're tougher than anyone. You don't fight the gale — you lie low, and when the storm passes, you lift your face again. That suppleness is your wisdom for surviving. Transplant you into any soil and before anyone notices, you've taken root — that adaptability is a gift. But here's the thing: you're so good at fitting in that there are moments you lose sight of how you actually want to bloom. Kindness that only ever yields eventually becomes a convenience for others to exploit. Even a blade of grass that won't break carries a quiet stubbornness. Every so often, defy the wind and bloom in your own color.`,
-    work: `On the job, you become indispensable as the one who fills the gaps in a team. Reading the room and moving things forward without ruffling feathers is a genuine talent. But if you keep stepping back even when someone asks for your opinion, all that work stays invisible. When the moment matters, say it out loud and say it plainly.`,
-    love: `You take on your partner's colors so easily in love that one day you look up and can't find yourself. A relationship where all you do is read their moods will wither you in the end. Find someone who doesn't leave when they see the real you — better yet, someone who waters you. That's the one worth choosing.`,
-    relationships: `In relationships, you have the knack of getting along with anyone without making waves. Hardly anyone dislikes you — but no one truly gets close to you either. You already know exactly that distance you keep. Separate the people you accommodate from the people you trust with your real feelings. Your softness is not something to sell cheap. Show your deepest roots only to the few who've earned it.`,
-    advice: `Yielding and giving up are not the same thing. Where it truly matters, dig in and hold your ground.`,
-  },
-  2: {
-    line: `You are Hinoe — the midday sun that lights up everything it touches.`,
-    desc: `You have a natural radiance that can't be hidden no matter how you try. Every emotion shows right on your face, and that openness brightens the hearts around you. You've felt it — the air in a room changes the moment you walk in. But listen: the sun never lets anyone watch it set. The brighter you shine in public, the harder the silence of your nights alone hits you. You burn hot and cool fast, too — because deep down, you're anxious unless you're always blazing. But to keep shining, you need time to rest. Don't feel guilty about recharging where no one can see you. The shadows are part of you. You're the sun either way.`,
-    work: `Put you out front — presenting, promoting, lighting up the room — and you come into your own. Sales, planning, anything on a stage: perfect fit. But hand you plain, unglamorous grunt work and your fuel runs out on the spot. It's the power to see the unflashy work through to the end that makes your shine the real thing.`,
-    love: `Love, for you, is the lightning-strike type — love at first sight. You catch fire fast, and you cool off just as fast. Somewhere along the way, you've made a partner wonder, "Do you really love me?" What's being tested in you isn't the blaze at the start — it's the patience to keep lighting up the ordinary days.`,
-    relationships: `In relationships, you always end up at the center of the circle. Walls with strangers might as well not exist for you — you warm up to anyone instantly. But your brightness is so dazzling that almost no one notices your shadows. Someone once said, "You look like you don't have a care in the world," and it stung a little, didn't it. Secure at least one person you can fall apart in front of. That person is your lifeline.`,
-    advice: `There is no sun that never sets. Resting is part of shining.`,
-  },
-  3: {
-    line: `You are Hinoto — the lamplight that burns most beautifully in the dark.`,
-    desc: `Behind that quiet exterior, you hide a flame no one can put out. Your senses are razor-sharp — you pick up every subtle shift in the hearts around you, down to the finest detail. That's why you bruise easily, and why you tire faster than anyone. People may say they can't tell what you're thinking, but the truth is you think deeper and feel deeper than anyone else in the room. You don't need to light up the whole world like the sun. A lamp's light exists to guide the feet of one person lost in the dark. That is your calling. But heat kept locked inside gets treated as if it doesn't exist. Even a tenth of what you feel — put it into words and actions where people can see it.`,
-    work: `Deep expertise is where you're built to shine at work — digging patiently into one field — or careful work in small, close teams. You're the type who quietly stacks up trust rather than grabbing the spotlight. Forcing yourself to play the social butterfly drains you to the core, so choose an environment that protects the way you burn.`,
-    love: `It takes you a long time to open the door in love — but once you open it for someone, you devote yourself deeply, quietly, and for the long haul. The trouble is your habit of bottling up every frustration and lonely moment until one day the flame simply goes out and you want to walk away. Learn to let it out in small doses.`,
-    relationships: `Your relationships run narrow and deep. The bonds you share with the few you truly trust have an intensity no one else can imitate. In a big crowd, though, your presence thins out like lamplight in a bright room. Don't you dare call that a flaw. Your worth shines in the quiet of one-on-one. Don't force yourself toward the center of the circle — stay beside the one person who needs your fire.`,
-    advice: `That sensitivity of yours isn't weakness — it's sharpness. Don't smother yourself playing numb.`,
-  },
-  4: {
-    line: `You are Tsuchinoe — the serene mountain that hasn't moved in a thousand years.`,
-    desc: `You were born with a stability that no ordinary storm can shake. The more everyone else panics, the more your stillness becomes their support. "I feel safe when you're around" — you've heard it all your life. But a mountain that never moves is also a mountain that never moves itself. Haven't you planted yourself so firmly in familiar places and familiar ways that taking a step toward change has started to feel like a chore? Here's what you should know: once you truly make up your mind, your power to act is beyond anyone's imitation. You're the type who can quietly make a decision that leaves everyone gasping, "Them? Really?" Use that power for offense, not just defense.`,
-    work: `The long game is where you shine at work. Steady, brick-by-brick work and positions of real responsibility suit you down to the ground. A workplace that flip-flops on direction, or one that worships speed above all, will only grind you down. But you do have a habit of testing the bridge so many times that the chance walks past you. Once in a while, have the nerve to cross without knocking.`,
-    love: `You're the steady type in love, building trust over time. Flings hold no interest for you — you want stability you can settle into. The trouble is you're terrible at putting feelings into words, so your partner ends up asking, "How do you actually feel about me?" A mountain can stay silent and never move — but a human heart, left without words, drifts away.`,
-    relationships: `In relationships, you may not say much, but that unshakable calm makes people lean on you naturally. The catch: you're no good at closing the distance yourself, so you end up waiting. The truth is you're quietly watching, taking your time to judge whether someone deserves your trust — aren't you. And once someone is inside your circle, your loyalty stands like the mountain itself. If you want people to know how deep that shelter runs, reach out first once in a while. That alone will set things in motion.`,
-    advice: `Your defenses are solid enough already. All that's left is one step — outward, on your own.`,
-  },
-  5: {
-    line: `You are Tsuchinoto — the rich field that raises every seed sown in it.`,
-    desc: `You have a born gift for raising people and holding them up. Far more people than you realize have been saved by an offhand word or a small kindness of yours. Like soil that grows crops without saying a word, you give without asking anything back — that's the measure of you. But listen — even soil goes thin. You keep feeding everyone else; when did you last till your own ground? One of these nights, mid-celebration of someone else's harvest, the question will hit you: "Where is my life in all this?" Take just two parts in ten of the love you pour into others and turn it on yourself. The richer your field grows, the greater the harvests you can raise.`,
-    work: `Where you show your true worth is in the roles that raise, support, and hold things together — teaching, mentoring, the backbone jobs nobody sees. But that habit of handing your credit to others costs you recognition you've earned. State your results with your own mouth. That isn't bragging — it's reporting.`,
-    love: `Giving is what makes you happy in love. But fuss over someone too much and you stop being a lover and become a guardian. A relationship that's all "let me do that for you" is not an equal one. Say what you want out loud. Only when you can be the one leaning does the scale finally balance.`,
-    relationships: `In relationships, you've settled deep into the listener's seat, the supporter's seat. You can't say no when someone needs you, and before you know it you're everyone's help desk. But when you're the one running dry, nobody notices — because you always look fine. Learn to say "actually, I'm worn out" and "not today." Showing weakness is proof that you trust someone. The person you hand it to will be glad you did.`,
-    advice: `A field that only gives will one day go barren. Let someone till you for a change.`,
-  },
-  6: {
-    line: `You are Kanoe — a blade honed until not a trace of cloud remains.`,
-    desc: `You cannot leave a vague thing vague. White or black, right or wrong. In a world full of hedging, that clarity and that speed of decision are a rare kind of strength — what everyone else swallows, you say first. But listen — the sharper the blade, the more it wounds when you don't choose where to swing it. Hasn't your "right" been cutting away someone's "circumstances" all along? A blade's true worth isn't decided by what it cuts. It's decided by what it chooses not to cut. When to draw, and when to keep it sheathed — the day you can tell the difference is the day you become the real thing.`,
-    work: `Decision and action are where you shine at work — negotiations, the moments when the rot has to be cut out. Your judgment there bows to no one, and an organization that muddles along will grate on you badly. But remember: the same hard truth can be medicine or a blade, depending on how it's said. Care about the cleanness of the cut, too.`,
-    love: `You play it dead straight in love — no games. You say exactly what you think, so some read it as honesty and some step back from the edge. With the one you love, of all people, set the blade down and touch with bare hands. Soft words work better than you give them credit for.`,
-    relationships: `In relationships, you speak your mind, so the line between friend and foe gets drawn sharp. Good. That's a far more trusted way to live than pleasing everyone. There are even people who want your blunt words — that's how little your words lie. But the gratitude you owe your own side? You've barely said it, have you. The things you want to protect — name them out loud.`,
-    advice: `A truly strong blade is rarely drawn.`,
-  },
-  7: {
-    line: `You are Kanoto — a gem born of countless rounds of polishing.`,
-    desc: `You carry a sharp eye for beauty and a delicate sensitivity in the same body. You're the first to spot the tiny flaw everyone else walks past, and you demand perfection down to the last detail — a severity you turn on yourself before anyone. You bruise easily, yet you'd rather die than let the bruise show. That pride and that fragility living side by side is the complicated part of you. But listen — a gem shines because of what was ground away. The very scratch you're ashamed of has become the facet that scatters light most beautifully. You don't need to be flawless. Grade yourself at half the strictness you grade everyone else.`,
-    work: `Precision and taste decide everything in the fields where you shine at work. Your refusal to tolerate sloppy work will make your name on quality alone. But your bar sits so high that you leave yourself — and everyone around you — gasping. Sometimes it takes courage to ship at eighty percent. Find it.`,
-    love: `Your ideals run high in love, and you don't compromise cheaply. There are nights you want to be honest, but pride grabs the words first and hands you something cold to say instead. Listen — with the one person you can show weakness to, wear nothing but yourself. The real value is in the stone before the polish.`,
-    relationships: `In friendship, you choose few and go deep. Because you don't open up to just anyone, people call you hard to approach — don't be ashamed of that. Gems don't lie around on the roadside. The ones who've actually gotten close know you're warmer-hearted and more loyal than anyone. Taking time to open up isn't a flaw; it's proof of how seriously you face people. No hurry. Choose the ones worth polishing against, at your own pace.`,
-    advice: `Stop being ashamed of your scratches. They're what set the angle of your shine.`,
-  },
-  8: {
-    line: `You are Mizunoe — the ocean that answers to no shore and runs all the way to the horizon.`,
-    desc: `You're built on a grand scale, and you love freedom above all else. Staying in one place, settling for one right answer — it's simply not in your nature. The way you stride past common sense, in thought and in action, is a pull no one around you can imitate. But listen — a tide that rises also pulls out. That restless ebb and flow of yours can curdle into "you can never get a hold of that one." The size of your vessel is real. Which is exactly why it's such a waste — how rarely you've dropped anchor and seen one thing all the way through. Water that only keeps flowing fills nothing. Just once, choose the harbor you'll pour all of yourself into.`,
-    work: `Change and stimulation are what you live on at work, not routine. Spinning several things at once, thinking past the edge of the map — those are your weapons. But your worst enemy is the habit of getting bored and letting go right before something takes off. Your credibility is built one finished thing at a time. Count them.`,
-    love: `A free spirit who can't stand a leash — that's you in love. Chased, you pull back; released, you want to chase — a troublesome tide, and your partner is left wondering if you're serious at all. If you want your freedom, pay for it in words. Drop the anchor of one sentence — "I'm not going anywhere" — and it will hold your freedom in place.`,
-    relationships: `In relationships, you're easy company for anyone, and your connections spread wide as open water. But you steer neatly around going deep, don't you. Somewhere in you is a quiet fear of leaning on any one person. Listen — every ocean has its deep places, and it is far too lonely for not one soul to know yours. The ones you trust — invite them in past the shallows.`,
-    advice: `You have the breadth. Now the depth. Try lowering your anchor in one harbor.`,
-  },
-  9: {
-    line: `You are Mizunoto — the dew that soaks into the earth without a sound.`,
-    desc: `You say little and watch everything. Those eyes see through the feelings people think they've hidden, catch the faintest shift in the air of a room. Sharp intuition and deep intelligence — that is your wellspring. But dew is so quiet that no one notices it's there. Inside you sits a lake's worth of insight that has never once been put into words. Stop waiting to be understood without speaking. As long as you stay silent, that intelligence gets treated as if it doesn't exist. The stiller the water, the deeper a single drop rings when it finally falls. Don't hoard that drop.`,
-    work: `Deep thinking is where you prove your worth at work — research, analysis, the quiet engine room behind every plan. The answers you produce run ten steps ahead of the loud voices in the room. But silence carries nothing to anyone. In your next meeting, be the one who speaks first — just once. Watch how the room looks at you after.`,
-    love: `You hide what you really feel in love, and wait to be read. But hear me — in love, a feeling left unspoken gets treated exactly like a feeling that doesn't exist. Instead of hoping for a hundred guesses, hand over one word. That quiet sentence of yours soaks in far deeper than you imagine.`,
-    relationships: `In relationships, you're the listener who draws out what others never meant to say. Everyone wants to be heard by you — and yet you've never found the one who hears you. That's because you never leave an opening to talk about yourself. Stay the mystery, and no one will ever be able to hold you up. With the ones you trust, let your rain fall.`,
-    advice: `"They'll understand without my saying it" is a fantasy. The drops that matter most — let them fall out loud.`,
-  },
-};
+// EN版データは day-master-types-en.js に分離し、初回のEN切替時のみ遅延読み込みする
+// (No.72対応、日本語のみ利用者には約12KBの英語全文字列を読み込ませないため)。
+// letで宣言し、day-master-types-en.js側は同じ識別子への代入のみ行う(constでの再宣言はエラーになる)。
+let DAY_MASTER_TYPES_EN = null;
+let enDataLoadPromise = null;
+function ensureEnDataLoaded() {
+  if (DAY_MASTER_TYPES_EN) return Promise.resolve();
+  if (enDataLoadPromise) return enDataLoadPromise;
+  enDataLoadPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'day-master-types-en.js';
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return enDataLoadPromise;
+}
 
 const LUCKY_NAME_EN = [
   'Potted Plant', 'Herbal Tea Set', 'Sunglasses', 'Aroma Candle', 'Ceramic Mug',
@@ -358,7 +300,7 @@ const LUCKY_REASON_EN = [
 function getDayMasterType(stemIdx) {
   const ja = DAY_MASTER_TYPES[stemIdx];
   if (LANG !== 'en') return { ...ja, isPendingTranslation: false };
-  const en = DAY_MASTER_TYPES_EN[stemIdx];
+  const en = DAY_MASTER_TYPES_EN && DAY_MASTER_TYPES_EN[stemIdx];
   if (en) return { ...ja, ...en, isPendingTranslation: false };
   return { ...ja, isPendingTranslation: true };
 }
@@ -372,7 +314,8 @@ const UI_TEXT = {
     startLeadHtml: '占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span>',
     nichishuLink: '📖 占う前に、10タイプの結果例を見る',
     labelBirthdate: '生年月日を入力',
-    labelBirthtime: '生まれた時刻(わかれば・任意)',
+    labelBirthtime: '生まれた時刻(わかれば)',
+    optionalBadge: '任意',
     startBtn: '占ってもらう ✦',
     startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
     privacyNote: '🔒 入力内容は送信・保存されません',
@@ -395,8 +338,10 @@ const UI_TEXT = {
     adviceLabel: '【黒曜先生からひとこと】',
     luckyLabel: '🔮 黒曜先生おすすめの開運アイテム',
     luckySeeMore: (name) => `${name}を見てみる`,
+    luckyPriceLabel: (price) => `目安 ${price}(変動あり)`,
     shareBtn: 'Xでシェア ✦',
     lineBtn: 'LINEでシェア',
+    shareNativeBtn: '共有する 📤',
     copyUrlBtn: '結果URLをコピー 🔗',
     copiedLabel: 'コピーしました ✓',
     copyFailedLabel: 'コピーできませんでした',
@@ -410,13 +355,13 @@ const UI_TEXT = {
     followLinkZensei: '前世診断',
     followLinkShugorei: '守護霊診断',
     followLabel3: '🐹 Desk Animalsをフォローする',
-    footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。',
-    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
+    footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。掲載アイテムの効果・開運を保証するものではありません。',
+    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
     footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
     footerNichishuLink: '10タイプの結果例を見る',
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
-    shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n#黒曜診断 #四柱推命`,
-    shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→`,
+    shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です\n#黒曜診断 #四柱推命`,
+    shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です`,
   },
   en: {
     pageTitle: 'Kokuyo Fortune Reading - A Free BaZi Reading From Your Birth Date',
@@ -426,7 +371,8 @@ const UI_TEXT = {
     startLeadHtml: 'Fortune-teller Kokuyo-sensei reads your birth date and<br>sums up your true nature <span class="accent">in one line.</span>',
     nichishuLink: '📖 Browse the 10 Day-Master Types First',
     labelBirthdate: 'Enter Your Birth Date',
-    labelBirthtime: 'Birth Time (optional, if known)',
+    labelBirthtime: 'Birth Time (if known)',
+    optionalBadge: 'Optional',
     startBtn: 'Get Your Reading ✦',
     startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
     privacyNote: '🔒 Nothing you enter is sent or stored',
@@ -449,8 +395,10 @@ const UI_TEXT = {
     adviceLabel: '【A word from Kokuyo-sensei】',
     luckyLabel: "🔮 Kokuyo-sensei's Lucky Pick",
     luckySeeMore: (name) => `Shop ${name}`,
+    luckyPriceLabel: (price) => `Roughly ${price} (subject to change)`,
     shareBtn: 'Share on X ✦',
     lineBtn: 'Share on LINE',
+    shareNativeBtn: 'Share 📤',
     copyUrlBtn: 'Copy Result URL 🔗',
     copiedLabel: 'Copied ✓',
     copyFailedLabel: 'Copy failed',
@@ -464,20 +412,20 @@ const UI_TEXT = {
     followLinkZensei: 'Past Life Reading',
     followLinkShugorei: 'Guardian Spirit Reading',
     followLabel3: '🐹 Follow Desk Animals',
-    footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee.',
-    footerDisclaimer: "This reading is for entertainment purposes only. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
+    footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee. We do not guarantee any luck-bringing effect from the items listed.',
+    footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
     footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
-    shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n#KokuyoFortuneReading #BaZi`,
-    shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →`,
+    shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n(For entertainment purposes only)\n#KokuyoFortuneReading #BaZi`,
+    shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →\n(For entertainment purposes only)`,
   },
 };
 
 // preload+media="print"で読み込んだGoogle Fontsを実際に適用する(初期描画をブロックしないための構成)。
 // インラインonload属性はCSP(script-src 'self')でブロックされるため、外部JS側で切り替える。
 (function applyPreloadedFont() {
-  const fontLink = document.getElementById('font-link');
+  const fontLink = $('font-link');
   if (fontLink) fontLink.media = 'all';
 })();
 
@@ -488,9 +436,9 @@ let isSharedView = false;
 
 // 生年月日入力(年/月/日の3セレクト)。ネイティブtype="date"のドラムロールスクロール負担を避けるための構成。
 function populateBirthdateSelects() {
-  const yearSel = document.getElementById('birth-year');
-  const monthSel = document.getElementById('birth-month');
-  const daySel = document.getElementById('birth-day');
+  const yearSel = $('birth-year');
+  const monthSel = $('birth-month');
+  const daySel = $('birth-day');
   const currentYear = new Date().getFullYear();
   for (let y = currentYear; y >= 1920; y--) {
     const opt = document.createElement('option');
@@ -515,9 +463,9 @@ function daysInMonth(year, month) {
 }
 
 function refreshDayOptions() {
-  const yearSel = document.getElementById('birth-year');
-  const monthSel = document.getElementById('birth-month');
-  const daySel = document.getElementById('birth-day');
+  const yearSel = $('birth-year');
+  const monthSel = $('birth-month');
+  const daySel = $('birth-day');
   const prevValue = daySel.value;
   const max = daysInMonth(yearSel.value, monthSel.value);
   daySel.innerHTML = '';
@@ -537,47 +485,47 @@ populateBirthdateSelects();
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  $(id).classList.add('active');
 }
 
 function showBirthdateError(message) {
   const t = UI_TEXT[LANG];
-  const errorEl = document.getElementById('birthdate-error');
+  const errorEl = $('birthdate-error');
   errorEl.textContent = message || t.errorRequired;
   errorEl.style.display = 'block';
   ['birth-year', 'birth-month', 'birth-day'].forEach(id => {
-    const el = document.getElementById(id);
+    const el = $(id);
     el.classList.add('invalid');
     el.setAttribute('aria-invalid', 'true');
   });
 }
 
 function clearBirthdateError() {
-  const errorEl = document.getElementById('birthdate-error');
+  const errorEl = $('birthdate-error');
   errorEl.style.display = 'none';
   ['birth-year', 'birth-month', 'birth-day'].forEach(id => {
-    const el = document.getElementById(id);
+    const el = $(id);
     el.classList.remove('invalid');
     el.removeAttribute('aria-invalid');
   });
 }
 
 function focusResultHeading() {
-  const heading = document.getElementById('result-line');
+  const heading = $('result-line');
   heading.setAttribute('tabindex', '-1');
   heading.focus();
 }
 
 function startDivination() {
-  const y = document.getElementById('birth-year').value;
-  const m = document.getElementById('birth-month').value;
-  const d = document.getElementById('birth-day').value;
+  const y = $('birth-year').value;
+  const m = $('birth-month').value;
+  const d = $('birth-day').value;
   if (!y || !m || !d) {
     showBirthdateError();
     return;
   }
   clearBirthdateError();
-  const timeInput = document.getElementById('birthtime');
+  const timeInput = $('birthtime');
   let hour = null;
   if (timeInput.value) {
     hour = Number(timeInput.value.split(':')[0]);
@@ -591,7 +539,7 @@ function startDivination() {
       showScreen('screen-start');
       showBirthdateError(UI_TEXT[LANG].errorGeneric);
     }
-  }, 1400);
+  }, 700);
 }
 
 function renderResult(y, m, d, hour) {
@@ -638,15 +586,15 @@ function applyResult(pillars) {
   const type = getDayMasterType(pillars.day.stemIdx);
   lastResult = { pillars, type };
 
-  document.getElementById('result-line').textContent = type.line;
-  document.getElementById('result-desc').textContent = type.desc;
-  document.getElementById('result-work').textContent = type.work;
-  document.getElementById('result-love').textContent = type.love;
-  document.getElementById('result-relationships').textContent = type.relationships;
-  document.getElementById('result-background').textContent = buildBackgroundText(pillars);
-  document.getElementById('result-advice').textContent = t.adviceLabel + type.advice;
+  $('result-line').textContent = type.line;
+  $('result-desc').textContent = type.desc;
+  $('result-work').textContent = type.work;
+  $('result-love').textContent = type.love;
+  $('result-relationships').textContent = type.relationships;
+  $('result-background').textContent = buildBackgroundText(pillars);
+  $('result-advice').textContent = t.adviceLabel + type.advice;
 
-  const pendingNoteEl = document.getElementById('result-pending-note');
+  const pendingNoteEl = $('result-pending-note');
   if (type.isPendingTranslation) {
     pendingNoteEl.textContent = t.pendingTranslationNote;
     pendingNoteEl.style.display = 'block';
@@ -654,37 +602,44 @@ function applyResult(pillars) {
     pendingNoteEl.style.display = 'none';
   }
 
-  const luckyLink = document.getElementById('lucky-link');
+  const luckyLink = $('lucky-link');
   luckyLink.href = affiliateUrl(type.lucky.keyword);
   luckyLink.removeAttribute('tabindex');
-  document.getElementById('lucky-emoji').textContent = type.lucky.emoji;
+  $('lucky-emoji').textContent = type.lucky.emoji;
   const luckyName = LANG === 'en' ? LUCKY_NAME_EN[pillars.day.stemIdx] : type.lucky.name;
-  document.getElementById('lucky-name').textContent = t.luckySeeMore(luckyName);
+  $('lucky-name').textContent = t.luckySeeMore(luckyName);
   const luckyReason = LANG === 'en' ? LUCKY_REASON_EN[pillars.day.stemIdx] : type.lucky.reason;
-  document.getElementById('lucky-reason').textContent = luckyReason || '';
-  document.getElementById('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
+  $('lucky-reason').textContent = luckyReason || '';
+  const luckyPriceEl = $('lucky-price');
+  if (luckyPriceEl) luckyPriceEl.textContent = type.lucky.price ? t.luckyPriceLabel(type.lucky.price) : '';
+  $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
 
   // 結果表示後は非表示の入力欄に生年月日・時刻を残さない(共有端末での閲覧リスク軽減)
-  document.getElementById('birth-year').value = '';
-  document.getElementById('birth-month').value = '';
-  document.getElementById('birth-day').value = '';
+  $('birth-year').value = '';
+  $('birth-month').value = '';
+  $('birth-day').value = '';
   refreshDayOptions();
-  document.getElementById('birthtime').value = '';
+  $('birthtime').value = '';
 
   showScreen('screen-result');
   focusResultHeading();
 }
 
 function restart() {
-  document.getElementById('birth-year').value = '';
-  document.getElementById('birth-month').value = '';
-  document.getElementById('birth-day').value = '';
+  $('birth-year').value = '';
+  $('birth-month').value = '';
+  $('birth-day').value = '';
   refreshDayOptions();
-  document.getElementById('birthtime').value = '';
+  $('birthtime').value = '';
   clearBirthdateError();
   isSharedView = false;
-  document.getElementById('btn-restart').textContent = UI_TEXT[LANG].restartBtn;
+  $('btn-restart').textContent = UI_TEXT[LANG].restartBtn;
   showScreen('screen-start');
+}
+
+// シェア手段別の効果測定(gtag未読み込み時は何もしない、計測失敗が機能を止めないよう安全に呼ぶ)
+function trackShareEvent(method) {
+  if (typeof gtag === 'function') gtag('event', 'share', { method });
 }
 
 function shareResult() {
@@ -693,6 +648,7 @@ function shareResult() {
   const text = t.shareText(lastResult.type.line);
   const url = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(resultUrl());
   window.open(url, '_blank', 'noopener');
+  trackShareEvent('x');
 }
 
 function shareResultLine() {
@@ -701,12 +657,24 @@ function shareResultLine() {
   const text = t.shareTextLine(lastResult.type.line);
   const url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(resultUrl()) + '&text=' + encodeURIComponent(text);
   window.open(url, '_blank', 'noopener');
+  trackShareEvent('line');
+}
+
+// Web Share API(モバイルOSの共有シート経由)。未対応環境ではbtn-share-nativeボタン自体を表示しない。
+function shareResultNative() {
+  if (!lastResult || !navigator.share) return;
+  const t = UI_TEXT[LANG];
+  navigator.share({
+    title: t.pageTitle,
+    text: t.shareTextLine(lastResult.type.line),
+    url: resultUrl(),
+  }).then(() => trackShareEvent('native')).catch(() => {});
 }
 
 function copyResultUrl() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
-  const btn = document.getElementById('btn-copy-url');
+  const btn = $('btn-copy-url');
   const original = btn.textContent;
   const restoreAfter = (label) => {
     btn.textContent = label;
@@ -717,7 +685,7 @@ function copyResultUrl() {
     return;
   }
   navigator.clipboard.writeText(resultUrl())
-    .then(() => restoreAfter(t.copiedLabel))
+    .then(() => { trackShareEvent('copy_url'); restoreAfter(t.copiedLabel); })
     .catch(() => restoreAfter(t.copyFailedLabel));
 }
 
@@ -727,47 +695,50 @@ function applyLangUI() {
   document.title = t.pageTitle;
   const metaDescEl = document.querySelector('meta[name="description"]');
   if (metaDescEl) metaDescEl.setAttribute('content', t.pageDescription);
-  document.getElementById('start-eyebrow').textContent = t.eyebrowStart;
-  document.getElementById('start-title').textContent = t.startTitle;
+  $('start-eyebrow').textContent = t.eyebrowStart;
+  $('start-title').textContent = t.startTitle;
   // startLeadHtmlはUI_TEXT内のハードコード文字列のみ(外部入力やURLパラメータ由来の値は絶対に代入しないこと)
-  document.getElementById('start-lead').innerHTML = t.startLeadHtml;
-  document.getElementById('nichishu-link').textContent = t.nichishuLink;
-  document.getElementById('label-birthdate').textContent = t.labelBirthdate;
-  document.getElementById('label-birthtime').textContent = t.labelBirthtime;
-  document.getElementById('btn-start').textContent = t.startBtn;
-  document.getElementById('start-sub').textContent = t.startSub;
-  document.getElementById('loading-text').textContent = t.loadingText;
-  document.getElementById('subhead-work').textContent = t.subheadWork;
-  document.getElementById('subhead-love').textContent = t.subheadLove;
-  document.getElementById('subhead-relationships').textContent = t.subheadRelationships;
-  document.getElementById('subhead-background').textContent = t.subheadBackground;
-  document.getElementById('lucky-label').childNodes[0].nodeValue = t.luckyLabel;
-  document.getElementById('btn-share').textContent = t.shareBtn;
-  document.getElementById('btn-share-line').textContent = t.lineBtn;
-  document.getElementById('btn-copy-url').textContent = t.copyUrlBtn;
-  document.getElementById('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
-  document.getElementById('lucky-remind-link').textContent = t.luckyRemindText;
-  document.getElementById('privacy-note').textContent = t.privacyNote;
-  document.getElementById('screen-start').setAttribute('aria-label', t.ariaScreenStart);
-  document.getElementById('screen-loading').setAttribute('aria-label', t.ariaScreenLoading);
-  document.getElementById('screen-result').setAttribute('aria-label', t.ariaScreenResult);
-  document.getElementById('birth-year').setAttribute('aria-label', t.ariaYear);
-  document.getElementById('birth-month').setAttribute('aria-label', t.ariaMonth);
-  document.getElementById('birth-day').setAttribute('aria-label', t.ariaDay);
+  $('start-lead').innerHTML = t.startLeadHtml;
+  $('nichishu-link').textContent = t.nichishuLink;
+  $('label-birthdate').textContent = t.labelBirthdate;
+  $('label-birthtime').textContent = t.labelBirthtime;
+  $('optional-badge').textContent = t.optionalBadge;
+  $('btn-start').textContent = t.startBtn;
+  $('start-sub').textContent = t.startSub;
+  $('loading-text').textContent = t.loadingText;
+  $('subhead-work').textContent = t.subheadWork;
+  $('subhead-love').textContent = t.subheadLove;
+  $('subhead-relationships').textContent = t.subheadRelationships;
+  $('subhead-background').textContent = t.subheadBackground;
+  $('lucky-label').childNodes[0].nodeValue = t.luckyLabel;
+  $('btn-share').textContent = t.shareBtn;
+  $('btn-share-line').textContent = t.lineBtn;
+  const shareNativeBtn = $('btn-share-native');
+  if (shareNativeBtn) shareNativeBtn.textContent = t.shareNativeBtn;
+  $('btn-copy-url').textContent = t.copyUrlBtn;
+  $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
+  $('lucky-remind-link').textContent = t.luckyRemindText;
+  $('privacy-note').textContent = t.privacyNote;
+  $('screen-start').setAttribute('aria-label', t.ariaScreenStart);
+  $('screen-loading').setAttribute('aria-label', t.ariaScreenLoading);
+  $('screen-result').setAttribute('aria-label', t.ariaScreenResult);
+  $('birth-year').setAttribute('aria-label', t.ariaYear);
+  $('birth-month').setAttribute('aria-label', t.ariaMonth);
+  $('birth-day').setAttribute('aria-label', t.ariaDay);
   document.querySelector('#lucky-label .pr-tag').setAttribute('aria-label', t.ariaAd);
   document.querySelector('#screen-result .result-actions').setAttribute('aria-label', t.ariaResultActions);
-  document.getElementById('footer-operator').textContent = t.footerOperator;
-  document.getElementById('gogyo-link').textContent = t.gogyoLink;
-  document.getElementById('follow-label-1').textContent = t.followLabel1;
-  document.getElementById('follow-link-quiz').textContent = t.followLinkQuiz;
-  document.getElementById('follow-label-2').textContent = t.followLabel2;
-  document.getElementById('follow-link-zensei').textContent = t.followLinkZensei;
-  document.getElementById('follow-link-shugorei').textContent = t.followLinkShugorei;
-  document.getElementById('follow-label-3').textContent = t.followLabel3;
-  document.getElementById('footer-pr').textContent = t.footerPr;
-  document.getElementById('footer-disclaimer').textContent = t.footerDisclaimer;
-  document.getElementById('footer-privacy').textContent = t.footerPrivacy;
-  document.getElementById('footer-nichishu-link').textContent = t.footerNichishuLink;
+  $('footer-operator').textContent = t.footerOperator;
+  $('gogyo-link').textContent = t.gogyoLink;
+  $('follow-label-1').textContent = t.followLabel1;
+  $('follow-link-quiz').textContent = t.followLinkQuiz;
+  $('follow-label-2').textContent = t.followLabel2;
+  $('follow-link-zensei').textContent = t.followLinkZensei;
+  $('follow-link-shugorei').textContent = t.followLinkShugorei;
+  $('follow-label-3').textContent = t.followLabel3;
+  $('footer-pr').textContent = t.footerPr;
+  $('footer-disclaimer').textContent = t.footerDisclaimer;
+  $('footer-privacy').textContent = t.footerPrivacy;
+  $('footer-nichishu-link').textContent = t.footerNichishuLink;
   document.documentElement.lang = LANG;
   // 結果画面が表示中に切り替えた場合、鑑定結果(言語依存のテキスト)を再計算してから再描画する
   if (lastResult) {
@@ -776,20 +747,34 @@ function applyLangUI() {
 }
 function setLang(lang) {
   LANG = lang;
-  document.getElementById('btn-lang-ja').classList.toggle('active', lang === 'ja');
-  document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
-  document.getElementById('btn-lang-ja').setAttribute('aria-pressed', String(lang === 'ja'));
-  document.getElementById('btn-lang-en').setAttribute('aria-pressed', String(lang === 'en'));
+  $('btn-lang-ja').classList.toggle('active', lang === 'ja');
+  $('btn-lang-en').classList.toggle('active', lang === 'en');
+  $('btn-lang-ja').setAttribute('aria-pressed', String(lang === 'ja'));
+  $('btn-lang-en').setAttribute('aria-pressed', String(lang === 'en'));
   applyLangUI();
+  // EN未読み込みなら裏で取得し、完了後(かつ依然EN表示中)なら結果を翻訳込みで再描画する
+  if (lang === 'en' && !DAY_MASTER_TYPES_EN) {
+    ensureEnDataLoaded().then(() => {
+      if (LANG === 'en') applyLangUI();
+    }).catch(() => {});
+  }
 }
-document.getElementById('btn-lang-ja').addEventListener('click', () => setLang('ja'));
-document.getElementById('btn-lang-en').addEventListener('click', () => setLang('en'));
+$('btn-lang-ja').addEventListener('click', () => setLang('ja'));
+$('btn-lang-en').addEventListener('click', () => setLang('en'));
 
-document.getElementById('btn-start').addEventListener('click', startDivination);
-document.getElementById('btn-restart').addEventListener('click', restart);
-document.getElementById('btn-share').addEventListener('click', shareResult);
-document.getElementById('btn-share-line').addEventListener('click', shareResultLine);
-document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl);
+$('btn-start').addEventListener('click', startDivination);
+$('btn-restart').addEventListener('click', restart);
+$('btn-share').addEventListener('click', shareResult);
+$('btn-share-line').addEventListener('click', shareResultLine);
+$('btn-copy-url').addEventListener('click', copyResultUrl);
+// Web Share API非対応環境(主にデスクトップ)ではボタン自体を出さない
+if (navigator.share) {
+  const shareNativeBtn = $('btn-share-native');
+  if (shareNativeBtn) {
+    shareNativeBtn.style.display = '';
+    shareNativeBtn.addEventListener('click', shareResultNative);
+  }
+}
 
 // 結果URL(?r=符号)で直接開かれた場合は、その場で同じ結果を再現して表示する
 // (符号の末尾1文字に埋め込まれた表示言語も復元する。旧形式の符号(言語なし)は従来通りja扱い)
@@ -807,29 +792,19 @@ document.getElementById('btn-copy-url').addEventListener('click', copyResultUrl)
   isSharedView = true;
   if (pillars.lang) {
     LANG = pillars.lang;
-    document.getElementById('btn-lang-ja').classList.toggle('active', LANG === 'ja');
-    document.getElementById('btn-lang-en').classList.toggle('active', LANG === 'en');
-    document.getElementById('btn-lang-ja').setAttribute('aria-pressed', String(LANG === 'ja'));
-    document.getElementById('btn-lang-en').setAttribute('aria-pressed', String(LANG === 'en'));
+    $('btn-lang-ja').classList.toggle('active', LANG === 'ja');
+    $('btn-lang-en').classList.toggle('active', LANG === 'en');
+    $('btn-lang-ja').setAttribute('aria-pressed', String(LANG === 'ja'));
+    $('btn-lang-en').setAttribute('aria-pressed', String(LANG === 'en'));
     applyLangUI();
   }
   applyResult(pillars);
+  if (LANG === 'en' && !DAY_MASTER_TYPES_EN) {
+    ensureEnDataLoaded().then(() => {
+      if (LANG === 'en') applyLangUI();
+    }).catch(() => {});
+  }
 })();
 
-// ===== アクセス解析(任意) =====
-// GA4の測定IDが決まったらここに設定してください(空文字の間は何も読み込みません、追加コストなし)
-const GA_MEASUREMENT_ID = 'G-NHH50DVLVN';
-// ローカル開発サーバー(_devserver.ps1)からのアクセスを除外するガード。
-// これがないと動作確認のたびに本番GA4にダミーのpageview/eventが記録されてしまう(2026-08-28判明)。
-const isLocalDev = ['localhost', '127.0.0.1', ''].includes(location.hostname);
-if (GA_MEASUREMENT_ID && !isLocalDev) {
-  const gaScript = document.createElement('script');
-  gaScript.async = true;
-  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(gaScript);
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  // 結果URL(?r=符号)がそのままGoogleへ送信されないよう、クエリ文字列を除いたURLで計測する
-  gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
-}
+// ===== アクセス解析 =====
+// GA4読み込みは analytics.js に一本化(index.htmlでscript.jsより先に読み込む)。
