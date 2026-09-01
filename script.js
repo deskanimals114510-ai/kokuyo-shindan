@@ -377,6 +377,14 @@ const UI_TEXT = {
     startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
     privacyNote: '🔒 入力内容は送信・保存されません',
     loadingText: '黒曜先生が、生まれた日を読み解いています…',
+    ariaScreenStart: '生年月日入力',
+    ariaScreenLoading: '鑑定中',
+    ariaScreenResult: '鑑定結果',
+    ariaYear: '生まれた年',
+    ariaMonth: '生まれた月',
+    ariaDay: '生まれた日',
+    ariaAd: '広告',
+    ariaResultActions: '結果の共有・操作',
     errorRequired: '生年月日を、年・月・日すべて選んでから占ってもらいなさい。',
     errorGeneric: '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。',
     subheadWork: '💼 仕事・お金の傾向',
@@ -423,6 +431,14 @@ const UI_TEXT = {
     startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
     privacyNote: '🔒 Nothing you enter is sent or stored',
     loadingText: 'Kokuyo-sensei is reading the day you were born…',
+    ariaScreenStart: 'Enter your birth date',
+    ariaScreenLoading: 'Reading in progress',
+    ariaScreenResult: 'Your reading',
+    ariaYear: 'Birth year',
+    ariaMonth: 'Birth month',
+    ariaDay: 'Birth day',
+    ariaAd: 'Advertisement',
+    ariaResultActions: 'Share and result actions',
     errorRequired: 'Choose a year, month, and day before asking for your reading.',
     errorGeneric: 'Something went wrong mid-reading. Give it another try.',
     subheadWork: '💼 Career & Money',
@@ -732,6 +748,14 @@ function applyLangUI() {
   document.getElementById('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
   document.getElementById('lucky-remind-link').textContent = t.luckyRemindText;
   document.getElementById('privacy-note').textContent = t.privacyNote;
+  document.getElementById('screen-start').setAttribute('aria-label', t.ariaScreenStart);
+  document.getElementById('screen-loading').setAttribute('aria-label', t.ariaScreenLoading);
+  document.getElementById('screen-result').setAttribute('aria-label', t.ariaScreenResult);
+  document.getElementById('birth-year').setAttribute('aria-label', t.ariaYear);
+  document.getElementById('birth-month').setAttribute('aria-label', t.ariaMonth);
+  document.getElementById('birth-day').setAttribute('aria-label', t.ariaDay);
+  document.querySelector('#lucky-label .pr-tag').setAttribute('aria-label', t.ariaAd);
+  document.querySelector('#screen-result .result-actions').setAttribute('aria-label', t.ariaResultActions);
   document.getElementById('footer-operator').textContent = t.footerOperator;
   document.getElementById('gogyo-link').textContent = t.gogyoLink;
   document.getElementById('follow-label-1').textContent = t.followLabel1;
