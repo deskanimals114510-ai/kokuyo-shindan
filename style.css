@@ -287,13 +287,26 @@ html.deep-link-result #screen-result { display: flex; }
 .lucky-arrow { font-size: 1.3rem; color: var(--gold); flex: none; }
 .pr-tag {
   display: inline-block;
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--bg1);
   background: var(--gold);
   border-radius: 5px;
-  padding: 1px 5px;
+  padding: 2px 7px;
   margin-left: 5px;
+  vertical-align: middle;
+}
+
+.optional-badge {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  background: rgba(212, 175, 106, 0.12);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 8px;
+  margin-left: 6px;
   vertical-align: middle;
 }
 
@@ -333,6 +346,17 @@ html.deep-link-result #screen-result { display: flex; }
 
 @media (min-width: 520px) {
   .card { padding: 48px 40px 40px; }
+}
+
+/* ---- 横向き・低高さビューポート(CTAまでのスクロール量を減らす) ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  #app { padding-top: 16px; padding-bottom: 16px; }
+  .card { padding: 20px 26px 18px; }
+  .emoji { font-size: 1.8rem; margin-bottom: 2px; }
+  .lead { margin-bottom: 14px; }
+  .date-input { margin-bottom: 12px; padding: 9px 14px; }
+  .card .sub { margin-top: 10px; }
+  .loading-wrap { min-height: 200px; }
 }
 
 /* ---- 日主タイプ別解説ページ(/nichishu/) ---- */
