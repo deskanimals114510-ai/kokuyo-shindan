@@ -9,7 +9,8 @@
   gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(gaScript);
   window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
+  // window.gtagとして公開(script.js/spinoff-common.jsのシェアイベント計測から呼べるようにするため)
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', GA_MEASUREMENT_ID, { page_location: location.origin + location.pathname });
 })();
