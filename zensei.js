@@ -15,13 +15,13 @@ function zenseiApplyResult(stemIdx, branchIdx) {
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
-  document.getElementById('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
-  document.getElementById('result-title').textContent = `あなたの前世は、${type.title}だった。`;
-  const zenseiImg = document.getElementById('result-zensei-img');
+  $('result-type-label').textContent = `年干:${stemChar}(${stemReading})`;
+  $('result-title').textContent = `あなたの前世は、${type.title}だった。`;
+  const zenseiImg = $('result-zensei-img');
   zenseiImg.src = `img/zensei/${type.slug}.jpg`;
   zenseiImg.alt = `前世「${type.title}」のイメージイラスト`;
 
-  const episodesEl = document.getElementById('result-episodes');
+  const episodesEl = $('result-episodes');
   episodesEl.innerHTML = '';
   type.paragraphs.forEach(p => {
     const el = document.createElement('p');
@@ -30,8 +30,8 @@ function zenseiApplyResult(stemIdx, branchIdx) {
     episodesEl.appendChild(el);
   });
 
-  document.getElementById('result-flavor').textContent = flavor;
-  document.getElementById('result-final-line').textContent = type.finalLine;
+  $('result-flavor').textContent = flavor;
+  $('result-final-line').textContent = type.finalLine;
 
   spinoffApplyLucky(stemIdx);
 
@@ -46,13 +46,13 @@ function zenseiApplyResult(stemIdx, branchIdx) {
   };
   spinoffRenderCardPreview('result-card-preview', cardOpts);
 
-  document.getElementById('btn-save-card').onclick = () => {
+  $('btn-save-card').onclick = () => {
     spinoffDownloadCard('btn-save-card', `zensei-shindan-${stemChar}.png`, cardOpts);
   };
 }
 
 function zenseiStart() {
-  const input = document.getElementById('birthdate');
+  const input = $('birthdate');
   if (!input.value) {
     spinoffShowFieldError('birthdate', 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
     return;
@@ -69,11 +69,11 @@ function zenseiStart() {
       spinoffShowScreen('screen-start');
       spinoffShowFieldError('birthdate', 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
     }
-  }, 1400);
+  }, 700);
 }
 
 function zenseiRestart() {
-  document.getElementById('birthdate').value = '';
+  $('birthdate').value = '';
   spinoffClearFieldError('birthdate', 'birthdate-error');
   spinoffShowScreen('screen-start');
 }
@@ -83,21 +83,29 @@ function zenseiResultUrl() {
   return spinoffResultUrl('zensei.html', zenseiLastResult.stemIdx, zenseiLastResult.branchIdx);
 }
 
-document.getElementById('btn-start').addEventListener('click', zenseiStart);
-document.getElementById('btn-restart').addEventListener('click', zenseiRestart);
-document.getElementById('btn-share').addEventListener('click', () => {
+$('btn-start').addEventListener('click', zenseiStart);
+$('btn-restart').addEventListener('click', zenseiRestart);
+$('btn-share').addEventListener('click', () => {
   if (!zenseiLastResult) return;
-  const text = `黒曜先生に前世を視てもらいました。\nあなたの前世は、${zenseiLastResult.type.title}だった。\n${zenseiLastResult.type.finalLine}\nあなたも視てもらいなさい→\n#黒曜診断 #前世診断`;
+  const text = `黒曜先生に前世を視てもらいました。\nあなたの前世は、${zenseiLastResult.type.title}だった。\n${zenseiLastResult.type.finalLine}\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #前世診断`;
   spinoffShareX(text, zenseiResultUrl());
 });
-document.getElementById('btn-share-line').addEventListener('click', () => {
+$('btn-share-line').addEventListener('click', () => {
   if (!zenseiLastResult) return;
-  const text = `黒曜先生に前世を視てもらいました。あなたの前世は、${zenseiLastResult.type.title}だった。\nあなたも視てもらいなさい→`;
+  const text = `黒曜先生に前世を視てもらいました。あなたの前世は、${zenseiLastResult.type.title}だった。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
   spinoffShareLine(text, zenseiResultUrl());
 });
-document.getElementById('btn-copy-url').addEventListener('click', () => {
+$('btn-copy-url').addEventListener('click', () => {
   if (!zenseiLastResult) return;
   spinoffCopyResultUrl('btn-copy-url', zenseiResultUrl());
+});
+spinoffSetupNativeShare('btn-share-native', () => {
+  if (!zenseiLastResult) return { title: '', text: '', url: '' };
+  return {
+    title: '黒曜診断・前世診断',
+    text: `黒曜先生に前世を視てもらいました。あなたの前世は、${zenseiLastResult.type.title}だった。\nあなたも視てもらいなさい→`,
+    url: zenseiResultUrl(),
+  };
 });
 
 // 結果URL(?r=符号)で直接開かれた場合は、その場で同じ結果を再現して表示する
