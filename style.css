@@ -224,7 +224,7 @@ html.deep-link-result #screen-result { display: flex; }
 }
 .btn-secondary:hover { background: rgba(212, 175, 106, 0.16); }
 .card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; }
-.privacy-note { font-size: 0.72rem; color: var(--text-sub); text-align: left; margin: -12px 0 20px; }
+.privacy-note { font-size: 0.8rem; color: var(--text-sub); text-align: left; margin: -12px 0 20px; }
 
 /* ---- 鑑定中画面 ---- */
 #screen-loading { align-items: center; justify-content: center; text-align: center; }
