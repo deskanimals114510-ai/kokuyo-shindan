@@ -51,8 +51,12 @@
       <span class="eyebrow">黒曜診断 番外編・守護霊診断</span>
       <h1>守護霊診断</h1>
       <p class="lead">占い師「黒曜先生」が、あなたの生年月日から<br>あなたに憑く<span class="accent">守護霊の姿</span>を視ます。</p>
-      <label for="birthdate" class="field-label">生年月日を入力</label>
-      <input type="date" id="birthdate" class="date-input" min="1920-01-01">
+      <label id="label-birthdate" for="birth-year" class="field-label">生年月日を入力</label>
+      <div class="date-select-group">
+        <select id="birth-year" class="date-input date-select" aria-label="生まれた年"><option value="">年</option></select>
+        <select id="birth-month" class="date-input date-select" aria-label="生まれた月"><option value="">月</option></select>
+        <select id="birth-day" class="date-input date-select" aria-label="生まれた日"><option value="">日</option></select>
+      </div>
       <p id="birthdate-error" class="field-error" role="alert" style="display:none;"></p>
       <button id="btn-start" class="btn-primary">守護霊を視てもらう ✦</button>
       <p class="sub">生まれた年の干支から、あなたの守護霊を鑑定します。エンタメ目的のコンテンツです</p>

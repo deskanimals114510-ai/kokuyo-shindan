@@ -50,12 +50,80 @@ function spinoffResultUrl(pageFile, stemIdx, branchIdx) {
   return location.origin + location.pathname.replace(/[^/]*$/, pageFile) + '?r=' + spinoffBuildResultCode(stemIdx, branchIdx);
 }
 
-// 未来日を選べないよう、生年月日の上限を「今日」に動的設定
-function spinoffSetMaxBirthdate(inputId) {
-  const today = new Date();
-  const iso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-  const el = $(inputId);
-  if (el) el.max = iso;
+// 生年月日入力(年/月/日の3セレクト)。index.html(script.js)と同一ロジックを
+// zensei.html/shugorei.htmlからも使えるよう共通化したもの。
+function spinoffDaysInMonth(year, month) {
+  if (!year || !month) return 31;
+  return new Date(Number(year), Number(month), 0).getDate();
+}
+
+function spinoffRefreshDayOptions(yearId, monthId, dayId, dayPlaceholderText) {
+  const yearSel = $(yearId);
+  const monthSel = $(monthId);
+  const daySel = $(dayId);
+  const prevValue = daySel.value;
+  const max = spinoffDaysInMonth(yearSel.value, monthSel.value);
+  daySel.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = dayPlaceholderText || '日';
+  daySel.appendChild(placeholder);
+  for (let d = 1; d <= max; d++) {
+    const opt = document.createElement('option');
+    opt.value = String(d);
+    opt.textContent = String(d);
+    daySel.appendChild(opt);
+  }
+  if (prevValue && Number(prevValue) <= max) daySel.value = prevValue;
+}
+
+function spinoffPopulateBirthdateSelects(yearId, monthId, dayId, dayPlaceholderText) {
+  const yearSel = $(yearId);
+  const monthSel = $(monthId);
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 1920; y--) {
+    const opt = document.createElement('option');
+    opt.value = String(y);
+    opt.textContent = String(y);
+    yearSel.appendChild(opt);
+  }
+  for (let m = 1; m <= 12; m++) {
+    const opt = document.createElement('option');
+    opt.value = String(m);
+    opt.textContent = String(m);
+    monthSel.appendChild(opt);
+  }
+  spinoffRefreshDayOptions(yearId, monthId, dayId, dayPlaceholderText);
+  yearSel.addEventListener('change', () => spinoffRefreshDayOptions(yearId, monthId, dayId, dayPlaceholderText));
+  monthSel.addEventListener('change', () => spinoffRefreshDayOptions(yearId, monthId, dayId, dayPlaceholderText));
+}
+
+// 3セレクトまとめてのエラー表示/解除(前世診断・守護霊診断共通)
+function spinoffShowBirthdateSelectsError(ids, errorId, message) {
+  const errorEl = $(errorId);
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+  }
+  ids.forEach(id => {
+    const el = $(id);
+    if (el) {
+      el.classList.add('invalid');
+      el.setAttribute('aria-invalid', 'true');
+    }
+  });
+}
+
+function spinoffClearBirthdateSelectsError(ids, errorId) {
+  const errorEl = $(errorId);
+  if (errorEl) errorEl.style.display = 'none';
+  ids.forEach(id => {
+    const el = $(id);
+    if (el) {
+      el.classList.remove('invalid');
+      el.removeAttribute('aria-invalid');
+    }
+  });
 }
 
 // preload+media="print"で読み込んだGoogle Fontsを実際に適用する(初期描画をブロックしないための構成)。
@@ -68,30 +136,6 @@ function spinoffSetMaxBirthdate(inputId) {
 function spinoffShowScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
-}
-
-// 生年月日未入力エラーの表示/解除(前世診断・守護霊診断共通)
-function spinoffShowFieldError(inputId, errorId, message) {
-  const errorEl = $(errorId);
-  const inputEl = $(inputId);
-  if (errorEl) {
-    errorEl.textContent = message;
-    errorEl.style.display = 'block';
-  }
-  if (inputEl) {
-    inputEl.classList.add('invalid');
-    inputEl.setAttribute('aria-invalid', 'true');
-  }
-}
-
-function spinoffClearFieldError(inputId, errorId) {
-  const errorEl = $(errorId);
-  const inputEl = $(inputId);
-  if (errorEl) errorEl.style.display = 'none';
-  if (inputEl) {
-    inputEl.classList.remove('invalid');
-    inputEl.removeAttribute('aria-invalid');
-  }
 }
 
 // 結果表示後、支援技術・キーボード操作の両方に画面遷移を伝えるためフォーカスを移動する

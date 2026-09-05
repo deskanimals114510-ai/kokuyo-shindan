@@ -326,6 +326,9 @@ const UI_TEXT = {
     ariaYear: '生まれた年',
     ariaMonth: '生まれた月',
     ariaDay: '生まれた日',
+    yearPlaceholder: '年',
+    monthPlaceholder: '月',
+    dayPlaceholder: '日',
     ariaAd: '広告',
     ariaResultActions: '結果の共有・操作',
     errorRequired: '生年月日を、年・月・日すべて選んでから占ってもらいなさい。',
@@ -385,6 +388,9 @@ const UI_TEXT = {
     ariaYear: 'Birth year',
     ariaMonth: 'Birth month',
     ariaDay: 'Birth day',
+    yearPlaceholder: 'Year',
+    monthPlaceholder: 'Month',
+    dayPlaceholder: 'Day',
     ariaAd: 'Advertisement',
     ariaResultActions: 'Share and result actions',
     errorRequired: 'Choose a year, month, and day before asking for your reading.',
@@ -477,7 +483,7 @@ function refreshDayOptions() {
   daySel.innerHTML = '';
   const placeholder = document.createElement('option');
   placeholder.value = '';
-  placeholder.textContent = '日';
+  placeholder.textContent = UI_TEXT[LANG].dayPlaceholder;
   daySel.appendChild(placeholder);
   for (let d = 1; d <= max; d++) {
     const opt = document.createElement('option');
@@ -743,6 +749,9 @@ function applyLangUI() {
   $('birth-year').setAttribute('aria-label', t.ariaYear);
   $('birth-month').setAttribute('aria-label', t.ariaMonth);
   $('birth-day').setAttribute('aria-label', t.ariaDay);
+  $('birth-year').options[0].textContent = t.yearPlaceholder;
+  $('birth-month').options[0].textContent = t.monthPlaceholder;
+  refreshDayOptions();
   document.querySelector('#lucky-label .pr-tag').setAttribute('aria-label', t.ariaAd);
   document.querySelector('#screen-result .result-actions').setAttribute('aria-label', t.ariaResultActions);
   $('footer-operator').textContent = t.footerOperator;

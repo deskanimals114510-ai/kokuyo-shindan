@@ -1,7 +1,8 @@
 // ===== 守護霊診断 画面制御 =====
 let shugoreiLastResult = null;
+const SHUGOREI_BIRTHDATE_IDS = ['birth-year', 'birth-month', 'birth-day'];
 
-spinoffSetMaxBirthdate('birthdate');
+spinoffPopulateBirthdateSelects('birth-year', 'birth-month', 'birth-day');
 
 function shugoreiFindType(stemIdx) {
   const stemChar = SPINOFF_STEMS[stemIdx];
@@ -46,13 +47,14 @@ function shugoreiApplyResult(stemIdx, branchIdx) {
 }
 
 function shugoreiStart() {
-  const input = $('birthdate');
-  if (!input.value) {
-    spinoffShowFieldError('birthdate', 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
+  const y = Number($('birth-year').value);
+  const m = Number($('birth-month').value);
+  const d = Number($('birth-day').value);
+  if (!y || !m || !d) {
+    spinoffShowBirthdateSelectsError(SHUGOREI_BIRTHDATE_IDS, 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
     return;
   }
-  spinoffClearFieldError('birthdate', 'birthdate-error');
-  const [y, m, d] = input.value.split('-').map(Number);
+  spinoffClearBirthdateSelectsError(SHUGOREI_BIRTHDATE_IDS, 'birthdate-error');
   spinoffShowScreen('screen-loading');
   setTimeout(() => {
     try {
@@ -61,14 +63,17 @@ function shugoreiStart() {
     } catch (e) {
       console.error('守護霊診断の生成に失敗しました', e);
       spinoffShowScreen('screen-start');
-      spinoffShowFieldError('birthdate', 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
+      spinoffShowBirthdateSelectsError(SHUGOREI_BIRTHDATE_IDS, 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
     }
   }, 700);
 }
 
 function shugoreiRestart() {
-  $('birthdate').value = '';
-  spinoffClearFieldError('birthdate', 'birthdate-error');
+  $('birth-year').value = '';
+  $('birth-month').value = '';
+  $('birth-day').value = '';
+  spinoffRefreshDayOptions('birth-year', 'birth-month', 'birth-day');
+  spinoffClearBirthdateSelectsError(SHUGOREI_BIRTHDATE_IDS, 'birthdate-error');
   spinoffShowScreen('screen-start');
 }
 

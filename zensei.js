@@ -1,7 +1,8 @@
 // ===== 前世診断 画面制御 =====
 let zenseiLastResult = null;
+const ZENSEI_BIRTHDATE_IDS = ['birth-year', 'birth-month', 'birth-day'];
 
-spinoffSetMaxBirthdate('birthdate');
+spinoffPopulateBirthdateSelects('birth-year', 'birth-month', 'birth-day');
 
 function zenseiFindType(stemIdx) {
   const stemChar = SPINOFF_STEMS[stemIdx];
@@ -52,13 +53,14 @@ function zenseiApplyResult(stemIdx, branchIdx) {
 }
 
 function zenseiStart() {
-  const input = $('birthdate');
-  if (!input.value) {
-    spinoffShowFieldError('birthdate', 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
+  const y = Number($('birth-year').value);
+  const m = Number($('birth-month').value);
+  const d = Number($('birth-day').value);
+  if (!y || !m || !d) {
+    spinoffShowBirthdateSelectsError(ZENSEI_BIRTHDATE_IDS, 'birthdate-error', '生年月日を選んでから視てもらいなさい。');
     return;
   }
-  spinoffClearFieldError('birthdate', 'birthdate-error');
-  const [y, m, d] = input.value.split('-').map(Number);
+  spinoffClearBirthdateSelectsError(ZENSEI_BIRTHDATE_IDS, 'birthdate-error');
   spinoffShowScreen('screen-loading');
   setTimeout(() => {
     try {
@@ -67,14 +69,17 @@ function zenseiStart() {
     } catch (e) {
       console.error('前世診断の生成に失敗しました', e);
       spinoffShowScreen('screen-start');
-      spinoffShowFieldError('birthdate', 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
+      spinoffShowBirthdateSelectsError(ZENSEI_BIRTHDATE_IDS, 'birthdate-error', '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。');
     }
   }, 700);
 }
 
 function zenseiRestart() {
-  $('birthdate').value = '';
-  spinoffClearFieldError('birthdate', 'birthdate-error');
+  $('birth-year').value = '';
+  $('birth-month').value = '';
+  $('birth-day').value = '';
+  spinoffRefreshDayOptions('birth-year', 'birth-month', 'birth-day');
+  spinoffClearBirthdateSelectsError(ZENSEI_BIRTHDATE_IDS, 'birthdate-error');
   spinoffShowScreen('screen-start');
 }
 
