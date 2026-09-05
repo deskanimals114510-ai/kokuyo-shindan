@@ -565,6 +565,20 @@ html.deep-link-result #screen-result { display: flex; }
   margin: 0 auto 14px;
   border-radius: 14px;
   box-shadow: 0 10px 26px rgba(212, 175, 106, 0.28);
+  object-fit: cover;
+  /* 読込完了まで画像の背後にスケルトンが透けて見える(読込後は画像が全面を覆うため自然に隠れる) */
+  background: linear-gradient(100deg, rgba(212, 175, 106, 0.1) 30%, rgba(212, 175, 106, 0.22) 50%, rgba(212, 175, 106, 0.1) 70%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shugorei-hero-img { animation: none; }
 }
 
 /* ---- キーボードフォーカス視認性(暗色背景上でもはっきり見えるよう明示指定) ---- */
