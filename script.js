@@ -7,6 +7,20 @@ const $ = (function () {
   };
 })();
 
+// script.js自身の実際のURLからベースパスを算出(ページのURLではなく)。
+// en/index.html等、サブディレクトリから読み込まれた場合でも同じ相対パス指定で
+// day-master-types-en.js等を正しく解決するための土台(2026-09-05、英語圏SEO対応で追加)。
+const SCRIPT_BASE = (function () {
+  const scripts = document.getElementsByTagName('script');
+  for (let i = 0; i < scripts.length; i++) {
+    const src = scripts[i].src;
+    if (src && /script\.js(\?.*)?$/.test(src)) {
+      return src.replace(/script\.js(\?.*)?$/, '');
+    }
+  }
+  return './';
+})();
+
 // ===== 干支計算エンジン =====
 // 検証済み基準日: 2007-01-01 = 乙未日(60干支インデックス31)
 // 出典: 儒略日ベースの日干支計算式 (JDN+49) mod 60 の実例より逆算
@@ -270,7 +284,7 @@ function ensureEnDataLoaded() {
   if (enDataLoadPromise) return enDataLoadPromise;
   enDataLoadPromise = new Promise((resolve, reject) => {
     const s = document.createElement('script');
-    s.src = 'day-master-types-en.js';
+    s.src = SCRIPT_BASE + 'day-master-types-en.js';
     s.onload = resolve;
     s.onerror = reject;
     document.head.appendChild(s);
@@ -369,8 +383,8 @@ const UI_TEXT = {
     shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です`,
   },
   en: {
-    pageTitle: 'Kokuyo Fortune Reading - A Free BaZi Reading From Your Birth Date',
-    pageDescription: 'A free BaZi (Four Pillars of Destiny) fortune reading based on your birth date. Fortune-teller Kokuyo-sensei sums up your true nature in one blunt line.',
+    pageTitle: 'Free BaZi Day Master Reading — Kokuyo Fortune Reading',
+    pageDescription: 'Find your BaZi Day Master and Four Pillars of Destiny for free from your birth date — no signup. Fortune-teller Kokuyo-sensei sums up your true nature in one blunt line.',
     eyebrowStart: 'BaZi-Based Free Reading',
     startTitle: 'Kokuyo Fortune Reading',
     startLeadHtml: 'Fortune-teller Kokuyo-sensei reads your birth date and<br>sums up your true nature <span class="accent">in one line.</span>',
@@ -788,6 +802,14 @@ function setLang(lang) {
 }
 $('btn-lang-ja').addEventListener('click', () => setLang('ja'));
 $('btn-lang-en').addEventListener('click', () => setLang('en'));
+
+// 英語圏SEO用ランディングページ(en/index.html)から読み込まれた場合、初期表示言語を
+// 英語に強制する(2026-09-05追加)。日本語メインサイトの<script>にはFORCE_LANGが
+// 存在しないため、通常表示への影響はない。?r=結果URLの言語復元は後続の
+// loadFromResultCode()が優先して上書きする。
+if (typeof FORCE_LANG !== 'undefined' && FORCE_LANG === 'en') {
+  setLang('en');
+}
 
 $('btn-start').addEventListener('click', startDivination);
 $('btn-restart').addEventListener('click', restart);
