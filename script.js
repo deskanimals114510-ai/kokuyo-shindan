@@ -804,12 +804,14 @@ $('btn-lang-ja').addEventListener('click', () => setLang('ja'));
 $('btn-lang-en').addEventListener('click', () => setLang('en'));
 
 // 英語圏SEO用ランディングページ(en/index.html)から読み込まれた場合、初期表示言語を
-// 英語に強制する(2026-09-05追加)。日本語メインサイトの<script>にはFORCE_LANGが
-// 存在しないため、通常表示への影響はない。?r=結果URLの言語復元は後続の
-// loadFromResultCode()が優先して上書きする。
-if (typeof FORCE_LANG !== 'undefined' && FORCE_LANG === 'en') {
-  setLang('en');
-}
+// 英語に強制する(2026-09-05追加)。?r=結果URLの言語復元は後続のloadFromResultCode()が
+// 優先して上書きする。
+// 日本語メインサイトではFORCE_LANGが存在せず、以前はここでsetLang()が一度も呼ばれて
+// いなかった。setLang()の内部でしか実行されないapplyLangUI()も未実行のままとなり、
+// UI_TEXT.jaの内容(フッター免責文言等)が反映されずindex.html側の静的な初期文言が
+// 表示され続ける不具合があった(MBTI診断で2026-09-08発見・修正、本サイトにも同型の
+// バグを確認し横展開)。FORCE_LANG未設定時も明示的にsetLang('ja')を実行するよう修正。
+setLang(typeof FORCE_LANG !== 'undefined' && FORCE_LANG === 'en' ? 'en' : 'ja');
 
 $('btn-start').addEventListener('click', startDivination);
 $('btn-restart').addEventListener('click', restart);
