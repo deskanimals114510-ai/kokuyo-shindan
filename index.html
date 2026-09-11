@@ -68,6 +68,11 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <span id="start-eyebrow" class="eyebrow">四柱推命ベース・無料鑑定</span>
       <h1 id="start-title">黒曜診断</h1>
       <p id="start-lead" class="lead">占い師「黒曜先生」が、あなたの生年月日から<br>本質を<span class="accent">一言で言い切ります。</span></p>
+      <div id="daily-fortune-card" class="daily-fortune-card" aria-live="polite">
+        <p id="daily-fortune-label" class="daily-fortune-label">🔮 今日の運勢</p>
+        <p id="daily-fortune-text" class="daily-fortune-text"></p>
+        <p id="daily-streak-text" class="daily-streak-text" style="display:none;"></p>
+      </div>
       <label id="label-birthdate" for="birth-year" class="field-label">生年月日を入力</label>
       <div class="date-select-group">
         <select id="birth-year" class="date-input date-select" aria-label="生まれた年"><option value="">年</option></select>

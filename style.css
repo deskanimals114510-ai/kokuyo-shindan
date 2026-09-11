@@ -226,6 +226,19 @@ html.deep-link-result #screen-result { display: flex; }
 .card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; }
 .privacy-note { font-size: 0.8rem; color: var(--text-sub); text-align: left; margin: 4px 0 20px; }
 
+/* 2026-09-12: 今日の運勢カード(生年月日を入力する前の全訪問者に、その場で軽い価値を渡す) */
+.daily-fortune-card {
+  background: rgba(240, 205, 130, 0.08);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 0 0 22px;
+  text-align: left;
+}
+.daily-fortune-label { font-size: 0.78rem; color: var(--gold-bright); font-weight: 700; margin: 0 0 6px; letter-spacing: 0.03em; }
+.daily-fortune-text { font-size: 0.88rem; color: var(--text-sub); line-height: 1.7; margin: 0; }
+.daily-streak-text { font-size: 0.78rem; color: var(--gold-bright); margin: 8px 0 0; }
+
 /* ---- 鑑定中画面 ---- */
 #screen-loading { align-items: center; justify-content: center; text-align: center; }
 .loading-wrap { min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; }

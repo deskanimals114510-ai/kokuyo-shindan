@@ -381,6 +381,9 @@ const UI_TEXT = {
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
     shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です\n#黒曜診断 #四柱推命`,
     shareTextLine: (line) => `黒曜先生に占われました。${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です`,
+    dailyFortuneLabel: '🔮 今日の運勢',
+    dailyFortuneLine: (stem, reading, line) => `${stem}(${reading})の日。${line}`,
+    dailyStreakText: (n) => `🔥 ${n}日連続でチェック中!`,
   },
   en: {
     pageTitle: 'Free BaZi Day Master Reading — Kokuyo Fortune Reading',
@@ -443,6 +446,9 @@ const UI_TEXT = {
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
     shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n(For entertainment purposes only)\n#KokuyoFortuneReading #BaZi`,
     shareTextLine: (line) => `Kokuyo-sensei just read my fortune. ${line}\nGet your own reading →\n(For entertainment purposes only)`,
+    dailyFortuneLabel: "🔮 Today's Fortune",
+    dailyFortuneLine: (stem, reading, line) => `Today is a ${stem} (${reading}) day. ${line}`,
+    dailyStreakText: (n) => `🔥 ${n}-day streak!`,
   },
 };
 
@@ -621,6 +627,86 @@ function shareOgUrl() {
   return location.origin + dir + 'nichishu/' + STEM_SLUG[lastResult.pillars.day.stemIdx] + '.html';
 }
 
+// ===== 今日の運勢(2026-09-12、[[project_diagnostic_web_tool]]流入拡大策より) =====
+// 生年月日を入力する前のスタート画面でも「今日の日主」を軽く見せることで、
+// 診断せずに帰る訪問者にもその場で価値を渡し、翌日以降の再訪を誘発する狙い。
+// 実装は既存のcomputeFourPillars()をそのまま今日の日付に適用するだけで、
+// 新規の占いロジックを増やさずに済む(本鑑定とは別に書き下ろした短い一言のみ新規)。
+const DAILY_FORTUNE_JA = [
+  '地に足をつけて、じっくり構える日。焦らず一歩ずつ進みなさい。',
+  'しなやかに、人に合わせて動くと吉。無理に逆らわなくて大丈夫よ。',
+  '今日はあなたが場の中心。堂々と、明るく振る舞いなさい。',
+  '静かな時間を大切に。一人でじっくり考えると答えが見えるわ。',
+  'どっしり構えて動かないのが吉。周りに振り回されないことね。',
+  '誰かのために動くと運が巡る日。与えることを恐れないで。',
+  '白黒はっきりさせるのに向いた日。迷わず決断しなさい。',
+  '細部にこだわると光る日。丁寧な仕上げを心がけて。',
+  '自由に動きたくなる日。予定を詰めすぎず余白を残しなさい。',
+  '静かに観察すると発見がある日。焦って動かなくて大丈夫よ。',
+];
+const DAILY_FORTUNE_EN = [
+  'Stand firm today — steady progress beats rushing.',
+  "Bend with the moment; flexibility works in your favor.",
+  "You're the center of attention today — shine boldly.",
+  'Quiet reflection brings clarity. Give yourself some solo time.',
+  "Stay grounded and unmoved — don't let others rush you.",
+  'Give generously today; helping others brings your luck around.',
+  "A good day for clear decisions — don't hesitate.",
+  'Attention to detail pays off. Polish the small things.',
+  'Restlessness kicks in — leave room in your schedule.',
+  'Quiet observation reveals something today. No need to rush.',
+];
+const STEM_EN = ['Kinoe', 'Kinoto', 'Hinoe', 'Hinoto', 'Tsuchinoe', 'Tsuchinoto', 'Kanoe', 'Kanoto', 'Mizunoe', 'Mizunoto'];
+const STEM_READING_EN = ['kinoe', 'kinoto', 'hinoe', 'hinoto', 'tsuchinoe', 'tsuchinoto', 'kanoe', 'kanoto', 'mizunoe', 'mizunoto'];
+
+function computeTodayStemIdx() {
+  const now = new Date();
+  const pillars = computeFourPillars(now.getFullYear(), now.getMonth() + 1, now.getDate(), null);
+  return pillars.day.stemIdx;
+}
+
+// 連続訪問日数をlocalStorageで記録(プライベートモード等で使えない環境でも診断自体は続行)。
+const DAILY_STREAK_KEY = 'kokuyoDailyStreak';
+function localDateStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function updateDailyStreak() {
+  try {
+    const today = new Date();
+    const todayStr = localDateStr(today);
+    const raw = localStorage.getItem(DAILY_STREAK_KEY);
+    const data = raw ? JSON.parse(raw) : { lastDate: null, streak: 0 };
+    if (data.lastDate === todayStr) return data.streak;
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const newStreak = data.lastDate === localDateStr(yesterday) ? data.streak + 1 : 1;
+    localStorage.setItem(DAILY_STREAK_KEY, JSON.stringify({ lastDate: todayStr, streak: newStreak }));
+    return newStreak;
+  } catch (e) {
+    return 0;
+  }
+}
+function renderDailyFortune() {
+  const t = UI_TEXT[LANG];
+  const idx = computeTodayStemIdx();
+  const stemEl = document.getElementById('daily-fortune-text');
+  if (!stemEl) return;
+  if (LANG === 'en') {
+    stemEl.textContent = t.dailyFortuneLine(STEM_EN[idx], STEM_READING_EN[idx], DAILY_FORTUNE_EN[idx]);
+  } else {
+    stemEl.textContent = t.dailyFortuneLine(STEMS[idx], STEM_READING[idx], DAILY_FORTUNE_JA[idx]);
+  }
+  document.getElementById('daily-fortune-label').textContent = t.dailyFortuneLabel;
+  const streak = updateDailyStreak();
+  const streakEl = document.getElementById('daily-streak-text');
+  if (streak > 1) {
+    streakEl.textContent = t.dailyStreakText(streak);
+    streakEl.style.display = '';
+  } else {
+    streakEl.style.display = 'none';
+  }
+}
+
 function applyResult(pillars) {
   const t = UI_TEXT[LANG];
   const type = getDayMasterType(pillars.day.stemIdx);
@@ -750,6 +836,7 @@ function applyLangUI() {
   $('start-title').textContent = t.startTitle;
   // startLeadHtmlはUI_TEXT内のハードコード文字列のみ(外部入力やURLパラメータ由来の値は絶対に代入しないこと)
   $('start-lead').innerHTML = t.startLeadHtml;
+  renderDailyFortune();
   $('nichishu-link').textContent = t.nichishuLink;
   $('label-birthdate').textContent = t.labelBirthdate;
   $('label-birthtime').textContent = t.labelBirthtime;
