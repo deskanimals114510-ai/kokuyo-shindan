@@ -607,6 +607,20 @@ function resultUrl() {
   return location.origin + location.pathname + '?r=' + buildResultCode(lastResult.pillars);
 }
 
+// STEMS(甲乙丙丁戊己庚辛壬癸)と同じ並び順の日主スラッグ。nichishu/{slug}.htmlのファイル名と一致。
+const STEM_SLUG = ['kinoe', 'kinoto', 'hinoe', 'hinoto', 'tsuchinoe', 'tsuchinoto', 'kanoe', 'kanoto', 'mizunoe', 'mizunoto'];
+
+// 2026-09-11: X/LINEシェア時のリンクプレビュー(OGP)対策。`?r=`の動的URLはクローラーが
+// JSを実行しないため常に汎用OGPのまま。nichishu/{slug}.htmlは日主タイプ別の専用OGP画像を
+// 既に持つため、SNS共有リンクにはこちらを使う(JAのみ、nichishu配下にEN版が無いためEN時は
+// 従来のresultUrl()を維持)。コピーURL・ネイティブ共有は従来通り完全な結果コードURLのまま。
+function shareOgUrl() {
+  if (!lastResult || LANG === 'en') return resultUrl();
+  const path = location.pathname;
+  const dir = path.endsWith('/') ? path : path.slice(0, path.lastIndexOf('/') + 1);
+  return location.origin + dir + 'nichishu/' + STEM_SLUG[lastResult.pillars.day.stemIdx] + '.html';
+}
+
 function applyResult(pillars) {
   const t = UI_TEXT[LANG];
   const type = getDayMasterType(pillars.day.stemIdx);
@@ -683,7 +697,7 @@ function shareResult() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
   const text = t.shareText(lastResult.type.line);
-  const url = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(resultUrl());
+  const url = 'https://x.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(shareOgUrl());
   window.open(url, '_blank', 'noopener');
   trackShareEvent('x');
 }
@@ -692,7 +706,7 @@ function shareResultLine() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
   const text = t.shareTextLine(lastResult.type.line);
-  const url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(resultUrl()) + '&text=' + encodeURIComponent(text);
+  const url = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(shareOgUrl()) + '&text=' + encodeURIComponent(text);
   window.open(url, '_blank', 'noopener');
   trackShareEvent('line');
 }
