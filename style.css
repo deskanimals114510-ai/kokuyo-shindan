@@ -194,6 +194,22 @@ html.deep-link-result #screen-result { display: flex; }
   box-shadow: var(--shadow-lift);
   text-align: center;
 }
+.hero-banner {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.hero-banner-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.6 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-banner-crop-top .hero-banner-img { object-position: top; }
 .emoji { font-size: 2.6rem; margin-bottom: 6px; filter: drop-shadow(0 0 14px rgba(212,175,106,0.5)); }
 .hero-preview {
   display: flex;
