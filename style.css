@@ -94,6 +94,21 @@ body {
 .star:nth-child(6) { top: 78%; left: 88%; font-size: 0.85rem; animation-delay: 0.4s; }
 .star:nth-child(7) { top: 88%; left: 30%; font-size: 1rem; animation-delay: 1.2s; }
 .star:nth-child(8) { top: 5%; left: 55%; font-size: 0.8rem; animation-delay: 2.8s; }
+
+/* 超ワイド画面(2026-09-12、パステル3サイトと同じ方針)。機能コンテンツの幅は
+   広げず、周囲の装飾(グロウ・星)を拡大・外側に再配置。 */
+@media (min-width: 1400px) {
+  .bg-glow {
+    background:
+      radial-gradient(circle at 50% 20%, rgba(138, 111, 214, 0.28), transparent 55%),
+      radial-gradient(circle at 8% 75%, rgba(212, 175, 106, 0.16), transparent 45%),
+      radial-gradient(circle at 92% 65%, rgba(138, 111, 214, 0.18), transparent 45%);
+  }
+  .star:nth-child(2) { left: 92%; font-size: 1.1rem; }
+  .star:nth-child(4) { left: 96%; font-size: 1.3rem; }
+  .star:nth-child(3) { left: 3%; font-size: 1.4rem; }
+  .star:nth-child(6) { left: 90%; font-size: 1.1rem; }
+}
 @keyframes twinkle {
   0%, 100% { opacity: 0; transform: scale(0.7); }
   50% { opacity: 0.9; transform: scale(1.1); }
