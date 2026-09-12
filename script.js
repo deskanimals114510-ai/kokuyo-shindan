@@ -881,6 +881,9 @@ function applyLangUI() {
   $('follow-link-quiz').textContent = t.followLinkQuiz;
   $('follow-label-2').textContent = t.followLabel2;
   $('follow-link-zensei').textContent = t.followLinkZensei;
+  $('start-spinoff-label').textContent = t.followLabel2;
+  $('start-spinoff-zensei').textContent = t.followLinkZensei;
+  $('start-spinoff-shugorei').textContent = t.followLinkShugorei;
   $('follow-link-shugorei').textContent = t.followLinkShugorei;
   $('follow-label-3').textContent = t.followLabel3;
   $('footer-pr').textContent = t.footerPr;
