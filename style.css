@@ -194,6 +194,45 @@ html.deep-link-result #screen-result { display: flex; }
   box-shadow: var(--shadow-lift);
   text-align: center;
 }
+.site-nav {
+  max-width: 980px;
+  margin: 0 auto 14px;
+}
+.site-nav-label {
+  display: block;
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+}
+.site-nav-links {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 6px;
+  scrollbar-width: none;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.site-nav-links::-webkit-scrollbar { display: none; }
+.site-nav-link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--gold);
+  color: var(--gold-bright);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+.site-nav-link:hover { background: var(--gold); color: var(--bg1); }
 .hero-banner {
   width: 100%;
   max-width: 980px;
