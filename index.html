@@ -116,6 +116,9 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <div class="follow-links">
         <p id="start-spinoff-label" class="follow-label">🌙 黒曜先生の番外編も視てもらいなさい</p>
         <div class="follow-btns">
+          <a class="follow-link" href="kinun.html">金運診断</a>
+          <a class="follow-link" href="tenshoku.html">天職診断</a>
+          <a class="follow-link" href="nenun.html">2027年の運勢</a>
           <a id="start-spinoff-zensei" class="follow-link" href="zensei.html">前世診断</a>
           <a id="start-spinoff-shugorei" class="follow-link" href="shugorei.html">守護霊診断</a>
         </div>
@@ -166,6 +169,9 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <button id="btn-share-native" class="btn-secondary" style="display:none;">共有する 📤</button>
       <button id="btn-restart" class="btn-secondary">もう一度占う</button>
     </div>
+    <div class="result-actions" role="group" aria-label="日主当てクイズへの招待">
+      <button id="btn-invite-guess" class="btn-secondary" aria-live="polite">🔮 友達に日主を当ててもらう</button>
+    </div>
     <p class="lucky-remind"><a id="lucky-remind-link" href="#lucky-link">🎁 開運アイテムをもう一度見る ↑</a></p>
     <p class="lucky-remind"><a id="interest-paid-link" href="#" aria-live="polite">🔔 もっと詳しく知りたい方へ(準備中・タップで通知登録)</a></p>
     <div class="follow-links">
@@ -179,6 +185,9 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
     <div class="follow-links">
       <p id="follow-label-2" class="follow-label">🌙 黒曜先生の番外編も視てもらいなさい</p>
       <div class="follow-btns">
+        <a class="follow-link" href="kinun.html">金運診断</a>
+        <a class="follow-link" href="tenshoku.html">天職診断</a>
+        <a class="follow-link" href="nenun.html">2027年の運勢</a>
         <a id="follow-link-zensei" class="follow-link" href="zensei.html">前世診断</a>
         <a id="follow-link-shugorei" class="follow-link" href="shugorei.html">守護霊診断</a>
       </div>
@@ -196,6 +205,46 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <div class="follow-btns">
         <a class="follow-link" href="https://deskanimals114510-ai.github.io/tiny-wonders/?utm_source=kokuyo-shindan&utm_medium=referral&utm_campaign=cross_site" target="_blank" rel="noopener">Tiny Wonders</a>
       </div>
+    </div>
+  </section>
+
+  <!-- 日主当てクイズ画面(招待リンク?guess=から着地。MBTI診断のType Guesser型のバイラル機能) -->
+  <section id="screen-guess" class="screen" aria-label="日主当てクイズ">
+    <div class="card">
+      <div class="emoji" aria-hidden="true">🔮</div>
+      <span class="eyebrow">日主 当てクイズ</span>
+      <h1>その人の日主、当ててみて</h1>
+      <p class="lead">友達や知り合いを思い浮かべながら、2問だけ答えてね。</p>
+      <div class="guess-question">
+        <p class="guess-question-text">Q1. その人を一言で表すなら?</p>
+        <div class="guess-options">
+          <button type="button" class="guess-option-btn" data-group="element" data-value="0">🌱 何にでも真っ直ぐ向き合う、成長意欲にあふれた人</button>
+          <button type="button" class="guess-option-btn" data-group="element" data-value="1">🔥 喜怒哀楽がはっきりしていて、感情表現が豊かな人</button>
+          <button type="button" class="guess-option-btn" data-group="element" data-value="2">⛰️ どっしり構えていて、周りを安心させる人</button>
+          <button type="button" class="guess-option-btn" data-group="element" data-value="3">⚔️ 白黒はっきりさせたい、筋を通したがる人</button>
+          <button type="button" class="guess-option-btn" data-group="element" data-value="4">🌊 物静かだけど、周りをよく観察している人</button>
+        </div>
+      </div>
+      <div class="guess-question">
+        <p class="guess-question-text">Q2. その人はどちらかというと?</p>
+        <div class="guess-options">
+          <button type="button" class="guess-option-btn" data-group="polarity" data-value="0">人前でも物怖じせず、自分から動くタイプ</button>
+          <button type="button" class="guess-option-btn" data-group="polarity" data-value="1">一歩引いて、静かに構えているタイプ</button>
+        </div>
+      </div>
+      <button id="btn-guess-submit" class="btn-primary" disabled>予想を見る 🔮</button>
+    </div>
+  </section>
+
+  <!-- 日主当てクイズ・答え合わせ画面 -->
+  <section id="screen-guess-reveal" class="screen" aria-label="日主当てクイズ 答え合わせ">
+    <div class="result-card">
+      <span class="eyebrow">予想の答え合わせ</span>
+      <h2 id="guess-reveal-title" class="result-line"></h2>
+      <div id="guess-reveal-body"></div>
+    </div>
+    <div class="result-actions" role="group" aria-label="自分も診断する">
+      <button id="btn-guess-take-quiz" class="btn-primary">自分も占ってもらう ✦</button>
     </div>
   </section>
 

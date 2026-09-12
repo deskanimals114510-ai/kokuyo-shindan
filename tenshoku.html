@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天職診断 - 黒曜先生が視るあなたの天職 | 黒曜診断</title>
+<meta name="description" content="生年月日から、占い師「黒曜先生」があなたの天職を視る無料診断。四柱推命の日主10タイプで、向いている職種を具体的に鑑定します。">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="天職診断 - 黒曜先生が視るあなたの天職">
+<meta property="og:description" content="生年月日から、占い師「黒曜先生」があなたの天職を視る無料診断。四柱推命の日主10タイプで、向いている職種を具体的に鑑定します。">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/tenshoku.html">
+<link rel="canonical" href="https://deskanimals114510-ai.github.io/kokuyo-shindan/tenshoku.html">
+<meta property="og:image" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="天職診断 - 黒曜先生が視るあなたの天職">
+<meta name="twitter:description" content="生年月日から、占い師「黒曜先生」があなたの天職を視る無料診断。四柱推命の日主10タイプで鑑定します。">
+<meta name="twitter:image" content="https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://www.google-analytics.com https://region1.google-analytics.com; frame-ancestors 'none'">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Cinzel:wght@600;700&display=swap">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet" media="print">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"天職診断 - 黒曜先生が視るあなたの天職","description":"生年月日から、占い師「黒曜先生」があなたの天職を視る無料診断。四柱推命の日主10タイプで鑑定します。","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/tenshoku.html","inLanguage":"ja","isPartOf":{"@type":"WebSite","name":"黒曜診断","url":"https://deskanimals114510-ai.github.io/kokuyo-shindan/"},"author":{"@type":"Organization","name":"Desk Animals Lab"},"image":"https://deskanimals114510-ai.github.io/kokuyo-shindan/og-image.jpg"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"黒曜診断","item":"https://deskanimals114510-ai.github.io/kokuyo-shindan/"},{"@type":"ListItem","position":2,"name":"天職診断","item":"https://deskanimals114510-ai.github.io/kokuyo-shindan/tenshoku.html"}]}</script>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true">
+  <span class="star">✦</span><span class="star">✧</span><span class="star">✦</span>
+  <span class="star">✧</span><span class="star">✦</span><span class="star">✧</span>
+  <span class="star">✦</span><span class="star">✧</span>
+</div>
+
+<main id="app">
+
+  <!-- スタート画面 -->
+  <section id="screen-start" class="screen active">
+    <div class="card">
+      <div class="emoji">🧭</div>
+      <span class="eyebrow">黒曜診断 番外編・天職診断</span>
+      <h1>天職診断</h1>
+      <p class="lead">占い師「黒曜先生」が、あなたの生年月日から<br><span class="accent">向いている仕事</span>を視ます。</p>
+      <label id="label-birthdate" for="birth-year" class="field-label">生年月日を入力</label>
+      <div class="date-select-group">
+        <select id="birth-year" class="date-input date-select" aria-label="生まれた年"><option value="">年</option></select>
+        <select id="birth-month" class="date-input date-select" aria-label="生まれた月"><option value="">月</option></select>
+        <select id="birth-day" class="date-input date-select" aria-label="生まれた日"><option value="">日</option></select>
+      </div>
+      <p id="birthdate-error" class="field-error" role="alert" style="display:none;"></p>
+      <button id="btn-start" class="btn-primary">天職を視てもらう ✦</button>
+      <p class="sub">生まれた年の干支から、向いている職種を具体的に鑑定します。エンタメ目的のコンテンツです</p>
+    </div>
+  </section>
+
+  <!-- 鑑定中画面 -->
+  <section id="screen-loading" class="screen">
+    <div class="loading-wrap">
+      <div class="loading-emoji">🧭</div>
+      <p class="loading-text" role="status" aria-live="polite">黒曜先生が、あなたの働き方の芯を読み解いています…</p>
+    </div>
+  </section>
+
+  <!-- 結果画面 -->
+  <section id="screen-result" class="screen">
+    <div class="result-card">
+      <span class="eyebrow">天職診断 RESULT</span>
+      <span id="result-type-label" class="spinoff-type-label"></span>
+      <h2 id="result-title" class="result-line"></h2>
+      <img id="result-hero-img" class="shugorei-hero-img" src="" alt="" width="168" height="252" loading="lazy">
+      <div id="result-episodes"></div>
+      <p id="result-final-line" class="spinoff-quote"></p>
+      <p id="lucky-hitokoto" class="spinoff-lucky-hitokoto"></p>
+      <a id="lucky-link" class="lucky-item" href="#" target="_blank" rel="noopener" tabindex="-1">
+        <span id="lucky-emoji" class="lucky-emoji"></span>
+        <span class="lucky-text">
+          <span class="lucky-label">🔮 黒曜先生おすすめの開運アイテム<span class="pr-tag" aria-label="広告">PR</span></span>
+          <span id="lucky-name" class="lucky-name"></span>
+          <span id="lucky-price" class="lucky-price"></span>
+        </span>
+        <span class="lucky-arrow">›</span>
+      </a>
+    </div>
+    <div id="result-card-preview" class="result-card-preview"></div>
+    <p class="result-card-preview-hint">画像を長押し(スマホ)または右クリックで保存できます</p>
+    <div class="result-actions">
+      <button id="btn-share" class="btn-primary">Xでシェア ✦</button>
+      <button id="btn-share-line" class="btn-secondary btn-line">LINEでシェア</button>
+      <button id="btn-copy-url" class="btn-secondary">結果URLをコピー 🔗</button>
+      <button id="btn-share-native" class="btn-secondary" style="display:none;">共有する 📤</button>
+      <button id="btn-restart" class="btn-secondary">もう一度視てもらう</button>
+    </div>
+    <div class="result-actions result-actions-card">
+      <button id="btn-save-card" class="btn-secondary">結果カードを保存 🖼️</button>
+    </div>
+    <div class="follow-links">
+      <p class="follow-label">🌙 黒曜先生の番外編、他にもあるわよ</p>
+      <div class="follow-btns">
+        <a class="follow-link" href="kinun.html">金運診断</a>
+        <a class="follow-link" href="nenun.html">2027年の運勢</a>
+        <a class="follow-link" href="zensei.html">前世診断</a>
+        <a class="follow-link" href="shugorei.html">守護霊診断</a>
+      </div>
+    </div>
+    <div class="follow-links">
+      <p class="follow-label">🔮 本格鑑定も気になるなら</p>
+      <div class="follow-btns">
+        <a class="follow-link" href="index.html">黒曜診断(四柱推命ベース)</a>
+      </div>
+    </div>
+    <div class="follow-links">
+      <p class="follow-label">🐹 Desk Animalsをフォローする</p>
+      <div class="follow-btns">
+        <a class="follow-link" href="https://x.com/deskanimalslab" target="_blank" rel="noopener">X</a>
+        <a class="follow-link" href="https://www.instagram.com/desk.animals114510/" target="_blank" rel="noopener">Instagram</a>
+        <a class="follow-link" href="https://www.tiktok.com/@desk.animals" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の年干をベースにした創作コンテンツであり、キャリアに関する専門的な助言ではありません。挿絵はAI画像生成です。科学的な診断や実際の鑑定に代わるものではありません。</p>
+    <p>🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。掲載アイテムの効果・開運を保証するものではありません。</p>
+    <p>生年月日そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。</p>
+    <p><a href="index.html" class="footer-link">黒曜診断トップへ戻る</a> ・ <a href="kinun.html" class="footer-link">金運診断はこちら</a> ・ <a href="nenun.html" class="footer-link">2027年の運勢はこちら</a></p>
+    <p><span>運営: Desk Animals Lab / お問い合わせ:</span> <a class="footer-link" href="https://x.com/deskanimalslab" target="_blank" rel="noopener">X @deskanimalslab</a></p>
+  </footer>
+
+</main>
+<script src="analytics.js"></script>
+<script src="spinoff-common.js"></script>
+<script src="tenshoku-data.js"></script>
+<script src="tenshoku.js"></script>
+</body>
+</html>

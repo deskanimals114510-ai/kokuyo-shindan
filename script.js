@@ -971,5 +971,82 @@ if (navigator.share) {
   }
 })();
 
+// ===== 日主当てクイズ(友達版、2026-09-12追加) =====
+// MBTI診断のType Guesserと同系統のバイラル機能。日主は五行(木火土金水)×陰陽の
+// 組み合わせなので、MBTIの4軸クイズとは違い「元素を当てる1問+陰陽を当てる1問」の
+// 2問だけで済む(STEMSの並び順が元素ペアそのものなので、elementIdx*2+polarityIdxで
+// そのままstemIndexになる)。JA固定(EN未対応、必要になったら追って翻訳する)。
+let guessAnswers = { element: null, polarity: null };
+let guessTargetStemIdx = null;
+
+function inviteGuessUrl() {
+  if (!lastResult) return location.href;
+  return location.origin + location.pathname + '?guess=' + lastResult.pillars.day.stemIdx;
+}
+function copyInviteGuessUrl() {
+  if (!lastResult) return;
+  const btn = $('btn-invite-guess');
+  navigator.clipboard.writeText(inviteGuessUrl()).then(() => {
+    if (typeof gtag === 'function') gtag('event', 'guess_invite_copy');
+    const original = btn.textContent;
+    btn.textContent = 'コピーしました ✓';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }).catch(() => {});
+}
+
+function updateGuessSubmitState() {
+  $('btn-guess-submit').disabled = !(guessAnswers.element !== null && guessAnswers.polarity !== null);
+}
+
+document.querySelectorAll('.guess-option-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const group = btn.dataset.group;
+    document.querySelectorAll(`.guess-option-btn[data-group="${group}"]`).forEach((b) => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    guessAnswers[group] = Number(btn.dataset.value);
+    updateGuessSubmitState();
+  });
+});
+
+function renderGuessReveal(guessedStemIdx) {
+  const titleEl = $('guess-reveal-title');
+  const body = $('guess-reveal-body');
+  if (guessTargetStemIdx === null) {
+    titleEl.textContent = '';
+    body.innerHTML = '<p class="lead">このリンクは予想クイズ用ではないみたいね。診断結果の画面から「友達に日主を当ててもらう」を使って、送り直してもらいなさい。</p>';
+    return;
+  }
+  const guessedType = getDayMasterType(guessedStemIdx);
+  const actualType = getDayMasterType(guessTargetStemIdx);
+  const isCorrect = guessedStemIdx === guessTargetStemIdx;
+  titleEl.textContent = isCorrect ? '大正解! 🎉' : '惜しい!';
+  body.innerHTML = isCorrect
+    ? `<p class="lead">よく見てるじゃない。その人の日主は、ちゃんと言い当てた通り「${actualType.title}(${actualType.reading})」よ。</p>`
+    : `<p class="lead">あなたの予想は「${guessedType.title}(${guessedType.reading})」だったけれど、本当は「${actualType.title}(${actualType.reading})」だったの。人は見かけ通りとは限らないものよ。</p>`;
+}
+
+function finishGuessQuiz() {
+  const guessedStemIdx = guessAnswers.element * 2 + guessAnswers.polarity;
+  const isCorrect = guessTargetStemIdx !== null && guessedStemIdx === guessTargetStemIdx;
+  if (typeof gtag === 'function') gtag('event', 'guess_quiz_complete', { guessed: guessedStemIdx, target: guessTargetStemIdx, correct: isCorrect });
+  renderGuessReveal(guessedStemIdx);
+  showScreen('screen-guess-reveal');
+}
+
+$('btn-invite-guess').addEventListener('click', copyInviteGuessUrl);
+$('btn-guess-submit').addEventListener('click', finishGuessQuiz);
+$('btn-guess-take-quiz').addEventListener('click', () => showScreen('screen-start'));
+
+// 招待リンク(?guess=<0-9>)から着地した場合、当てクイズ画面をその場で表示する
+(function loadFromGuessLink() {
+  const target = new URLSearchParams(location.search).get('guess');
+  if (target === null) return;
+  const n = Number(target);
+  if (!Number.isInteger(n) || n < 0 || n > 9) return;
+  guessTargetStemIdx = n;
+  if (typeof gtag === 'function') gtag('event', 'guess_quiz_start');
+  showScreen('screen-guess');
+})();
+
 // ===== アクセス解析 =====
 // GA4読み込みは analytics.js に一本化(index.htmlでscript.jsより先に読み込む)。

@@ -353,6 +353,28 @@ html.deep-link-result #screen-result { display: flex; }
 .btn-secondary:hover { background: rgba(212, 175, 106, 0.16); }
 .card .sub { font-size: 0.74rem; color: var(--text-sub); margin: 18px 0 0; }
 .privacy-note { font-size: 0.8rem; color: var(--text-sub); text-align: left; margin: 4px 0 20px; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* 2026-09-12: 日主当てクイズ(友達版) */
+.guess-question { margin: 0 0 22px; text-align: left; }
+.guess-question-text { font-size: 0.9rem; font-weight: 700; color: var(--text); margin: 0 0 10px; }
+.guess-options { display: flex; flex-direction: column; gap: 8px; }
+.guess-option-btn {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.guess-option-btn:hover { border-color: var(--gold); }
+.guess-option-btn.selected { border-color: var(--gold-bright); background: rgba(212, 175, 106, 0.14); }
+#guess-reveal-body .lead { text-align: center; }
 
 /* 2026-09-12: 今日の運勢カード(生年月日を入力する前の全訪問者に、その場で軽い価値を渡す) */
 .daily-fortune-card {
