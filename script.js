@@ -376,6 +376,9 @@ const UI_TEXT = {
     followLabel3: '🐹 Desk Animalsをフォローする',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。掲載アイテムの効果・開運を保証するものではありません。',
     footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
+    transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
+    transparencyBody: '多くの占いは、生年月日から一つの運勢だけを告げるものよ。でも私は、あなたの本質・仕事・恋愛・人間関係・アドバイスの5つを、それぞれ別々に見立てているの。四柱推命でいう「日主(にっしゅ)」——生まれた日の十干を軸にして、あなたという木がどんな形をしているかを読み解いているのよ。',
+    transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ月の区切りには実際の暦と多少のずれがあることも、正直に伝えておくわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
     footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
     footerNichishuLink: '10タイプの結果例を見る',
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
@@ -441,6 +444,9 @@ const UI_TEXT = {
     followLabel3: '🐹 Follow Desk Animals',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee. We do not guarantee any luck-bringing effect from the items listed.',
     footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
+    transparencyTitle: "🔮 What makes this reading different",
+    transparencyBody: 'Most fortune-telling sites give you a single, generic reading. This one breaks it into five separate readings — your core nature, career, love, relationships, and advice — each read independently. It\'s built around your "Day Master" in BaZi (Four Pillars of Destiny): the heavenly stem of the day you were born, which shapes what kind of tree you are.',
+    transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. To be upfront: month boundaries use approximate dates that can be off by about a day from the real calendar. And your birth date is never stored anywhere, full stop.",
     footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
@@ -879,6 +885,9 @@ function applyLangUI() {
   $('follow-label-3').textContent = t.followLabel3;
   $('footer-pr').textContent = t.footerPr;
   $('footer-disclaimer').textContent = t.footerDisclaimer;
+  $('transparency-title').textContent = t.transparencyTitle;
+  $('transparency-body').textContent = t.transparencyBody;
+  $('transparency-note').textContent = t.transparencyNote;
   $('footer-privacy').textContent = t.footerPrivacy;
   $('footer-nichishu-link').textContent = t.footerNichishuLink;
   document.documentElement.lang = LANG;
