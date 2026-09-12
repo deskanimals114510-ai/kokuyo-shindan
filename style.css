@@ -792,6 +792,8 @@ html.deep-link-result #screen-result { display: flex; }
 .type-nav-link:focus-visible,
 .spinoff-cross-link:focus-visible,
 .lucky-remind a:focus-visible,
+.site-nav-link:focus-visible,
+.footer-link:focus-visible,
 .date-input:focus-visible {
   outline: 2px solid var(--gold-bright);
   outline-offset: 2px;
