@@ -50,6 +50,17 @@ function spinoffResultUrl(pageFile, stemIdx, branchIdx) {
   return location.origin + location.pathname.replace(/[^/]*$/, pageFile) + '?r=' + spinoffBuildResultCode(stemIdx, branchIdx);
 }
 
+// 2026-09-12: X/LINEシェア時のOGP対策(本体script.jsのshareOgUrl()と同じ考え方)。
+// ?r=の動的URLはクローラーがJSを実行しないため常に汎用OGPのまま。各スピンオフのタイプ別
+// 詳細ページ(zensei/{slug}.html等、No.25で追加済み)は日主別og:image(img/ogp/{slug}.jpg)を
+// 個別に持つため、SNS共有プレビューにはこちらを使う。コピーURL・ネイティブ共有は従来通り
+// ?r=の結果URL(spinoffResultUrl)のまま維持する。
+function spinoffShareOgUrl(pageDir, slug) {
+  const path = location.pathname;
+  const dir = path.endsWith('/') ? path : path.slice(0, path.lastIndexOf('/') + 1);
+  return location.origin + dir + pageDir + '/' + slug + '.html';
+}
+
 // 生年月日入力(年/月/日の3セレクト)。index.html(script.js)と同一ロジックを
 // zensei.html/shugorei.htmlからも使えるよう共通化したもの。
 function spinoffDaysInMonth(year, month) {

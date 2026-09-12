@@ -87,12 +87,12 @@ $('btn-restart').addEventListener('click', shugoreiRestart);
 $('btn-share').addEventListener('click', () => {
   if (!shugoreiLastResult) return;
   const text = `黒曜先生に守護霊を視てもらいました。\nあなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #守護霊診断`;
-  spinoffShareX(text, shugoreiResultUrl());
+  spinoffShareX(text, spinoffShareOgUrl('shugorei', shugoreiLastResult.type.slug));
 });
 $('btn-share-line').addEventListener('click', () => {
   if (!shugoreiLastResult) return;
   const text = `黒曜先生に守護霊を視てもらいました。あなたの守護霊は「${shugoreiLastResult.type.name}」。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
-  spinoffShareLine(text, shugoreiResultUrl());
+  spinoffShareLine(text, spinoffShareOgUrl('shugorei', shugoreiLastResult.type.slug));
 });
 $('btn-copy-url').addEventListener('click', () => {
   if (!shugoreiLastResult) return;

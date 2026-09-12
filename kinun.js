@@ -109,12 +109,12 @@ $('btn-restart').addEventListener('click', kinunRestart);
 $('btn-share').addEventListener('click', () => {
   if (!kinunLastResult) return;
   const text = `黒曜先生に金運を視てもらいました。\nあなたの金運は、${kinunLastResult.type.title}。\n${kinunLastResult.type.finalLine}\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #金運診断`;
-  spinoffShareX(text, kinunResultUrl());
+  spinoffShareX(text, spinoffShareOgUrl('kinun', kinunLastResult.type.slug));
 });
 $('btn-share-line').addEventListener('click', () => {
   if (!kinunLastResult) return;
   const text = `黒曜先生に金運を視てもらいました。あなたの金運は、${kinunLastResult.type.title}。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
-  spinoffShareLine(text, kinunResultUrl());
+  spinoffShareLine(text, spinoffShareOgUrl('kinun', kinunLastResult.type.slug));
 });
 $('btn-copy-url').addEventListener('click', () => {
   if (!kinunLastResult) return;

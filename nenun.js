@@ -93,12 +93,12 @@ $('btn-restart').addEventListener('click', nenunRestart);
 $('btn-share').addEventListener('click', () => {
   if (!nenunLastResult) return;
   const text = `黒曜先生に2027年の運勢を視てもらいました。\n2027年のあなたは、${nenunLastResult.type.title}。\n${nenunLastResult.type.finalLine}\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #2027年の運勢`;
-  spinoffShareX(text, nenunResultUrl());
+  spinoffShareX(text, spinoffShareOgUrl('nenun', nenunLastResult.type.slug));
 });
 $('btn-share-line').addEventListener('click', () => {
   if (!nenunLastResult) return;
   const text = `黒曜先生に2027年の運勢を視てもらいました。2027年のあなたは、${nenunLastResult.type.title}。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
-  spinoffShareLine(text, nenunResultUrl());
+  spinoffShareLine(text, spinoffShareOgUrl('nenun', nenunLastResult.type.slug));
 });
 $('btn-copy-url').addEventListener('click', () => {
   if (!nenunLastResult) return;

@@ -109,12 +109,12 @@ $('btn-restart').addEventListener('click', tenshokuRestart);
 $('btn-share').addEventListener('click', () => {
   if (!tenshokuLastResult) return;
   const text = `黒曜先生に天職を視てもらいました。\nあなたの天職は、${tenshokuLastResult.type.title}。\n${tenshokuLastResult.type.finalLine}\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #天職診断`;
-  spinoffShareX(text, tenshokuResultUrl());
+  spinoffShareX(text, spinoffShareOgUrl('tenshoku', tenshokuLastResult.type.slug));
 });
 $('btn-share-line').addEventListener('click', () => {
   if (!tenshokuLastResult) return;
   const text = `黒曜先生に天職を視てもらいました。あなたの天職は、${tenshokuLastResult.type.title}。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
-  spinoffShareLine(text, tenshokuResultUrl());
+  spinoffShareLine(text, spinoffShareOgUrl('tenshoku', tenshokuLastResult.type.slug));
 });
 $('btn-copy-url').addEventListener('click', () => {
   if (!tenshokuLastResult) return;

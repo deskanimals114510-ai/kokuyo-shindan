@@ -93,12 +93,12 @@ $('btn-restart').addEventListener('click', zenseiRestart);
 $('btn-share').addEventListener('click', () => {
   if (!zenseiLastResult) return;
   const text = `黒曜先生に前世を視てもらいました。\nあなたの前世は、${zenseiLastResult.type.title}だった。\n${zenseiLastResult.type.finalLine}\nあなたも視てもらいなさい→\n※エンタメ目的の診断です\n#黒曜診断 #前世診断`;
-  spinoffShareX(text, zenseiResultUrl());
+  spinoffShareX(text, spinoffShareOgUrl('zensei', zenseiLastResult.type.slug));
 });
 $('btn-share-line').addEventListener('click', () => {
   if (!zenseiLastResult) return;
   const text = `黒曜先生に前世を視てもらいました。あなたの前世は、${zenseiLastResult.type.title}だった。\nあなたも視てもらいなさい→\n※エンタメ目的の診断です`;
-  spinoffShareLine(text, zenseiResultUrl());
+  spinoffShareLine(text, spinoffShareOgUrl('zensei', zenseiLastResult.type.slug));
 });
 $('btn-copy-url').addEventListener('click', () => {
   if (!zenseiLastResult) return;
