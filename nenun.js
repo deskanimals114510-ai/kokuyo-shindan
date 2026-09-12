@@ -11,7 +11,8 @@ function nenunFindType(stemIdx) {
 
 function nenunApplyResult(stemIdx, branchIdx) {
   const type = nenunFindType(stemIdx);
-  nenunLastResult = { stemIdx, branchIdx, type };
+  const flavor = BRANCH_FLAVOR[SPINOFF_BRANCHES[branchIdx]];
+  nenunLastResult = { stemIdx, branchIdx, type, flavor };
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
@@ -30,6 +31,7 @@ function nenunApplyResult(stemIdx, branchIdx) {
     episodesEl.appendChild(el);
   });
 
+  $('result-flavor').textContent = flavor;
   $('result-final-line').textContent = type.finalLine;
 
   spinoffApplyLucky(stemIdx);

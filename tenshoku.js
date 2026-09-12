@@ -11,7 +11,8 @@ function tenshokuFindType(stemIdx) {
 
 function tenshokuApplyResult(stemIdx, branchIdx) {
   const type = tenshokuFindType(stemIdx);
-  tenshokuLastResult = { stemIdx, branchIdx, type };
+  const flavor = BRANCH_FLAVOR[SPINOFF_BRANCHES[branchIdx]];
+  tenshokuLastResult = { stemIdx, branchIdx, type, flavor };
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
@@ -30,6 +31,7 @@ function tenshokuApplyResult(stemIdx, branchIdx) {
     episodesEl.appendChild(el);
   });
 
+  $('result-flavor').textContent = flavor;
   $('result-final-line').textContent = type.finalLine;
 
   spinoffApplyLucky(stemIdx);

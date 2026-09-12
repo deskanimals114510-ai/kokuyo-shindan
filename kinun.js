@@ -11,7 +11,8 @@ function kinunFindType(stemIdx) {
 
 function kinunApplyResult(stemIdx, branchIdx) {
   const type = kinunFindType(stemIdx);
-  kinunLastResult = { stemIdx, branchIdx, type };
+  const flavor = BRANCH_FLAVOR[SPINOFF_BRANCHES[branchIdx]];
+  kinunLastResult = { stemIdx, branchIdx, type, flavor };
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
@@ -30,6 +31,7 @@ function kinunApplyResult(stemIdx, branchIdx) {
     episodesEl.appendChild(el);
   });
 
+  $('result-flavor').textContent = flavor;
   $('result-final-line').textContent = type.finalLine;
 
   spinoffApplyLucky(stemIdx);
