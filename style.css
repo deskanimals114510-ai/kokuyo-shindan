@@ -195,6 +195,25 @@ html.deep-link-result #screen-result { display: flex; }
   text-align: center;
 }
 .emoji { font-size: 2.6rem; margin-bottom: 6px; filter: drop-shadow(0 0 14px rgba(212,175,106,0.5)); }
+.hero-preview {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 2px 0 16px;
+}
+.hero-preview-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 3px solid var(--gold);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  margin-left: -16px;
+}
+.hero-preview-img:first-child { margin-left: 0; transform: rotate(-6deg); }
+.hero-preview-img:nth-child(2) { width: 76px; height: 76px; z-index: 2; transform: translateY(-6px); }
+.hero-preview-img:nth-child(3) { transform: rotate(6deg); }
 .card h1 {
   font-family: "Cinzel", "Shippori Mincho", serif;
   font-size: 1.9rem;
