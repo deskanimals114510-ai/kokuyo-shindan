@@ -109,6 +109,28 @@ body {
   .star:nth-child(3) { left: 3%; font-size: 1.4rem; }
   .star:nth-child(6) { left: 90%; font-size: 1.1rem; }
 }
+
+/* 左右の余白に既存イラストを配置(2026-09-12、新規生成なし・既存アセット再利用)。
+   日主イラストは168×252の低解像度アセットのため、拡大しすぎない幅に留める。 */
+.bg-illustrations { display: none; }
+@media (min-width: 1400px) {
+  body:has(#screen-start.active) .bg-illustrations {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bg-illust {
+    position: absolute;
+    width: 150px;
+    border-radius: 24px;
+    opacity: 0.55;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+  }
+  .bg-illust-left { top: 14%; left: 4%; transform: rotate(-6deg); }
+  .bg-illust-right { bottom: 12%; right: 4%; transform: rotate(6deg); }
+}
 @keyframes twinkle {
   0%, 100% { opacity: 0; transform: scale(0.7); }
   50% { opacity: 0.9; transform: scale(1.1); }
