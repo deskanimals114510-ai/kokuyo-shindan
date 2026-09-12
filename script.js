@@ -329,6 +329,8 @@ const UI_TEXT = {
     nichishuLink: '📖 占う前に、10タイプの結果例を見る',
     labelBirthdate: '生年月日を入力',
     labelBirthtime: '生まれた時刻(わかれば)',
+    labelBirthplace: '生まれた場所(わかれば)',
+    birthplacePlaceholder: '選択しない',
     optionalBadge: '任意',
     startBtn: '占ってもらう ✦',
     startSub: '生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります',
@@ -375,7 +377,7 @@ const UI_TEXT = {
     followLinkShugorei: '守護霊診断',
     followLabel3: '🐹 Desk Animalsをフォローする',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。掲載アイテムの効果・開運を保証するものではありません。',
-    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
+    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。出生地(都道府県)を選ぶと、県庁所在地の経度から時刻を補正しますが、季節による誤差(均時差、最大±16分程度)は計算に含めていない簡易補正です。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
     transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
     transparencyBody: '多くの占いは、生年月日から一つの運勢だけを告げるものよ。でも私は、あなたの本質・仕事・恋愛・人間関係・アドバイスの5つを、それぞれ別々に見立てているの。四柱推命でいう「日主(にっしゅ)」——生まれた日の十干を軸にして、あなたという木がどんな形をしているかを読み解いているのよ。',
     transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ月の区切りには実際の暦と多少のずれがあることも、正直に伝えておくわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
@@ -397,6 +399,8 @@ const UI_TEXT = {
     nichishuLink: '📖 Browse the 10 Day-Master Types First',
     labelBirthdate: 'Enter Your Birth Date',
     labelBirthtime: 'Birth Time (if known)',
+    labelBirthplace: 'Birthplace (if known)',
+    birthplacePlaceholder: 'Not selected',
     optionalBadge: 'Optional',
     startBtn: 'Get Your Reading ✦',
     startSub: "We'll read your core nature from your birth date. Add your birth time for an even deeper reading.",
@@ -443,7 +447,7 @@ const UI_TEXT = {
     followLinkShugorei: 'Guardian Spirit Reading',
     followLabel3: '🐹 Follow Desk Animals',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee. We do not guarantee any luck-bringing effect from the items listed.',
-    footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
+    footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. If you select a birthplace (prefecture), we adjust the time using that prefectural capital's longitude, but this is a simplified correction that does not account for the seasonal equation of time (up to about ±16 minutes). The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
     transparencyTitle: "🔮 What makes this reading different",
     transparencyBody: 'Most fortune-telling sites give you a single, generic reading. This one breaks it into five separate readings — your core nature, career, love, relationships, and advice — each read independently. It\'s built around your "Day Master" in BaZi (Four Pillars of Destiny): the heavenly stem of the day you were born, which shapes what kind of tree you are.',
     transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. To be upfront: month boundaries use approximate dates that can be off by about a day from the real calendar. And your birth date is never stored anywhere, full stop.",
@@ -471,6 +475,115 @@ let lastResult = null;
 let isSharedView = false;
 // 有料鑑定への興味シグナル計測(No.86)。クリック後はお礼文言に差し替えて再クリックを無効化する。
 let interestPaidClicked = false;
+
+// ===== 出生地(真太陽時補正、2026-09-12追加) =====
+// 日本標準時(JST)は東経135度(明石市)の子午線を基準にしているため、実際の太陽が
+// 南中する時刻(真太陽時)は出生地の経度によって最大±50分ほどずれる。時柱(2時間ごとの
+// 干支)の境目付近に生まれた人はこの補正で時柱そのものが変わり得るため、任意入力として
+// 都道府県(=県庁所在地の経度で近似)を追加した。均時差(季節による最大±16分の変動)は
+// 計算せず経度差のみの簡易補正とする(エンタメ精度、footerDisclaimerで明示)。
+// 経度は県庁所在地のおおよその値(小数点2桁、資料により多少前後する)。
+const PREFECTURES = [
+  { ja: '北海道', en: 'Hokkaido', lon: 141.35 },
+  { ja: '青森県', en: 'Aomori', lon: 140.74 },
+  { ja: '岩手県', en: 'Iwate', lon: 141.15 },
+  { ja: '宮城県', en: 'Miyagi', lon: 140.87 },
+  { ja: '秋田県', en: 'Akita', lon: 140.10 },
+  { ja: '山形県', en: 'Yamagata', lon: 140.36 },
+  { ja: '福島県', en: 'Fukushima', lon: 140.47 },
+  { ja: '茨城県', en: 'Ibaraki', lon: 140.45 },
+  { ja: '栃木県', en: 'Tochigi', lon: 139.88 },
+  { ja: '群馬県', en: 'Gunma', lon: 139.06 },
+  { ja: '埼玉県', en: 'Saitama', lon: 139.65 },
+  { ja: '千葉県', en: 'Chiba', lon: 140.12 },
+  { ja: '東京都', en: 'Tokyo', lon: 139.69 },
+  { ja: '神奈川県', en: 'Kanagawa', lon: 139.64 },
+  { ja: '新潟県', en: 'Niigata', lon: 139.02 },
+  { ja: '富山県', en: 'Toyama', lon: 137.21 },
+  { ja: '石川県', en: 'Ishikawa', lon: 136.66 },
+  { ja: '福井県', en: 'Fukui', lon: 136.22 },
+  { ja: '山梨県', en: 'Yamanashi', lon: 138.57 },
+  { ja: '長野県', en: 'Nagano', lon: 138.18 },
+  { ja: '岐阜県', en: 'Gifu', lon: 136.76 },
+  { ja: '静岡県', en: 'Shizuoka', lon: 138.38 },
+  { ja: '愛知県', en: 'Aichi', lon: 136.91 },
+  { ja: '三重県', en: 'Mie', lon: 136.51 },
+  { ja: '滋賀県', en: 'Shiga', lon: 135.87 },
+  { ja: '京都府', en: 'Kyoto', lon: 135.76 },
+  { ja: '大阪府', en: 'Osaka', lon: 135.52 },
+  { ja: '兵庫県', en: 'Hyogo', lon: 135.18 },
+  { ja: '奈良県', en: 'Nara', lon: 135.83 },
+  { ja: '和歌山県', en: 'Wakayama', lon: 135.17 },
+  { ja: '鳥取県', en: 'Tottori', lon: 134.24 },
+  { ja: '島根県', en: 'Shimane', lon: 133.05 },
+  { ja: '岡山県', en: 'Okayama', lon: 133.93 },
+  { ja: '広島県', en: 'Hiroshima', lon: 132.46 },
+  { ja: '山口県', en: 'Yamaguchi', lon: 131.47 },
+  { ja: '徳島県', en: 'Tokushima', lon: 134.56 },
+  { ja: '香川県', en: 'Kagawa', lon: 134.04 },
+  { ja: '愛媛県', en: 'Ehime', lon: 132.77 },
+  { ja: '高知県', en: 'Kochi', lon: 133.53 },
+  { ja: '福岡県', en: 'Fukuoka', lon: 130.42 },
+  { ja: '佐賀県', en: 'Saga', lon: 130.30 },
+  { ja: '長崎県', en: 'Nagasaki', lon: 129.87 },
+  { ja: '熊本県', en: 'Kumamoto', lon: 130.74 },
+  { ja: '大分県', en: 'Oita', lon: 131.61 },
+  { ja: '宮崎県', en: 'Miyazaki', lon: 131.42 },
+  { ja: '鹿児島県', en: 'Kagoshima', lon: 130.56 },
+  { ja: '沖縄県', en: 'Okinawa', lon: 127.68 },
+];
+
+function populateBirthplaceSelect() {
+  const sel = $('birthplace');
+  if (!sel) return;
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  sel.appendChild(placeholder);
+  PREFECTURES.forEach((p) => {
+    const opt = document.createElement('option');
+    opt.value = String(p.lon);
+    sel.appendChild(opt);
+  });
+  renderBirthplaceOptionLabels();
+}
+
+// 言語切替のたびに都道府県名だけ差し替える(value=経度は変えない、選択状態を保つため)
+function renderBirthplaceOptionLabels() {
+  const sel = $('birthplace');
+  if (!sel) return;
+  const t = UI_TEXT[LANG];
+  sel.options[0].textContent = t.birthplacePlaceholder;
+  PREFECTURES.forEach((p, i) => {
+    sel.options[i + 1].textContent = LANG === 'en' ? p.en : p.ja;
+  });
+}
+
+// 経度差から真太陽時への補正分数(均時差は含まない簡易補正)。東経135度を基準に、
+// 4分/度で加減する(東ほど進み、西ほど遅れる)。
+function solarTimeCorrectionMinutes(longitude) {
+  return Math.round((longitude - 135) * 4);
+}
+
+// 出生地補正込みで、日主・時柱計算に使う実効的な年月日・時・分を求める。
+// 補正の結果、日付が前後にずれる場合(未明生まれ+西日本など)は年月日も繰り上げ/繰り下げる。
+function applyBirthplaceCorrection(y, m, d, hour, minute, longitude) {
+  if (longitude === null || longitude === undefined || isNaN(longitude)) {
+    return { y, m, d, hour, minute };
+  }
+  const correction = solarTimeCorrectionMinutes(longitude);
+  let totalMinutes = hour * 60 + minute + correction;
+  let dayOffset = 0;
+  while (totalMinutes < 0) { totalMinutes += 1440; dayOffset -= 1; }
+  while (totalMinutes >= 1440) { totalMinutes -= 1440; dayOffset += 1; }
+  const correctedHour = Math.floor(totalMinutes / 60);
+  const correctedMinute = totalMinutes % 60;
+  if (dayOffset === 0) {
+    return { y, m, d, hour: correctedHour, minute: correctedMinute };
+  }
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + dayOffset);
+  return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate(), hour: correctedHour, minute: correctedMinute };
+}
 
 // 生年月日入力(年/月/日の3セレクト)。ネイティブtype="date"のドラムロールスクロール負担を避けるための構成。
 function populateBirthdateSelects() {
@@ -520,6 +633,7 @@ function refreshDayOptions() {
   if (prevValue && Number(prevValue) <= max) daySel.value = prevValue;
 }
 populateBirthdateSelects();
+populateBirthplaceSelect();
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -565,13 +679,23 @@ function startDivination() {
   clearBirthdateError();
   const timeInput = $('birthtime');
   let hour = null;
+  let minute = 0;
   if (timeInput.value) {
-    hour = Number(timeInput.value.split(':')[0]);
+    const parts = timeInput.value.split(':');
+    hour = Number(parts[0]);
+    minute = Number(parts[1]) || 0;
   }
+  const birthplaceSel = $('birthplace');
+  const longitude = (hour !== null && birthplaceSel && birthplaceSel.value) ? Number(birthplaceSel.value) : null;
   showScreen('screen-loading');
   setTimeout(() => {
     try {
-      renderResult(Number(y), Number(m), Number(d), hour);
+      let by = Number(y), bm = Number(m), bd = Number(d), bh = hour;
+      if (hour !== null && longitude !== null) {
+        const corrected = applyBirthplaceCorrection(by, bm, bd, hour, minute, longitude);
+        by = corrected.y; bm = corrected.m; bd = corrected.d; bh = corrected.hour;
+      }
+      renderResult(by, bm, bd, bh);
     } catch (e) {
       console.error('鑑定の生成に失敗しました', e);
       showScreen('screen-start');
@@ -752,6 +876,7 @@ function applyResult(pillars) {
   $('birth-day').value = '';
   refreshDayOptions();
   $('birthtime').value = '';
+  $('birthplace').value = '';
 
   showScreen('screen-result');
   focusResultHeading();
@@ -763,6 +888,7 @@ function restart() {
   $('birth-day').value = '';
   refreshDayOptions();
   $('birthtime').value = '';
+  $('birthplace').value = '';
   clearBirthdateError();
   isSharedView = false;
   $('btn-restart').textContent = UI_TEXT[LANG].restartBtn;
@@ -846,6 +972,8 @@ function applyLangUI() {
   $('nichishu-link').textContent = t.nichishuLink;
   $('label-birthdate').textContent = t.labelBirthdate;
   $('label-birthtime').textContent = t.labelBirthtime;
+  $('label-birthplace').textContent = t.labelBirthplace;
+  renderBirthplaceOptionLabels();
   $('optional-badge').textContent = t.optionalBadge;
   $('btn-start').textContent = t.startBtn;
   $('start-sub').textContent = t.startSub;

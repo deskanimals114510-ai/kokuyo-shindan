@@ -103,6 +103,8 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <p id="privacy-note" class="privacy-note">🔒 入力内容は送信・保存されません</p>
       <label for="birthtime" class="field-label"><span id="label-birthtime">生まれた時刻(わかれば)</span><span id="optional-badge" class="optional-badge">任意</span></label>
       <input type="time" id="birthtime" class="date-input">
+      <label for="birthplace" class="field-label"><span id="label-birthplace">生まれた場所(わかれば)</span><span class="optional-badge">任意</span></label>
+      <select id="birthplace" class="date-input date-select"></select>
       <button id="btn-start" class="btn-primary">占ってもらう ✦</button>
       <p id="start-sub" class="sub">生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります</p>
       <a id="nichishu-link" class="follow-link link-spaced-top" href="nichishu/" target="_blank" rel="noopener">📖 占う前に、日主10タイプ一覧を見る</a>
