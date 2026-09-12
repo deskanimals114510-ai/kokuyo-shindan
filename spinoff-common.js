@@ -412,10 +412,12 @@ const SPINOFF_LUCKY = [
   { emoji: '💧', name: '加湿器・アロマディフューザー', keyword: 'アロマディフューザー 卓上', price: '¥2,000〜4,000', hitokoto: '静かな気配には、静かに満ちる香りを添えなさい。' },
 ];
 
-// 前世診断・守護霊診断の結果画面に、年干インデックスからラッキーアイテムカードを差し込む共通処理
-// (両ページのHTMLはid="lucky-link"/"lucky-emoji"/"lucky-name"/"lucky-price"/"lucky-hitokoto"を持つ前提)
-function spinoffApplyLucky(stemIdx) {
-  const item = SPINOFF_LUCKY[stemIdx];
+// 各スピンオフの結果画面に、年干インデックスからラッキーアイテムカードを差し込む共通処理
+// (各ページのHTMLはid="lucky-link"/"lucky-emoji"/"lucky-name"/"lucky-price"/"lucky-hitokoto"を持つ前提)
+// 第2引数luckyArrayを省略すると汎用のSPINOFF_LUCKYを使う。金運診断・天職診断のようにテーマに直結する
+// スピンオフは、呼び出し側でテーマ別配列(KINUN_LUCKY/TENSHOKU_LUCKY等)を渡して差し替える(2026-09-12追加)。
+function spinoffApplyLucky(stemIdx, luckyArray) {
+  const item = (luckyArray || SPINOFF_LUCKY)[stemIdx];
   const link = $('lucky-link');
   if (!link || !item) return;
   link.href = spinoffAffiliateUrl(item.keyword);
