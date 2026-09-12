@@ -440,6 +440,30 @@ html.deep-link-result #screen-result { display: flex; }
   margin: 18px 0 8px;
 }
 .result-advice { font-size: 0.88rem; line-height: 1.8; color: var(--gold-bright); text-align: left; margin-bottom: 16px; }
+
+/* 2026-09-12: 大運(10年ごとの運気サイクル) */
+.dayun-section { margin: 0 0 16px; text-align: left; }
+.dayun-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+}
+.dayun-card {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 68px;
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: rgba(212, 175, 106, 0.06);
+}
+.dayun-age { font-size: 0.7rem; color: var(--text-sub); }
+.dayun-ganzhi { font-size: 1.1rem; font-weight: 700; color: var(--gold-bright); font-family: "Shippori Mincho", serif; }
+.dayun-reading { font-size: 0.64rem; color: var(--text-sub); }
 .lucky-item {
   display: flex;
   align-items: center;

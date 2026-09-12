@@ -105,6 +105,12 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <input type="time" id="birthtime" class="date-input">
       <label for="birthplace" class="field-label"><span id="label-birthplace">生まれた場所(わかれば)</span><span class="optional-badge">任意</span></label>
       <select id="birthplace" class="date-input date-select"></select>
+      <label for="birth-gender" class="field-label"><span id="label-gender">性別(わかれば・大運の計算に使用)</span><span class="optional-badge">任意</span></label>
+      <select id="birth-gender" class="date-input date-select">
+        <option id="gender-option-none" value=""></option>
+        <option id="gender-option-male" value="male"></option>
+        <option id="gender-option-female" value="female"></option>
+      </select>
       <button id="btn-start" class="btn-primary">占ってもらう ✦</button>
       <p id="start-sub" class="sub">生年月日から、あなたの核となる気質を鑑定します。生まれた時刻まで入れると、より詳しい鑑定になります</p>
       <a id="nichishu-link" class="follow-link link-spaced-top" href="nichishu/" target="_blank" rel="noopener">📖 占う前に、日主10タイプ一覧を見る</a>
@@ -152,6 +158,12 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <h3 id="subhead-background" class="result-subhead">🌙 生まれ持った背景</h3>
       <p id="result-background" class="result-desc"></p>
       <p id="result-pending-note" class="lang-note" style="display:none;"></p>
+      <div id="dayun-section" class="dayun-section" style="display:none;">
+        <h3 id="subhead-dayun" class="result-subhead">🔄 大運(10年ごとの運気の巡り)</h3>
+        <p id="dayun-intro" class="result-desc"></p>
+        <div id="dayun-list" class="dayun-list"></div>
+      </div>
+      <p id="dayun-hint" class="lang-note"></p>
       <p id="result-advice" class="result-advice"></p>
       <a id="lucky-link" class="lucky-item" href="#" target="_blank" rel="noopener" tabindex="-1">
         <span id="lucky-emoji" class="lucky-emoji" aria-hidden="true"></span>
