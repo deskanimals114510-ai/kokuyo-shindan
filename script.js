@@ -475,6 +475,7 @@ const UI_TEXT = {
     restartBtn: 'もう一度占う',
     restartBtnFirstVisit: '自分も占ってもらう ✦',
     luckyRemindText: '🎁 開運アイテムをもう一度見る ↑',
+    luckyTeaserText: '🎁 あなたへの開運アイテムはこの下にあります ↓',
     interestLinkText: '🔔 もっと詳しく知りたい方へ(準備中・タップで通知登録)',
     interestThanksText: '興味を持っていただきありがとうございます。正式リリース時にX(@deskanimalslab)でお知らせします🔔',
     gogyoLink: '五行相性を見る',
@@ -553,6 +554,7 @@ const UI_TEXT = {
     restartBtn: 'Try Again',
     restartBtnFirstVisit: 'Get Your Own Reading ✦',
     luckyRemindText: '🎁 See the Lucky Pick Again ↑',
+    luckyTeaserText: '🎁 Your lucky pick is just below ↓',
     interestLinkText: '🔔 Want an even deeper reading? (Coming soon — tap to get notified)',
     interestThanksText: "Thanks for your interest! We'll announce it on X (@deskanimalslab) when it's ready 🔔",
     gogyoLink: 'Element Compatibility Check',
@@ -1159,6 +1161,7 @@ function applyLangUI() {
   $('btn-copy-url').textContent = t.copyUrlBtn;
   $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
   $('lucky-remind-link').textContent = t.luckyRemindText;
+  $('lucky-teaser-link').textContent = t.luckyTeaserText;
   $('interest-paid-link').textContent = interestPaidClicked ? t.interestThanksText : t.interestLinkText;
   $('privacy-note').textContent = t.privacyNote;
   $('screen-start').setAttribute('aria-label', t.ariaScreenStart);
