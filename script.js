@@ -481,10 +481,16 @@ const UI_TEXT = {
     gogyoLink: '五行相性を見る',
     followLabel1: '✨ もっと黒曜診断を楽しみなさい',
     followLinkQuiz: '性格・恋愛・仕事タイプ診断',
+    followLinkLovechar64: '恋愛キャラ診断(全64通り)',
     followLabel2: '🌙 一つの日主だけじゃ、あなたの全部は見えないのよ',
+    followLinkKinun: '金運診断',
+    followLinkTenshoku: '天職診断',
+    followLinkNenun: '2027年の運勢',
     followLinkZensei: '前世診断',
     followLinkShugorei: '守護霊診断',
     followLabel3: '🐹 Desk Animalsをフォローする',
+    followLabel4: '🐾 動物の雑学・診断もチェック',
+    followLinkTwMatome: '動物雑学まとめ',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。掲載アイテムの効果・開運を保証するものではありません。',
     footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。出生地(都道府県)を選ぶと、県庁所在地の経度から時刻を補正しますが、季節による誤差(均時差、最大±16分程度)は計算に含めていない簡易補正です。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
     transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
@@ -560,10 +566,16 @@ const UI_TEXT = {
     gogyoLink: 'Element Compatibility Check',
     followLabel1: '✨ More ways to enjoy Kokuyo Fortune Reading',
     followLinkQuiz: 'Personality / Love / Career Type Quiz',
+    followLinkLovechar64: 'Love Character Quiz (64 Types)',
     followLabel2: "🌙 One day-master alone won't show you everything",
+    followLinkKinun: 'Money Luck Reading',
+    followLinkTenshoku: 'Career Calling Reading',
+    followLinkNenun: '2027 Fortune Reading',
     followLinkZensei: 'Past Life Reading',
     followLinkShugorei: 'Guardian Spirit Reading',
     followLabel3: '🐹 Follow Desk Animals',
+    followLabel4: '🐾 Check out more animal trivia & quizzes',
+    followLinkTwMatome: 'Animal Trivia Roundup',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee. We do not guarantee any luck-bringing effect from the items listed.',
     footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. If you select a birthplace (prefecture), we adjust the time using that prefectural capital's longitude, but this is a simplified correction that does not account for the seasonal equation of time (up to about ±16 minutes). The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
     transparencyTitle: "🔮 What makes this reading different",
@@ -1183,13 +1195,19 @@ function applyLangUI() {
   $('gogyo-link').textContent = t.gogyoLink;
   $('follow-label-1').textContent = t.followLabel1;
   $('follow-link-quiz').textContent = t.followLinkQuiz;
+  $('follow-link-lovechar64').textContent = t.followLinkLovechar64;
   $('follow-label-2').textContent = t.followLabel2;
+  $('follow-link-kinun').textContent = t.followLinkKinun;
+  $('follow-link-tenshoku').textContent = t.followLinkTenshoku;
+  $('follow-link-nenun').textContent = t.followLinkNenun;
   $('follow-link-zensei').textContent = t.followLinkZensei;
   $('start-spinoff-label').textContent = t.followLabel2;
   $('start-spinoff-zensei').textContent = t.followLinkZensei;
   $('start-spinoff-shugorei').textContent = t.followLinkShugorei;
   $('follow-link-shugorei').textContent = t.followLinkShugorei;
   $('follow-label-3').textContent = t.followLabel3;
+  $('follow-label-4').textContent = t.followLabel4;
+  $('follow-link-tw-matome').textContent = t.followLinkTwMatome;
   $('footer-pr').textContent = t.footerPr;
   $('footer-disclaimer').textContent = t.footerDisclaimer;
   $('transparency-title').textContent = t.transparencyTitle;
