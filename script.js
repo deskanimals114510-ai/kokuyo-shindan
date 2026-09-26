@@ -1202,6 +1202,9 @@ function applyLangUI() {
   $('follow-link-nenun').textContent = t.followLinkNenun;
   $('follow-link-zensei').textContent = t.followLinkZensei;
   $('start-spinoff-label').textContent = t.followLabel2;
+  $('start-spinoff-kinun').textContent = t.followLinkKinun;
+  $('start-spinoff-tenshoku').textContent = t.followLinkTenshoku;
+  $('start-spinoff-nenun').textContent = t.followLinkNenun;
   $('start-spinoff-zensei').textContent = t.followLinkZensei;
   $('start-spinoff-shugorei').textContent = t.followLinkShugorei;
   $('follow-link-shugorei').textContent = t.followLinkShugorei;
