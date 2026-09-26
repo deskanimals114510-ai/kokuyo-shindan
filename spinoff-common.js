@@ -445,3 +445,8 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
 
 // ===== アクセス解析 =====
 // GA4読み込みは analytics.js に一本化(shugorei.html/zensei.htmlでspinoff-common.jsより先に読み込む)。
+
+// 開運アイテム(アフィリエイト)リンクのクリックを明示計測(本体script.js側と揃える、2026-09-26追加)。
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.lucky-item')) { if (typeof gtag === 'function') gtag('event', 'affiliate_click'); }
+});

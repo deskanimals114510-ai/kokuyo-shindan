@@ -1350,3 +1350,12 @@ $('btn-guess-take-quiz').addEventListener('click', () => showScreen('screen-star
 
 // ===== アクセス解析 =====
 // GA4読み込みは analytics.js に一本化(index.htmlでscript.jsより先に読み込む)。
+
+// 開運アイテム(アフィリエイト)リンクのクリックはこれまで明示計測がなく、GA4拡張計測の
+// 自動outboundクリック検知任せだった(MBTI診断は.lucky-itemに明示trackEvent('affiliate_click')
+// 済みだが黒曜診断は未実装だったため揃える)。あわせて、結果画面上部に追加した早見リンク
+// (lucky-teaser-link)が実際に使われているかも計測する(2026-09-26追加)。
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.lucky-item')) { if (typeof gtag === 'function') gtag('event', 'affiliate_click'); return; }
+  if (e.target.closest('#lucky-teaser-link')) { if (typeof gtag === 'function') gtag('event', 'lucky_teaser_click'); return; }
+});
