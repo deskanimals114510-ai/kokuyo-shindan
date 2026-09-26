@@ -475,7 +475,7 @@ const UI_TEXT = {
     restartBtn: 'もう一度占う',
     restartBtnFirstVisit: '自分も占ってもらう ✦',
     luckyRemindText: '🎁 開運アイテムをもう一度見る ↑',
-    luckyTeaserText: '🎁 あなたへの開運アイテムはこの下にあります ↓',
+    resultExpandText: '続きを見る(仕事・恋愛・人間関係・開運アイテムなど) ▼',
     interestLinkText: '🔔 もっと詳しく知りたい方へ(準備中・タップで通知登録)',
     interestThanksText: '興味を持っていただきありがとうございます。正式リリース時にX(@deskanimalslab)でお知らせします🔔',
     gogyoLink: '五行相性を見る',
@@ -554,7 +554,7 @@ const UI_TEXT = {
     restartBtn: 'Try Again',
     restartBtnFirstVisit: 'Get Your Own Reading ✦',
     luckyRemindText: '🎁 See the Lucky Pick Again ↑',
-    luckyTeaserText: '🎁 Your lucky pick is just below ↓',
+    resultExpandText: 'See more (career, love, relationships, lucky pick...) ▼',
     interestLinkText: '🔔 Want an even deeper reading? (Coming soon — tap to get notified)',
     interestThanksText: "Thanks for your interest! We'll announce it on X (@deskanimalslab) when it's ready 🔔",
     gogyoLink: 'Element Compatibility Check',
@@ -998,6 +998,10 @@ function applyResult(pillars, dayYun) {
 
   renderDaYunSection(lastResult.dayYun);
 
+  // 新しい結果を表示するたびに「続きを見る」の開示状態をリセットする(前回開いたままにしない)
+  $('result-details').classList.remove('expanded');
+  $('result-expand-btn').classList.remove('expanded');
+
   // 結果表示後は非表示の入力欄に生年月日・時刻を残さない(共有端末での閲覧リスク軽減)
   $('birth-year').value = '';
   $('birth-month').value = '';
@@ -1161,7 +1165,7 @@ function applyLangUI() {
   $('btn-copy-url').textContent = t.copyUrlBtn;
   $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
   $('lucky-remind-link').textContent = t.luckyRemindText;
-  $('lucky-teaser-link').textContent = t.luckyTeaserText;
+  $('result-expand-btn').textContent = t.resultExpandText;
   $('interest-paid-link').textContent = interestPaidClicked ? t.interestThanksText : t.interestLinkText;
   $('privacy-note').textContent = t.privacyNote;
   $('screen-start').setAttribute('aria-label', t.ariaScreenStart);
@@ -1353,9 +1357,25 @@ $('btn-guess-take-quiz').addEventListener('click', () => showScreen('screen-star
 
 // 開運アイテム(アフィリエイト)リンクのクリックはこれまで明示計測がなく、GA4拡張計測の
 // 自動outboundクリック検知任せだった(MBTI診断は.lucky-itemに明示trackEvent('affiliate_click')
-// 済みだが黒曜診断は未実装だったため揃える)。あわせて、結果画面上部に追加した早見リンク
-// (lucky-teaser-link)が実際に使われているかも計測する(2026-09-26追加)。
+// 済みだが黒曜診断は未実装だったため揃える、2026-09-26追加)。
 document.addEventListener('click', (e) => {
   if (e.target.closest('.lucky-item')) { if (typeof gtag === 'function') gtag('event', 'affiliate_click'); return; }
-  if (e.target.closest('#lucky-teaser-link')) { if (typeof gtag === 'function') gtag('event', 'lucky_teaser_click'); return; }
+});
+
+// ===== 結果画面のプログレッシブディスクロージャー(「ちょい見せ」設計、2026-09-26追加) =====
+// 結果画面は最初はタイプ名+短い説明+シェアボタンのみを見せ、仕事/恋愛/人間関係/背景・
+// 開運アイテムは「続きを見る」クリックで初めて開示する(診断コンテンツのUXベストプラクティス、
+// reference_diagnostic_ux_design_patterns_2026参照)。早い段階でシェアの動機を作りつつ、
+// 「続きが気になる」状態を維持する狙い。
+$('result-expand-btn').addEventListener('click', () => {
+  $('result-details').classList.add('expanded');
+  $('result-expand-btn').classList.add('expanded');
+  if (typeof gtag === 'function') gtag('event', 'result_expand_click');
+});
+// 「開運アイテムをもう一度見る」リンクは#lucky-linkへのアンカージャンプだが、未展開のままだと
+// 対象がdisplay:noneで見えない(ジャンプ自体は起きるが空白しか表示されない)。先に展開してから
+// ジャンプさせる。
+$('lucky-remind-link').addEventListener('click', () => {
+  $('result-details').classList.add('expanded');
+  $('result-expand-btn').classList.add('expanded');
 });

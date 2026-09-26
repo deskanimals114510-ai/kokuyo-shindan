@@ -149,7 +149,8 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
       <span class="eyebrow">RESULT</span>
       <h2 id="result-line" class="result-line"></h2>
       <p id="result-desc" class="result-desc"></p>
-      <p class="lucky-teaser"><a id="lucky-teaser-link" href="#lucky-link">🎁 あなたへの開運アイテムはこの下にあります ↓</a></p>
+      <button id="result-expand-btn" class="result-expand-btn" type="button">続きを見る(仕事・恋愛・人間関係・開運アイテムなど) ▼</button>
+      <div id="result-details" class="result-details">
       <h3 id="subhead-work" class="result-subhead">💼 仕事・お金の傾向</h3>
       <p id="result-work" class="result-desc"></p>
       <h3 id="subhead-love" class="result-subhead">💞 恋愛の傾向</h3>
@@ -176,6 +177,7 @@ if (/[?&]r=[0-9]{3}([0-9]|x)[je]?(&|$)/.test(location.search)) {
         </span>
         <span class="lucky-arrow" aria-hidden="true">›</span>
       </a>
+      </div>
     </div>
     <div class="result-actions" role="group" aria-label="結果の共有・操作">
       <button id="btn-share" class="btn-primary">Xでシェア ✦</button>

@@ -482,20 +482,24 @@ html.deep-link-result #screen-result { display: flex; }
 .lucky-remind { text-align: center; margin: 14px 0 0; }
 .lucky-remind a { font-size: 0.76rem; color: var(--gold-bright); text-decoration: none; }
 .lucky-remind a:hover { text-decoration: underline; }
-.lucky-teaser { text-align: center; margin: 14px 0 6px; }
-.lucky-teaser a {
-  display: inline-block;
-  font-size: 0.78rem;
+.result-details { display: none; }
+.result-details.expanded { display: block; }
+.result-expand-btn {
+  display: block;
+  margin: 14px auto 6px;
+  font-family: inherit;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--gold-bright);
   background: rgba(212, 175, 106, 0.14);
   border: 1.5px solid var(--gold);
   border-radius: 999px;
-  padding: 6px 16px;
-  text-decoration: none;
+  padding: 8px 20px;
+  cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
 }
-.lucky-teaser a:hover { background: var(--gold); color: var(--bg1); transform: translateY(-1px); }
+.result-expand-btn:hover { background: var(--gold); color: var(--bg1); transform: translateY(-1px); }
+.result-expand-btn.expanded { display: none; }
 .lucky-emoji { font-size: 1.6rem; flex: none; }
 .lucky-text { flex: 1; display: flex; flex-direction: column; gap: 3px; text-align: left; }
 .lucky-label { font-size: 0.66rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
