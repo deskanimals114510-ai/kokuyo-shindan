@@ -167,7 +167,7 @@ html.deep-link-result #screen-result { display: flex; }
 .accent { color: var(--gold-bright); }
 
 /* PC幅でのスタート画面2カラム化(2026-09-12、MBTI診断と同じ設計方針)。
-   鑑定中・結果画面は幅を変えない。 */
+   鑑定中は幅を変えない(結果画面は下記2026-09-30の別ルールで対応済み)。 */
 .start-sidebar { display: flex; flex-direction: column; gap: 18px; }
 .start-sidebar .transparency-box,
 .start-sidebar .follow-links { margin-top: 0; padding-top: 0; border-top: none; }
@@ -181,6 +181,22 @@ html.deep-link-result #screen-result { display: flex; }
     width: 100%;
   }
   .start-sidebar { padding-top: 6px; }
+}
+
+/* PC幅での結果画面の幅調整(2026-09-30)。黒曜診断の結果は(MBTI診断・相性診断と
+   違い)複数カードの並列ではなく1枚の鑑定カード内に長文セクションが連なる構成
+   のため、3カラムグリッド化はせず、鑑定カードだけ幅を広げて読みやすくする
+   (シェア/フォローリンク等のボタン列は間延びを避けるため480px幅のまま)。 */
+@media (min-width: 900px) {
+  #app:has(#screen-result.active) { max-width: 720px; }
+  #screen-result { align-items: center; }
+  #screen-result > * {
+    width: 100%;
+    max-width: 480px;
+  }
+  #screen-result > .result-card {
+    max-width: none;
+  }
 }
 
 /* ---- スタート画面 ---- */
