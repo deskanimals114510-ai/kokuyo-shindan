@@ -1218,6 +1218,8 @@ function applyLangUI() {
   $('transparency-note').textContent = t.transparencyNote;
   $('footer-privacy').textContent = t.footerPrivacy;
   $('footer-nichishu-link').textContent = t.footerNichishuLink;
+  // 日主当てクイズ(友達版)は日本語専用のため、英語表示では招待ボタンを出さない
+  $('btn-invite-guess').hidden = LANG === 'en';
   document.documentElement.lang = LANG;
   // 結果画面が表示中に切り替えた場合、鑑定結果(言語依存のテキスト)を再計算してから再描画する
   if (lastResult) {
