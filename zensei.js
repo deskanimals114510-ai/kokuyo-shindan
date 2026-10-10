@@ -61,11 +61,13 @@ function zenseiStart() {
     return;
   }
   spinoffClearBirthdateSelectsError(ZENSEI_BIRTHDATE_IDS, 'birthdate-error');
+  spinoffTrack('quiz_start');
   spinoffShowScreen('screen-loading');
   setTimeout(() => {
     try {
       const pillar = spinoffComputeYearPillar(y, m, d);
       zenseiApplyResult(pillar.stemIdx, pillar.branchIdx);
+      spinoffTrack('quiz_complete');
     } catch (e) {
       console.error('前世診断の生成に失敗しました', e);
       spinoffShowScreen('screen-start');

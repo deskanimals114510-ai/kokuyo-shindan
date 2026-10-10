@@ -496,7 +496,7 @@ const UI_TEXT = {
     transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
     transparencyBody: '多くの占いは、生年月日から一つの運勢だけを告げるものよ。でも私は、あなたの本質・仕事・恋愛・人間関係・アドバイスの5つを、それぞれ別々に見立てているの。四柱推命でいう「日主(にっしゅ)」——生まれた日の十干を軸にして、あなたという木がどんな形をしているかを読み解いているのよ。',
     transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ月の区切りには実際の暦と多少のずれがあることも、正直に伝えておくわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
-    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
+    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。計測にはCookieを使用します。ラッキーアイテムのリンク先(Amazon)などの第三者がCookieを設定・取得する場合があります。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
     footerNichishuLink: '10タイプの結果例を見る',
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
     shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です\n#黒曜診断 #四柱推命`,
@@ -581,7 +581,7 @@ const UI_TEXT = {
     transparencyTitle: "🔮 What makes this reading different",
     transparencyBody: 'Most fortune-telling sites give you a single, generic reading. This one breaks it into five separate readings — your core nature, career, love, relationships, and advice — each read independently. It\'s built around your "Day Master" in BaZi (Four Pillars of Destiny): the heavenly stem of the day you were born, which shapes what kind of tree you are.',
     transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. To be upfront: month boundaries use approximate dates that can be off by about a day from the real calendar. And your birth date is never stored anywhere, full stop.",
-    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. Loading Google Fonts also sends your IP address to Google.",
+    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. It uses cookies for this measurement. Third parties such as Amazon (the Lucky Item links) may also set and read cookies. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
     shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n(For entertainment purposes only)\n#KokuyoFortuneReading #BaZi`,
@@ -807,6 +807,7 @@ function startDivination() {
     return;
   }
   clearBirthdateError();
+  if (typeof gtag === 'function') gtag('event', 'quiz_start', { quiz_name: 'kokuyo' });
   const timeInput = $('birthtime');
   let hour = null;
   let minute = 0;
@@ -828,6 +829,7 @@ function startDivination() {
         by = corrected.y; bm = corrected.m; bd = corrected.d; bh = corrected.hour; bMin = corrected.minute;
       }
       renderResult(by, bm, bd, bh, bMin, gender);
+      if (typeof gtag === 'function') gtag('event', 'quiz_complete', { quiz_name: 'kokuyo' });
     } catch (e) {
       console.error('鑑定の生成に失敗しました', e);
       showScreen('screen-start');

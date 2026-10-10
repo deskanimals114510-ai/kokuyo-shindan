@@ -144,6 +144,12 @@ function spinoffClearBirthdateSelectsError(ids, errorId) {
   if (fontLink) fontLink.media = 'all';
 })();
 
+// 診断の開始・完了をGA4に送る(quiz_nameはページ名=kinun/nenun/…。GA未読込時は何もしない)
+function spinoffTrack(name) {
+  const quizName = location.pathname.split('/').pop().replace('.html', '') || 'spinoff';
+  if (typeof gtag === 'function') gtag('event', name, { quiz_name: 'kokuyo_' + quizName });
+}
+
 function spinoffShowScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');

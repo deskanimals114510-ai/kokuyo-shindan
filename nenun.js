@@ -61,11 +61,13 @@ function nenunStart() {
     return;
   }
   spinoffClearBirthdateSelectsError(NENUN_BIRTHDATE_IDS, 'birthdate-error');
+  spinoffTrack('quiz_start');
   spinoffShowScreen('screen-loading');
   setTimeout(() => {
     try {
       const pillar = spinoffComputeYearPillar(y, m, d);
       nenunApplyResult(pillar.stemIdx, pillar.branchIdx);
+      spinoffTrack('quiz_complete');
     } catch (e) {
       console.error('2027年の運勢の生成に失敗しました', e);
       spinoffShowScreen('screen-start');
