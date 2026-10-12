@@ -475,7 +475,7 @@ const UI_TEXT = {
     restartBtn: 'もう一度占う',
     restartBtnFirstVisit: '自分も占ってもらう ✦',
     luckyRemindText: '🎁 開運アイテムをもう一度見る ↑',
-    resultExpandText: '続きを見る(仕事・恋愛・人間関係・開運アイテムなど) ▼',
+    resultExpandText: '続きを見る(仕事・恋愛・人間関係など) ▼',
     interestLinkText: '🔔 もっと詳しく知りたい方へ(準備中・タップで通知登録)',
     interestThanksText: '興味を持っていただきありがとうございます。正式リリース時にX(@deskanimalslab)でお知らせします🔔',
     gogyoLink: '五行相性を見る',
@@ -496,7 +496,7 @@ const UI_TEXT = {
     transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
     transparencyBody: '多くの占いは、生年月日から一つの運勢だけを告げるものよ。でも私は、あなたの本質・仕事・恋愛・人間関係・アドバイスの5つを、それぞれ別々に見立てているの。四柱推命でいう「日主(にっしゅ)」——生まれた日の十干を軸にして、あなたという木がどんな形をしているかを読み解いているのよ。',
     transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ月の区切りには実際の暦と多少のずれがあることも、正直に伝えておくわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
-    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。計測にはCookieを使用します。ラッキーアイテムのリンク先(Amazon)などの第三者がCookieを設定・取得する場合があります。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
+    footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。計測にはCookieを使用します。開運アイテムのリンク先(Amazon)などの第三者がCookieを設定・取得する場合があります。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
     footerNichishuLink: '10タイプの結果例を見る',
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
     shareText: (line) => `黒曜先生に占われました。\n${line}\nあなたも占われてみなさい→\n※エンタメ目的の診断です\n#黒曜診断 #四柱推命`,
@@ -560,7 +560,7 @@ const UI_TEXT = {
     restartBtn: 'Try Again',
     restartBtnFirstVisit: 'Get Your Own Reading ✦',
     luckyRemindText: '🎁 See the Lucky Pick Again ↑',
-    resultExpandText: 'See more (career, love, relationships, lucky pick...) ▼',
+    resultExpandText: 'See more (career, love, relationships...) ▼',
     interestLinkText: '🔔 Want an even deeper reading? (Coming soon — tap to get notified)',
     interestThanksText: "Thanks for your interest! We'll announce it on X (@deskanimalslab) when it's ready 🔔",
     gogyoLink: 'Element Compatibility Check',
@@ -581,7 +581,7 @@ const UI_TEXT = {
     transparencyTitle: "🔮 What makes this reading different",
     transparencyBody: 'Most fortune-telling sites give you a single, generic reading. This one breaks it into five separate readings — your core nature, career, love, relationships, and advice — each read independently. It\'s built around your "Day Master" in BaZi (Four Pillars of Destiny): the heavenly stem of the day you were born, which shapes what kind of tree you are.',
     transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. To be upfront: month boundaries use approximate dates that can be off by about a day from the real calendar. And your birth date is never stored anywhere, full stop.",
-    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. It uses cookies for this measurement. Third parties such as Amazon (the Lucky Item links) may also set and read cookies. Loading Google Fonts also sends your IP address to Google.",
+    footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. It uses cookies for this measurement. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
     shareText: (line) => `Kokuyo-sensei just read my fortune.\n${line}\nGet your own reading →\n(For entertainment purposes only)\n#KokuyoFortuneReading #BaZi`,
@@ -1222,6 +1222,11 @@ function applyLangUI() {
   $('footer-nichishu-link').textContent = t.footerNichishuLink;
   // 日主当てクイズ(友達版)は日本語専用のため、英語表示では招待ボタンを出さない
   $('btn-invite-guess').hidden = LANG === 'en';
+  // 英語表示では開運アイテム(amazon.co.jp・日本のタグ)とアフィリエイト表記を出さない
+  // (MBTI診断と同じ方針。米国タグ未取得のまま英語でAmazon Associateを名乗らないため、2026-10-13)
+  $('lucky-link').hidden = LANG === 'en';
+  $('lucky-remind-link').parentNode.hidden = LANG === 'en';
+  $('footer-pr').hidden = LANG === 'en';
   document.documentElement.lang = LANG;
   // 結果画面が表示中に切り替えた場合、鑑定結果(言語依存のテキスト)を再計算してから再描画する
   if (lastResult) {
@@ -1384,7 +1389,16 @@ $('btn-guess-take-quiz').addEventListener('click', () => showScreen('screen-star
 // 自動outboundクリック検知任せだった(MBTI診断は.lucky-itemに明示trackEvent('affiliate_click')
 // 済みだが黒曜診断は未実装だったため揃える、2026-09-26追加)。
 document.addEventListener('click', (e) => {
-  if (e.target.closest('.lucky-item')) { if (typeof gtag === 'function') gtag('event', 'affiliate_click'); return; }
+  if (e.target.closest('.lucky-item')) {
+    if (typeof gtag === 'function') {
+      gtag('event', 'affiliate_click', {
+        quiz_name: 'kokuyo', placement: 'result_card', mode: isSharedView ? 'gift' : 'self',
+        result_type: lastResult ? `stem_${lastResult.pillars.day.stemIdx}` : '',
+        item_name: lastResult ? lastResult.type.lucky.name : '',
+      });
+    }
+    return;
+  }
 });
 
 // ===== 結果画面のプログレッシブディスクロージャー(「ちょい見せ」設計、2026-09-26追加) =====
@@ -1396,11 +1410,4 @@ $('result-expand-btn').addEventListener('click', () => {
   $('result-details').classList.add('expanded');
   $('result-expand-btn').classList.add('expanded');
   if (typeof gtag === 'function') gtag('event', 'result_expand_click');
-});
-// 「開運アイテムをもう一度見る」リンクは#lucky-linkへのアンカージャンプだが、未展開のままだと
-// 対象がdisplay:noneで見えない(ジャンプ自体は起きるが空白しか表示されない)。先に展開してから
-// ジャンプさせる。
-$('lucky-remind-link').addEventListener('click', () => {
-  $('result-details').classList.add('expanded');
-  $('result-expand-btn').classList.add('expanded');
 });

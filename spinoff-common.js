@@ -438,6 +438,7 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
   const link = $('lucky-link');
   if (!link || !item) return;
   link.href = spinoffAffiliateUrl(item.keyword);
+  link.dataset.affResult = `stem_${stemIdx}`;
   link.removeAttribute('tabindex');
   const emojiEl = $('lucky-emoji');
   if (emojiEl) emojiEl.textContent = item.emoji;
@@ -454,5 +455,16 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
 
 // 開運アイテム(アフィリエイト)リンクのクリックを明示計測(本体script.js側と揃える、2026-09-26追加)。
 document.addEventListener('click', (e) => {
-  if (e.target.closest('.lucky-item')) { if (typeof gtag === 'function') gtag('event', 'affiliate_click'); }
+  const link = e.target.closest('.lucky-item');
+  if (link && typeof gtag === 'function') {
+    const quizName = location.pathname.split('/').pop().replace('.html', '') || 'spinoff';
+    const nameEl = $('lucky-name');
+    gtag('event', 'affiliate_click', {
+      quiz_name: 'kokuyo_' + quizName, placement: 'result_card',
+      // シェアされた結果URL(?r=)で開いている時は贈る側として数える(本体と同じ区分)
+      mode: new URLSearchParams(location.search).has('r') ? 'gift' : 'self',
+      result_type: link.dataset.affResult || '',
+      item_name: nameEl ? nameEl.textContent.replace(/を見てみる$/, '') : '',
+    });
+  }
 });

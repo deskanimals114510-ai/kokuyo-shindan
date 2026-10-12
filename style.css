@@ -495,6 +495,9 @@ html.deep-link-result #screen-result { display: flex; }
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .lucky-item:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(212, 175, 106, 0.32); }
+.lucky-item[hidden], .lucky-remind[hidden] { display: none; }
+/* 2026-10-13: 開運アイテムを「続きを見る」の外へ出したため、ボタンとの間隔を取る */
+.result-card > .lucky-item { margin-top: 16px; }
 .lucky-remind { text-align: center; margin: 14px 0 0; }
 .lucky-remind a { font-size: 0.76rem; color: var(--gold-bright); text-decoration: none; }
 .lucky-remind a:hover { text-decoration: underline; }
