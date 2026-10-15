@@ -212,8 +212,10 @@ function computeDaYun(pillars, y, m, d, hour, minute, gender) {
 
   const daysDiff = forward ? (nextTermJD - jd) : (jd - prevTermJD);
   const totalYearsFloat = Math.max(0, daysDiff / 3);
-  const startYears = Math.floor(totalYearsFloat);
-  const startMonths = Math.round((totalYearsFloat - startYears) * 12);
+  let startYears = Math.floor(totalYearsFloat);
+  let startMonths = Math.round((totalYearsFloat - startYears) * 12);
+  // 端数の四捨五入で「○歳12ヶ月」になる場合は1歳繰り上げて0ヶ月にする
+  if (startMonths >= 12) { startYears += 1; startMonths = 0; }
 
   const monthStemIdx = STEMS.indexOf(pillars.month.stem);
   const monthBranchIdx = BRANCHES.indexOf(pillars.month.branch);
@@ -364,8 +366,13 @@ function buildBackgroundText(pillars) {
   return parts.join('');
 }
 
-function affiliateUrl(keyword) {
-  const base = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}`;
+// 価格帯は「目安」の断定ではなく、品目ごとの価格帯(price)をAmazon検索の価格フィルタ(p_36は円×100)にして表示と一致させる
+function priceRangeParam(price) {
+  const m = /¥([\d,]+)〜([\d,]+)/.exec(price || '');
+  return m ? `&rh=p_36%3A${Number(m[1].replace(/,/g, '')) * 100}-${Number(m[2].replace(/,/g, '')) * 100}` : '';
+}
+function affiliateUrl(keyword, price) {
+  const base = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}${priceRangeParam(price)}`;
   return AFFILIATE_TAG ? `${base}&tag=${encodeURIComponent(AFFILIATE_TAG)}` : base;
 }
 const AFFILIATE_TAG = 'tinywonders-22';
@@ -386,7 +393,12 @@ function ensureEnDataLoaded() {
     const s = document.createElement('script');
     s.src = SCRIPT_BASE + 'day-master-types-en.js';
     s.onload = resolve;
-    s.onerror = reject;
+    s.onerror = (e) => {
+      // 失敗したPromiseを保持し続けると以後の再試行ができないため、破棄して次回に再読み込みさせる
+      enDataLoadPromise = null;
+      s.remove();
+      reject(e);
+    };
     document.head.appendChild(s);
   });
   return enDataLoadPromise;
@@ -455,6 +467,7 @@ const UI_TEXT = {
     dayPlaceholder: '日',
     ariaAd: '広告',
     ariaResultActions: '結果の共有・操作',
+    ariaSiteNav: 'Desk Animals Labの診断サイト一覧',
     errorRequired: '生年月日を、年・月・日すべて選んでから占ってもらいなさい。',
     errorGeneric: '占いの途中で何かが乱れたようね。もう一度、試してごらんなさい。',
     subheadWork: '💼 仕事・お金の傾向',
@@ -465,7 +478,7 @@ const UI_TEXT = {
     adviceLabel: '【黒曜先生からひとこと】',
     luckyLabel: '🔮 黒曜先生おすすめの開運アイテム',
     luckySeeMore: (name) => `${name}を見てみる`,
-    luckyPriceLabel: (price) => `目安 ${price}(変動あり)`,
+    luckyPriceLabel: (price) => `${price}の価格帯で検索`,
     shareBtn: 'Xでシェア ✦',
     lineBtn: 'LINEでシェア',
     shareNativeBtn: '共有する 📤',
@@ -540,6 +553,7 @@ const UI_TEXT = {
     dayPlaceholder: 'Day',
     ariaAd: 'Advertisement',
     ariaResultActions: 'Share and result actions',
+    ariaSiteNav: 'Desk Animals Lab quizzes',
     errorRequired: 'Choose a year, month, and day before asking for your reading.',
     errorGeneric: 'Something went wrong mid-reading. Give it another try.',
     subheadWork: '💼 Career & Money',
@@ -550,7 +564,6 @@ const UI_TEXT = {
     adviceLabel: '【A word from Kokuyo-sensei】',
     luckyLabel: "🔮 Kokuyo-sensei's Lucky Pick",
     luckySeeMore: (name) => `Shop ${name}`,
-    luckyPriceLabel: (price) => `Roughly ${price} (subject to change)`,
     shareBtn: 'Share on X ✦',
     lineBtn: 'Share on LINE',
     shareNativeBtn: 'Share 📤',
@@ -766,6 +779,8 @@ populateBirthdateSelects();
 populateBirthplaceSelect();
 
 function showScreen(id) {
+  // ?r=で開いた時に<head>で付けた結果画面固定のクラスは、画面を切り替えた時点で外す(外さないと「もう一度占う」で入力画面に戻れない)
+  if (id !== 'screen-result') document.documentElement.classList.remove('deep-link-result');
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
 }
@@ -999,7 +1014,7 @@ function applyResult(pillars, dayYun) {
   }
 
   const luckyLink = $('lucky-link');
-  luckyLink.href = affiliateUrl(type.lucky.keyword);
+  luckyLink.href = affiliateUrl(type.lucky.keyword, type.lucky.price);
   luckyLink.removeAttribute('tabindex');
   $('lucky-emoji').textContent = type.lucky.emoji;
   const luckyName = LANG === 'en' ? LUCKY_NAME_EN[pillars.day.stemIdx] : type.lucky.name;
@@ -1007,7 +1022,8 @@ function applyResult(pillars, dayYun) {
   const luckyReason = LANG === 'en' ? LUCKY_REASON_EN[pillars.day.stemIdx] : type.lucky.reason;
   $('lucky-reason').textContent = luckyReason || '';
   const luckyPriceEl = $('lucky-price');
-  if (luckyPriceEl) luckyPriceEl.textContent = type.lucky.price ? t.luckyPriceLabel(type.lucky.price) : '';
+  // 英語表示ではlucky-link自体を非表示にするため、価格帯の文言は日本語のみ
+  if (luckyPriceEl) luckyPriceEl.textContent = LANG === 'en' || !type.lucky.price ? '' : UI_TEXT.ja.luckyPriceLabel(type.lucky.price);
   $('btn-restart').textContent = isSharedView ? t.restartBtnFirstVisit : t.restartBtn;
 
   renderDaYunSection(lastResult.dayYun);
@@ -1027,6 +1043,27 @@ function applyResult(pillars, dayYun) {
 
   showScreen('screen-result');
   focusResultHeading();
+  observeLuckyView();
+}
+
+// 開運アイテム枠の表示計測(affiliate_clickと同じresult_type形式)。結果を描画するたびに
+// 付け直し、#lucky-linkが画面に半分以上入った時点で1回だけsection_viewを送る。
+let luckyViewObserver = null;
+function observeLuckyView() {
+  if (luckyViewObserver) { luckyViewObserver.disconnect(); luckyViewObserver = null; }
+  const link = $('lucky-link');
+  if (!link || !lastResult || typeof IntersectionObserver === 'undefined') return;
+  const params = {
+    quiz_name: 'kokuyo', placement: 'result_card', mode: isSharedView ? 'gift' : 'self',
+    result_type: `stem_${lastResult.pillars.day.stemIdx}`,
+  };
+  luckyViewObserver = new IntersectionObserver((entries, obs) => {
+    if (!entries.some((en) => en.isIntersecting && en.intersectionRatio >= 0.5)) return;
+    obs.disconnect();
+    if (luckyViewObserver === obs) luckyViewObserver = null;
+    if (typeof gtag === 'function') gtag('event', 'section_view', params);
+  }, { threshold: 0.5 });
+  luckyViewObserver.observe(link);
 }
 
 function renderDaYunSection(dayYun) {
@@ -1075,6 +1112,8 @@ function restart() {
   $('birth-gender').value = '';
   clearBirthdateError();
   isSharedView = false;
+  // 言語切替時に前回の結果画面へ戻されないよう、結果を破棄する
+  lastResult = null;
   $('btn-restart').textContent = UI_TEXT[LANG].restartBtn;
   showScreen('screen-start');
 }
@@ -1191,8 +1230,8 @@ function applyLangUI() {
   $('birth-year').options[0].textContent = t.yearPlaceholder;
   $('birth-month').options[0].textContent = t.monthPlaceholder;
   refreshDayOptions();
-  document.querySelector('#lucky-label .pr-tag').setAttribute('aria-label', t.ariaAd);
   document.querySelector('#screen-result .result-actions').setAttribute('aria-label', t.ariaResultActions);
+  document.querySelector('.site-nav').setAttribute('aria-label', t.ariaSiteNav);
   $('footer-operator').textContent = t.footerOperator;
   $('gogyo-link').textContent = t.gogyoLink;
   $('follow-label-1').textContent = t.followLabel1;
@@ -1221,7 +1260,8 @@ function applyLangUI() {
   $('footer-privacy').textContent = t.footerPrivacy;
   $('footer-nichishu-link').textContent = t.footerNichishuLink;
   // 日主当てクイズ(友達版)は日本語専用のため、英語表示では招待ボタンを出さない
-  $('btn-invite-guess').hidden = LANG === 'en';
+  // 日主当てクイズは日本語のみ。英語表示では日本語ラベルの招待グループごと隠す
+  $('btn-invite-guess').parentElement.hidden = LANG === 'en';
   // 英語表示では開運アイテム(amazon.co.jp・日本のタグ)とアフィリエイト表記を出さない
   // (MBTI診断と同じ方針。米国タグ未取得のまま英語でAmazon Associateを名乗らないため、2026-10-13)
   $('lucky-link').hidden = LANG === 'en';
@@ -1320,12 +1360,19 @@ function inviteGuessUrl() {
 function copyInviteGuessUrl() {
   if (!lastResult) return;
   const btn = $('btn-invite-guess');
+  const original = btn.textContent;
+  const restoreAfter = (label) => {
+    btn.textContent = label;
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  };
+  if (!navigator.clipboard) {
+    restoreAfter('コピーできませんでした');
+    return;
+  }
   navigator.clipboard.writeText(inviteGuessUrl()).then(() => {
     if (typeof gtag === 'function') gtag('event', 'guess_invite_copy');
-    const original = btn.textContent;
-    btn.textContent = 'コピーしました ✓';
-    setTimeout(() => { btn.textContent = original; }, 2000);
-  }).catch(() => {});
+    restoreAfter('コピーしました ✓');
+  }).catch(() => restoreAfter('コピーできませんでした'));
 }
 
 function updateGuessSubmitState() {
@@ -1374,9 +1421,9 @@ $('btn-guess-take-quiz').addEventListener('click', () => showScreen('screen-star
 // 招待リンク(?guess=<0-9>)から着地した場合、当てクイズ画面をその場で表示する
 (function loadFromGuessLink() {
   const target = new URLSearchParams(location.search).get('guess');
-  if (target === null) return;
+  // 1桁の数字のみ受け付ける(Number()だと空文字・" 1"・"1e0"等も通ってしまうため)
+  if (target === null || !/^[0-9]$/.test(target)) return;
   const n = Number(target);
-  if (!Number.isInteger(n) || n < 0 || n > 9) return;
   guessTargetStemIdx = n;
   if (typeof gtag === 'function') gtag('event', 'guess_quiz_start');
   showScreen('screen-guess');

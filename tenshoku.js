@@ -32,11 +32,11 @@ function tenshokuApplyResult(stemIdx, branchIdx) {
 
   const stemChar = SPINOFF_STEMS[stemIdx];
   const stemReading = SPINOFF_STEM_READING[stemIdx];
-  $('result-type-label').textContent = `日主:${stemChar}(${stemReading})`;
+  $('result-type-label').textContent = `生まれ年の干(年干):${stemChar}(${stemReading})`;
   $('result-title').textContent = `あなたの天職は、${type.title}。`;
   const heroImg = $('result-hero-img');
   heroImg.src = `img/nichishu/${type.slug}.jpg`;
-  heroImg.alt = `日主「${stemChar}(${stemReading})」のイメージイラスト`;
+  heroImg.alt = `年干「${stemChar}(${stemReading})」のイメージイラスト`;
 
   const episodesEl = $('result-episodes');
   episodesEl.innerHTML = '';
@@ -57,7 +57,7 @@ function tenshokuApplyResult(stemIdx, branchIdx) {
 
   const cardOpts = {
     eyebrow: '天職診断',
-    typeLabel: `日主 ${stemChar}(${stemReading})`,
+    typeLabel: `生まれ年の干 ${stemChar}(${stemReading})`,
     mainTitle: type.title,
     quote: type.finalLine,
   };
@@ -137,5 +137,6 @@ spinoffSetupNativeShare('btn-share-native', () => {
   if (!code) return;
   const decoded = spinoffDecodeResultCode(code);
   if (!decoded) return;
+  spinoffIsSharedView = true;
   tenshokuApplyResult(decoded.stemIdx, decoded.branchIdx);
 })();

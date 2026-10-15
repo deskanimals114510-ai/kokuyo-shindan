@@ -286,7 +286,8 @@ html.deep-link-result #screen-result { display: flex; }
 .hero-preview-img:first-child { margin-left: 0; transform: rotate(-6deg); }
 .hero-preview-img:nth-child(2) { width: 76px; height: 76px; z-index: 2; transform: translateY(-6px); }
 .hero-preview-img:nth-child(3) { transform: rotate(6deg); }
-.card h1 {
+.card h1,
+.card h2.card-title {
   font-family: "Cinzel", "Shippori Mincho", serif;
   font-size: 1.9rem;
   font-weight: 700;
@@ -818,6 +819,8 @@ html.deep-link-result #screen-result { display: flex; }
 
 @media (prefers-reduced-motion: reduce) {
   .shugorei-hero-img { animation: none; }
+  .bg-glow, .star, .loading-emoji { animation: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* ---- キーボードフォーカス視認性(暗色背景上でもはっきり見えるよう明示指定) ---- */

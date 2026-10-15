@@ -43,6 +43,8 @@ function spinoffDecodeResultCode(code) {
   const stemIdx = Number(code[0]);
   const branchIdx = Number(code.slice(1));
   if (stemIdx > 9 || branchIdx > 11) return null;
+  // 干と支は陰陽(偶奇)が必ず一致する(甲子・乙丑…)。不一致の組み合わせは実在しない干支なので弾く
+  if (stemIdx % 2 !== branchIdx % 2) return null;
   return { stemIdx, branchIdx };
 }
 
@@ -150,7 +152,12 @@ function spinoffTrack(name) {
   if (typeof gtag === 'function') gtag('event', name, { quiz_name: 'kokuyo_' + quizName });
 }
 
+// 共有された結果URL(?r=)の結果を表示中かどうか。affiliate_click/section_viewのmode判定に使う。
+// 各ページのloadFromResultCodeでtrueにし、入力画面に戻った時点でfalseに戻す。
+let spinoffIsSharedView = false;
+
 function spinoffShowScreen(id) {
+  if (id === 'screen-start') spinoffIsSharedView = false;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
 }
@@ -170,12 +177,20 @@ function spinoffTrackShareEvent(method) {
 
 function spinoffCopyResultUrl(btnId, url) {
   const btn = $(btnId);
+  if (!btn) return;
+  const original = btn.textContent;
+  const restoreAfter = (label) => {
+    btn.textContent = label;
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  };
+  if (!navigator.clipboard) {
+    restoreAfter('コピーできませんでした');
+    return;
+  }
   navigator.clipboard.writeText(url).then(() => {
     spinoffTrackShareEvent('copy_url');
-    const original = btn.textContent;
-    btn.textContent = 'コピーしました ✓';
-    setTimeout(() => { btn.textContent = original; }, 2000);
-  });
+    restoreAfter('コピーしました ✓');
+  }).catch(() => restoreAfter('コピーできませんでした'));
 }
 
 function spinoffShareX(text, url) {
@@ -382,8 +397,13 @@ async function spinoffDownloadCard(btnId, filename, opts) {
   btn.disabled = true;
   try {
     const canvas = await spinoffBuildCardCanvas(opts);
-    await new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
       canvas.toBlob((blob) => {
+        // 生成に失敗するとblobがnullになる(メモリ不足等)。catchへ回し、finallyでボタンを元に戻す
+        if (!blob) {
+          reject(new Error('toBlob returned null'));
+          return;
+        }
         const a = document.createElement('a');
         const url = URL.createObjectURL(blob);
         a.href = url;
@@ -411,8 +431,14 @@ async function spinoffDownloadCard(btnId, filename, opts) {
 // 年干が持つ気質アーキタイプ(大樹/草花/太陽…)に紐づけているので、前世診断・守護霊診断どちらの結果にも使い回せる。
 const SPINOFF_AFFILIATE_TAG = 'tinywonders-22';
 
-function spinoffAffiliateUrl(keyword) {
-  const base = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}`;
+// 価格帯は「目安」の断定ではなく、品目ごとの価格帯(price)をAmazon検索の価格フィルタ(p_36は円×100)にして表示と一致させる
+function spinoffPriceRangeParam(price) {
+  const m = /¥([\d,]+)〜([\d,]+)/.exec(price || '');
+  return m ? `&rh=p_36%3A${Number(m[1].replace(/,/g, '')) * 100}-${Number(m[2].replace(/,/g, '')) * 100}` : '';
+}
+
+function spinoffAffiliateUrl(keyword, price) {
+  const base = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}${spinoffPriceRangeParam(price)}`;
   return SPINOFF_AFFILIATE_TAG ? `${base}&tag=${encodeURIComponent(SPINOFF_AFFILIATE_TAG)}` : base;
 }
 
@@ -437,7 +463,7 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
   const item = (luckyArray || SPINOFF_LUCKY)[stemIdx];
   const link = $('lucky-link');
   if (!link || !item) return;
-  link.href = spinoffAffiliateUrl(item.keyword);
+  link.href = spinoffAffiliateUrl(item.keyword, item.price);
   link.dataset.affResult = `stem_${stemIdx}`;
   link.removeAttribute('tabindex');
   const emojiEl = $('lucky-emoji');
@@ -445,9 +471,36 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
   const nameEl = $('lucky-name');
   if (nameEl) nameEl.textContent = item.name + 'を見てみる';
   const priceEl = $('lucky-price');
-  if (priceEl) priceEl.textContent = '目安 ' + item.price + '(変動あり)';
+  if (priceEl) priceEl.textContent = item.price ? `${item.price}の価格帯で検索` : '';
   const hitokotoEl = $('lucky-hitokoto');
   if (hitokotoEl) hitokotoEl.textContent = item.hitokoto;
+  spinoffObserveLuckyView(link, stemIdx);
+}
+
+function spinoffQuizName() {
+  return 'kokuyo_' + (location.pathname.split('/').pop().replace('.html', '') || 'spinoff');
+}
+
+// 開運アイテム枠の表示計測(affiliate_clickと同じresult_type形式)。結果を描画するたびに
+// 付け直し、#lucky-linkが画面に半分以上入った時点で1回だけsection_viewを送る。
+let spinoffLuckyViewObserver = null;
+function spinoffObserveLuckyView(link, stemIdx) {
+  if (spinoffLuckyViewObserver) { spinoffLuckyViewObserver.disconnect(); spinoffLuckyViewObserver = null; }
+  if (typeof IntersectionObserver === 'undefined') return;
+  // spinoffApplyLuckyは結果画面表示の直前に呼ばれるため、modeは観測開始時点ではなく送信時に判定する
+  const resultType = `stem_${stemIdx}`;
+  spinoffLuckyViewObserver = new IntersectionObserver((entries, obs) => {
+    if (!entries.some((en) => en.isIntersecting && en.intersectionRatio >= 0.5)) return;
+    obs.disconnect();
+    if (spinoffLuckyViewObserver === obs) spinoffLuckyViewObserver = null;
+    if (typeof gtag === 'function') {
+      gtag('event', 'section_view', {
+        quiz_name: spinoffQuizName(), placement: 'result_card',
+        mode: spinoffIsSharedView ? 'gift' : 'self', result_type: resultType,
+      });
+    }
+  }, { threshold: 0.5 });
+  spinoffLuckyViewObserver.observe(link);
 }
 
 // ===== アクセス解析 =====
@@ -457,12 +510,12 @@ function spinoffApplyLucky(stemIdx, luckyArray) {
 document.addEventListener('click', (e) => {
   const link = e.target.closest('.lucky-item');
   if (link && typeof gtag === 'function') {
-    const quizName = location.pathname.split('/').pop().replace('.html', '') || 'spinoff';
     const nameEl = $('lucky-name');
     gtag('event', 'affiliate_click', {
-      quiz_name: 'kokuyo_' + quizName, placement: 'result_card',
-      // シェアされた結果URL(?r=)で開いている時は贈る側として数える(本体と同じ区分)
-      mode: new URLSearchParams(location.search).has('r') ? 'gift' : 'self',
+      quiz_name: spinoffQuizName(), placement: 'result_card',
+      // シェアされた結果を表示中は贈る側として数える(本体と同じ区分)。URLの?r有無ではなく
+      // 表示状態で判定する(?r=で開いた後に自分で占い直した場合はselfになる)
+      mode: spinoffIsSharedView ? 'gift' : 'self',
       result_type: link.dataset.affResult || '',
       item_name: nameEl ? nameEl.textContent.replace(/を見てみる$/, '') : '',
     });

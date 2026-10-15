@@ -115,5 +115,6 @@ spinoffSetupNativeShare('btn-share-native', () => {
   if (!code) return;
   const decoded = spinoffDecodeResultCode(code);
   if (!decoded) return;
+  spinoffIsSharedView = true;
   shugoreiApplyResult(decoded.stemIdx, decoded.branchIdx);
 })();
