@@ -1167,10 +1167,12 @@ function copyResultUrl() {
   if (!lastResult) return;
   const t = UI_TEXT[LANG];
   const btn = $('btn-copy-url');
-  const original = btn.textContent;
+  // 表示中に連打されても、差し替え前の文言を取り違えない
   const restoreAfter = (label) => {
+    if (!btn._flashTimer) btn._origLabel = btn.textContent;
+    clearTimeout(btn._flashTimer);
     btn.textContent = label;
-    setTimeout(() => { btn.textContent = original; }, 2000);
+    btn._flashTimer = setTimeout(() => { btn.textContent = btn._origLabel; btn._flashTimer = null; }, 2000);
   };
   if (!navigator.clipboard) {
     restoreAfter(t.copyFailedLabel);
@@ -1360,10 +1362,12 @@ function inviteGuessUrl() {
 function copyInviteGuessUrl() {
   if (!lastResult) return;
   const btn = $('btn-invite-guess');
-  const original = btn.textContent;
+  // 表示中に連打されても、差し替え前の文言を取り違えない
   const restoreAfter = (label) => {
+    if (!btn._flashTimer) btn._origLabel = btn.textContent;
+    clearTimeout(btn._flashTimer);
     btn.textContent = label;
-    setTimeout(() => { btn.textContent = original; }, 2000);
+    btn._flashTimer = setTimeout(() => { btn.textContent = btn._origLabel; btn._flashTimer = null; }, 2000);
   };
   if (!navigator.clipboard) {
     restoreAfter('コピーできませんでした');

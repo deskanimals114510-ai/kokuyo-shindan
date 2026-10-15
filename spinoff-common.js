@@ -178,10 +178,12 @@ function spinoffTrackShareEvent(method) {
 function spinoffCopyResultUrl(btnId, url) {
   const btn = $(btnId);
   if (!btn) return;
-  const original = btn.textContent;
+  // 表示中に連打されても、差し替え前の文言を取り違えない
   const restoreAfter = (label) => {
+    if (!btn._flashTimer) btn._origLabel = btn.textContent;
+    clearTimeout(btn._flashTimer);
     btn.textContent = label;
-    setTimeout(() => { btn.textContent = original; }, 2000);
+    btn._flashTimer = setTimeout(() => { btn.textContent = btn._origLabel; btn._flashTimer = null; }, 2000);
   };
   if (!navigator.clipboard) {
     restoreAfter('コピーできませんでした');
@@ -412,6 +414,8 @@ async function spinoffDownloadCard(btnId, filename, opts) {
         a.click();
         a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 4000);
+        // 本体・他サイトと同じsave_card(1200x630の横長カードはMBTI診断の'x'と同じ形式名)
+        if (typeof gtag === 'function') gtag('event', 'save_card', { quiz_name: spinoffQuizName(), card_format: 'x' });
         resolve();
       }, 'image/png');
     });
