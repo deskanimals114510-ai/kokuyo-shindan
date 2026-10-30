@@ -48,6 +48,7 @@ function combinedGanzhiIndex(stemIdx, branchIdx) {
 // Jean Meeus「Astronomical Algorithms」の低精度太陽黄経式(誤差0.01度程度、四柱推命の
 // 大運計算には十分な精度)を実装。国立天文台の暦要項(2023〜2025年の立春時刻)と照合し、
 // 誤差1〜9分程度(実用上問題ない精度)であることを検証済み。
+// (2026-10-31追記: 2004〜2027年の288節を暦要項と比べると最大約13分。表(NAOJ_SETSU)にある年は暦要項の時刻を使う)
 function normalizeDeg(x) { return ((x % 360) + 360) % 360; }
 function degToRad(x) { return x * Math.PI / 180; }
 
@@ -118,72 +119,144 @@ function hourGanzhi(dayStemIdx, hour) {
   return { stem: STEMS[stemIdx], branch: BRANCHES[branchPos] };
 }
 
-// 立春(近似2/4)を年の境界とする。節気は年により前後1日程度ずれることがある(エンタメ精度)
-function effectiveYear(y, m, d) {
-  if (m < 2 || (m === 2 && d < 4)) return y - 1;
-  return y;
+// ===== 年柱・月柱: 節入り(太陽黄経)で判定(2026-10-31、近似日付から切り替え) =====
+// 以前は立春=2/4・各節=固定の月日・0時切り替えの近似で、約1.3%(1925〜2030年の総当たりで
+// 1,035/77,432)の年柱・月柱が誤っていた(例: 1984-02-04は甲子年としていたが、1984年の立春は
+// 2/5 0:19 JSTなので正しくは癸亥年)。
+// 年の境目=太陽黄経315度(立春)、月の境目=315度から30度ごと(節)。判定に使う時刻は
+// 出生地補正(地方時)をかける前のJST(節入りは絶対時刻のため)。
+// 表(NAOJ_SETSU)にある年は国立天文台 暦要項の時刻(中央標準時)を使い、表にない年は
+// Meeusの太陽黄経(findSolarTermJD、誤差は十数分以内)で求める。
+
+// 12節の太陽黄経と、Meeusの反復計算の初期値に使うおおよその月日(小寒から暦順)
+const SETSU_DEG = [285, 315, 345, 15, 45, 75, 105, 135, 165, 195, 225, 255];
+const SETSU_APPROX_MD = [[1, 6], [2, 4], [3, 6], [4, 5], [5, 6], [6, 6], [7, 7], [8, 8], [9, 8], [10, 8], [11, 7], [12, 7]];
+// 節の順番(小寒=0〜大雪=11)→月支の並び(寅=0始まり)。小寒は丑月(11)、立春は寅月(0)
+const SETSU_MONTH_POS = [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// 国立天文台 暦要項「二十四節気および雑節」の12節(小寒・立春・啓蟄・清明・立夏・芒種・
+// 小暑・立秋・白露・寒露・立冬・大雪)。各要素は "MMDDhhmm"(中央標準時=JST)
+// 出典: https://eco.mtk.nao.ac.jp/koyomi/yoko/2024/rekiyou242.html 等(年ごとのrekiyouYY2.html。
+// 2001〜2003年のページは公開されていない)。
+// 【追加手順】新しい年の暦要項(https://eco.mtk.nao.ac.jp/koyomi/yoko/YYYY/rekiyouYY2.html)から、
+// 12節の日時を小寒→大雪の順に "MMDDhhmm" で並べた1行を下に追加する。同じ年の立春は
+// spinoff-common.js の SPINOFF_NAOJ_RISSHUN にも追加する(スピンオフ5本の年柱用)。
+// 読み込み時に12個そろっているか・Meeusとの差が30分以内かを確かめ、外れた年はMeeusに切り替える。
+const NAOJ_SETSU = {
+  2004: '01060919 02042056 03051456 04041943 05051302 06051714 07070331 08071320 09071613 10080749 11071059 12070349',
+  2005: '01051503 02040243 03052045 04050134 05051853 06052302 07070917 08071903 09072157 10081333 11071642 12070933',
+  2006: '01052047 02040827 03060229 04050715 05060031 06060437 07071451 08080041 09080339 10081921 11072235 12071527',
+  2007: '01060240 02041418 03060818 04051305 05060620 06061027 07072042 08080631 09080929 10090112 11080424 12072114',
+  2008: '01060825 02042000 03051359 04041846 05051203 06051612 07070227 08071216 09071514 10080657 11071011 12070302',
+  2009: '01051414 02040150 03051948 04050034 05051751 06052159 07070813 08071801 09072058 10081240 11071556 12070852',
+  2010: '01052009 02040748 03060146 04050630 05052344 06060349 07071402 08072349 09080245 10081826 11072142 12071438',
+  2011: '01060155 02041333 03060730 04051212 05060523 06060927 07071942 08080533 09080834 10090019 11080335 12072029',
+  2012: '01060744 02041922 03051321 04041806 05051120 06051526 07070141 08071131 09071429 10080612 11070926 12070219',
+  2013: '01051334 02040113 03051915 04050002 05051718 06052123 07070735 08071720 09072016 10081158 11071514 12070809',
+  2014: '01051924 02040703 03060102 04050547 05052259 06060303 07071315 08072302 09080201 10081748 11072107 12071404',
+  2015: '01060121 02041258 03060656 04051139 05060453 06060858 07071912 08080501 09080800 10082343 11080259 12071953',
+  2016: '01060708 02041846 03051244 04041728 05051042 06051449 07070103 08071053 09071351 10080533 11070848 12070141',
+  2017: '01051256 02040034 03051833 04042317 05051631 06052037 07070651 08071640 09071939 10081122 11071438 12070733',
+  2018: '01051849 02040628 03060028 04050513 05052225 06060229 07071242 08072231 09080130 10081715 11072032 12071326',
+  2019: '01060039 02041214 03060610 04051051 05060403 06060806 07071821 08080413 09080717 10082306 11080224 12071918',
+  2020: '01060630 02041803 03051157 04041638 05050951 06051358 07070014 08071006 09071308 10080455 11070814 12070109',
+  2021: '01051223 02032359 03051754 04042235 05051547 06051952 07070605 08071554 09071853 10081039 11071359 12070657',
+  2022: '01051814 02040551 03052344 04050420 05052126 06060126 07071138 08072129 09080032 10081622 11071945 12071246',
+  2023: '01060005 02041143 03060536 04051013 05060319 06060718 07071731 08080323 09080627 10082216 11080136 12071833',
+  2024: '01060549 02041727 03051123 04041602 05050910 06051310 07062320 08070909 09071211 10080400 11070720 12070017',
+  2025: '01051133 02032310 03051707 04042149 05051457 06051857 07070505 08071452 09071752 10080941 11071304 12070605',
+  2026: '01051723 02040502 03052259 04050340 05052049 06060048 07071057 08072043 09072341 10081529 11071852 12071153',
+  2027: '01052310 02041046 03060440 04050917 05060225 06060626 07071637 08080227 09080528 10082117 11080039 12071738',
+};
+
+// ある西暦年の12節の瞬間(ユリウス日)。年ごとにメモ化する。
+// fromTable: 暦要項の表の時刻を使ったか(注記の判定幅を変えるため)
+const SETSU_TABLE_MAX_DIFF_MIN = 30; // 表の書き間違い検知: Meeusとの差がこれを超えたら表を使わない
+const setsuCache = {};
+function setsuOfYear(year) {
+  if (setsuCache[year]) return setsuCache[year];
+  const calc = SETSU_DEG.map((deg, k) => {
+    const [am, ad] = SETSU_APPROX_MD[k];
+    return findSolarTermJD(deg, gregorianToJD(year, am, ad, 12, 0));
+  });
+  let tableJD = null;
+  if (NAOJ_SETSU[year]) {
+    const items = NAOJ_SETSU[year].split(' ');
+    const jds = items.map((s) => (/^\d{8}$/.test(s)
+      ? gregorianToJD(year, Number(s.slice(0, 2)), Number(s.slice(2, 4)), Number(s.slice(4, 6)), Number(s.slice(6, 8)))
+      : NaN));
+    const valid = jds.length === 12 && jds.every((jd, k) => Math.abs(jd - calc[k]) * 1440 <= SETSU_TABLE_MAX_DIFF_MIN);
+    if (valid) tableJD = jds;
+    else console.warn(`NAOJ_SETSU ${year}: 12個そろっていないか、Meeusとの差が${SETSU_TABLE_MAX_DIFF_MIN}分を超えています。この年は天文計算で判定します。`);
+  }
+  const list = calc.map((jd, k) => ({ jd: tableJD ? tableJD[k] : jd, year, k, fromTable: !!tableJD }));
+  setsuCache[year] = list;
+  return list;
 }
 
-// 年干支: 1984年 = 甲子(index0) を基準
-function yearGanzhiIndex(y, m, d) {
-  const effY = effectiveYear(y, m, d);
-  return (((effY - 1984) % 60) + 60) % 60;
+// ユリウス日jdの直前(jd以下)と直後の節を返す。yearはjdのおおよその西暦年
+function setsuAround(jd, year) {
+  const all = setsuOfYear(year - 1).concat(setsuOfYear(year), setsuOfYear(year + 1));
+  for (let i = all.length - 1; i > 0; i--) {
+    if (all[i].jd <= jd) return { prev: all[i], next: all[i + 1] };
+  }
+  return { prev: all[0], next: all[1] };
 }
 
-// 月柱: 節気の近似境界日(月,日)。寅月(立春)始まりの順で12個
-const MONTH_BOUNDARIES = [
-  { m: 2, d: 4, branch: '寅' },   // 立春
-  { m: 3, d: 6, branch: '卯' },   // 驚蟄
-  { m: 4, d: 5, branch: '辰' },   // 清明
-  { m: 5, d: 6, branch: '巳' },   // 立夏
-  { m: 6, d: 6, branch: '午' },   // 芒種
-  { m: 7, d: 7, branch: '未' },   // 小暑
-  { m: 8, d: 8, branch: '申' },   // 立秋
-  { m: 9, d: 8, branch: '酉' },   // 白露
-  { m: 10, d: 8, branch: '戌' },  // 寒露
-  { m: 11, d: 7, branch: '亥' },  // 立冬
-  { m: 12, d: 7, branch: '子' },  // 大雪
-  { m: 1, d: 6, branch: '丑' },   // 小寒
-];
+// JSTの年月日時分から、年柱・月柱を決める節を求める。
+// 返り値: { effYear: 立春基準の年, monthPos: 寅=0〜丑=11 }
+function pillarSetsu(y, m, d, hour, minute) {
+  const jd = gregorianToJD(y, m, d, hour, minute);
+  const prev = setsuAround(jd, y).prev;
+  // 小寒(k=0)〜立春前は前年扱い。それ以外は節の属する年がそのまま立春基準の年
+  const effYear = prev.k === 0 ? prev.year - 1 : prev.year;
+  return { effYear, monthPos: SETSU_MONTH_POS[prev.k] };
+}
+
+// 節入りの境目にかかる生まれかを判定する。かかる場合は { k: 節の番号(小寒=0〜大雪=11), timeUnknown }、
+// かからなければnull。時刻不明なら「生まれた日(JST)に節入りがある」、時刻ありなら
+// 「節入りの前後◯分以内」(表にある年は暦要項の時刻なので±15分、表にない年はMeeusの誤差を見込んで±30分)。
+// 分→日の換算は 分 / 1440。
+const SETSU_NEAR_MIN_TABLE = 15;
+const SETSU_NEAR_MIN_CALC = 30;
+function setsuNearInfo(y, m, d, hour, minute) {
+  if (hour === null) {
+    const dayStart = gregorianToJD(y, m, d, 0, 0);
+    const dayEnd = dayStart + 1;
+    const hit = setsuOfYear(y).find((s) => s.jd >= dayStart && s.jd < dayEnd);
+    return hit ? { k: hit.k, timeUnknown: true } : null;
+  }
+  const jd = gregorianToJD(y, m, d, hour, minute);
+  const around = setsuAround(jd, y);
+  for (const s of [around.prev, around.next]) {
+    const limitDays = (s.fromTable ? SETSU_NEAR_MIN_TABLE : SETSU_NEAR_MIN_CALC) / 1440;
+    if (Math.abs(jd - s.jd) <= limitDays) return { k: s.k, timeUnknown: false };
+  }
+  return null;
+}
+
 // 五虎遁: 年干グループ(0:甲己 1:乙庚 2:丙辛 3:丁壬 4:戊癸)ごとの寅月の干インデックス
 const TIGER_START_STEM = [2, 4, 6, 8, 0]; // 丙戊庚壬甲
+const MONTH_BRANCH_ORDER = ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'];
 
-function monthPosition(m, d) {
-  const md = m * 100 + d;
-  if (md >= 204 && md < 306) return 0;  // 寅
-  if (md >= 306 && md < 405) return 1;  // 卯
-  if (md >= 405 && md < 506) return 2;  // 辰
-  if (md >= 506 && md < 606) return 3;  // 巳
-  if (md >= 606 && md < 707) return 4;  // 午
-  if (md >= 707 && md < 808) return 5;  // 未
-  if (md >= 808 && md < 908) return 6;  // 申
-  if (md >= 908 && md < 1008) return 7; // 酉
-  if (md >= 1008 && md < 1107) return 8; // 戌
-  if (md >= 1107 && md < 1207) return 9; // 亥
-  if (md >= 1207 || md < 106) return 10; // 子
-  return 11; // 丑
-}
-
-function monthGanzhi(y, m, d) {
-  const yIdx = yearGanzhiIndex(y, m, d);
-  const yStemIdx = yIdx % 10;
-  const group = yStemIdx % 5;
-  const pos = monthPosition(m, d);
-  const stemIdx = (TIGER_START_STEM[group] + pos) % 10;
-  const branchOrder = ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'];
-  return { stem: STEMS[stemIdx], branch: branchOrder[pos] };
-}
-
-function computeFourPillars(y, m, d, hour) {
+// y/m/d/hourは日柱・時柱用(出生地補正後)の値。jstは年柱・月柱用の補正前JST
+// { y, m, d, hour, minute }(hourはnull可)。省略時はy/m/d/hourをそのまま使う。
+// 時刻不明のときは正午(12:00 JST)で年柱・月柱を判定する。
+function computeFourPillars(y, m, d, hour, jst) {
   const h = (hour === undefined || hour === null || isNaN(hour)) ? null : hour;
   const dayIdx = dayGanzhiIndexForHour(y, m, d, h);
-  const yearIdx = yearGanzhiIndex(y, m, d);
-  const month = monthGanzhi(y, m, d);
+  const src = jst || { y, m, d, hour: h, minute: 0 };
+  const srcHour = (src.hour === undefined || src.hour === null || isNaN(src.hour)) ? null : src.hour;
+  const srcMin = srcHour === null ? 0 : (src.minute || 0);
+  const setsu = pillarSetsu(src.y, src.m, src.d, srcHour === null ? 12 : srcHour, srcHour === null ? 0 : srcMin);
+  const yearIdx = (((setsu.effYear - 1984) % 60) + 60) % 60; // 1984年 = 甲子(index0)
+  const monthStemIdx = (TIGER_START_STEM[(yearIdx % 10) % 5] + setsu.monthPos) % 10;
   const result = {
     day: { stem: STEMS[dayIdx % 10], branch: BRANCHES[dayIdx % 12], stemIdx: dayIdx % 10 },
     year: { stem: STEMS[yearIdx % 10], branch: BRANCHES[yearIdx % 12] },
-    month,
+    month: { stem: STEMS[monthStemIdx], branch: MONTH_BRANCH_ORDER[setsu.monthPos] },
     hour: null,
+    nearSetsu: setsuNearInfo(src.y, src.m, src.d, srcHour, srcMin),
   };
   if (h !== null) {
     result.hour = hourGanzhi(dayIdx % 10, h);
@@ -196,19 +269,18 @@ function computeFourPillars(y, m, d, hour) {
 // 逆(陰干の男性・陽干の女性)は「逆行」。起運年齢は、生まれた日時から最寄りの節(順行なら次の節、
 // 逆行なら直前の節)までの日数を3日=1年換算で求める(1日=4ヶ月換算、端数はそのまま反映)。
 // 大運の干支は月柱を起点に、60干支を順行なら+1ずつ、逆行なら-1ずつ進めたもの。
+// y/m/d/hour/minuteは出生地補正(地方時)をかける前のJST。節入りは絶対時刻なので、
+// 地方時に直した時刻と比べると東西で最大±50分ずれる(2026-10-31修正)。
 function computeDaYun(pillars, y, m, d, hour, minute, gender) {
   const yearStemIdx = STEMS.indexOf(pillars.year.stem);
   const yearIsYang = STEM_YINYANG[yearStemIdx] === '陽';
   const forward = (yearIsYang && gender === 'male') || (!yearIsYang && gender === 'female');
 
   const jd = gregorianToJD(y, m, d, hour, minute);
-  const birthLon = solarApparentLongitude(jd);
-  const offset = ((birthLon - 15) % 30 + 30) % 30;
-  const prevTermDeg = normalizeDeg(birthLon - offset);
-  const nextTermDeg = normalizeDeg(prevTermDeg + 30);
-  const RATE = 0.9856; // 太陽黄経のおおよその1日あたりの進み(度)
-  const prevTermJD = findSolarTermJD(prevTermDeg, jd - offset / RATE);
-  const nextTermJD = findSolarTermJD(nextTermDeg, jd + (30 - offset) / RATE);
+  // 月柱と同じ節入り表(暦要項の時刻+Meeus)から、直前・直後の節を取る
+  const around = setsuAround(jd, y);
+  const prevTermJD = around.prev.jd;
+  const nextTermJD = around.next.jd;
 
   const daysDiff = forward ? (nextTermJD - jd) : (jd - prevTermJD);
   const totalYearsFloat = Math.max(0, daysDiff / 3);
@@ -475,6 +547,8 @@ const UI_TEXT = {
     subheadRelationships: '🤝 人間関係の傾向',
     subheadBackground: '🌙 生まれ持った背景',
     pendingTranslationNote: '',
+    setsuNames: ['小寒', '立春', '啓蟄', '清明', '立夏', '芒種', '小暑', '立秋', '白露', '寒露', '立冬', '大雪'],
+    setsuNote: (name, isRisshun, timeUnknown) => `メインのタイプ(日主)は変わらないわ。「生まれ持った背景」の一部と大運は、${name}の境目にあたるため、前後どちらの月にもなりうるの。${isRisshun ? '立春なので、生まれ年(と大運の順行・逆行)も同じよ。' : ''}${timeUnknown ? '生まれた時刻を入れるとはっきりするわ。' : ''}`,
     adviceLabel: '【黒曜先生からひとこと】',
     luckyLabel: '🔮 黒曜先生おすすめの開運アイテム',
     luckySeeMore: (name) => `${name}を見てみる`,
@@ -505,10 +579,10 @@ const UI_TEXT = {
     followLabel4: '🐾 動物の雑学・診断もチェック',
     followLinkTwMatome: '動物雑学まとめ',
     footerPr: '🔖 本ページの「開運アイテム」リンクにはアフィリエイト(広告)リンクを含みます。リンク経由の購入により、当サイトが紹介料を得る場合があります。Amazonのアソシエイトとして、Desk Animals Labは適格販売により収入を得ています。掲載アイテムの効果・開運を保証するものではありません。',
-    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ月の区切りには実際の暦と前後1日程度ずれることがある近似日付を使用しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。出生地(都道府県)を選ぶと、県庁所在地の経度から時刻を補正しますが、季節による誤差(均時差、最大±16分程度)は計算に含めていない簡易補正です。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
+    footerDisclaimer: '本診断はエンタメ目的のコンテンツです。占い師「黒曜先生」は架空のキャラクターであり、実在の人物とは関係ありません。四柱推命の考え方をベースにしていますが、生まれ年・生まれ月の区切り(立春などの節入り)は、2004〜2027年は国立天文台が公開している暦要項の時刻、それ以外の年は太陽の位置の天文計算(誤差は十数分程度)で判定しています。夜23時以降に生まれた方は、生まれた日の干支を翌日のものとして扱う昔ながらの考え方を採用していますが、これは流派によって扱いが異なる点にご留意ください。出生地(都道府県)を選ぶと、県庁所在地の経度から時刻を補正しますが、季節による誤差(均時差、最大±16分程度)は計算に含めていない簡易補正です。挿絵はAI画像生成、英語版の文章はAIによる書き起こし・翻訳です。科学的な診断や実際の鑑定に代わるものではありません。',
     transparencyTitle: '🔮 この鑑定が、他の占いと違うところ',
     transparencyBody: '多くの占いは、生年月日から一つの運勢だけを告げるものよ。でも私は、あなたの本質・仕事・恋愛・人間関係・アドバイスの5つを、それぞれ別々に見立てているの。四柱推命でいう「日主(にっしゅ)」——生まれた日の十干を軸にして、あなたという木がどんな形をしているかを読み解いているのよ。',
-    transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ月の区切りには実際の暦と多少のずれがあることも、正直に伝えておくわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
+    transparencyNote: '占いは当てるためのものじゃなく、自分を見つめ直すきっかけにしてほしいの。生まれ年と生まれ月の区切り(節入り)は、2004〜2027年は国立天文台が公開している暦要項の時刻、それ以外の年は太陽の位置の天文計算(誤差は十数分程度)で判定しているわ。あなたの生年月日はどこにも残さない——それだけは約束する。',
     footerPrivacy: '生年月日・時刻そのものは診断のためだけに使用し、サーバーへの送信・保存は一切行いません(鑑定はすべてお使いの端末内で計算しています)。なお、アクセス解析(Googleアナリティクス)は行っており、閲覧したページの情報が計測されます。計測にはCookieを使用します。開運アイテムのリンク先(Amazon)などの第三者がCookieを設定・取得する場合があります。また、Google Fontsの読み込み時にお使いのIPアドレスがGoogleに送信されます。',
     footerNichishuLink: '10タイプの結果例を見る',
     footerOperator: '運営: Desk Animals Lab / お問い合わせ:',
@@ -561,6 +635,8 @@ const UI_TEXT = {
     subheadRelationships: '🤝 Relationships',
     subheadBackground: '🌙 What Shaped You',
     pendingTranslationNote: '🌐 English write-up for this type is coming soon — shown in Japanese for now.',
+    setsuNames: ['Minor Cold', 'Start of Spring', 'Awakening of Insects', 'Clear and Bright', 'Start of Summer', 'Grain in Ear', 'Minor Heat', 'Start of Autumn', 'White Dew', 'Cold Dew', 'Start of Winter', 'Major Snow'],
+    setsuNote: (name, isRisshun, timeUnknown) => `Your main type (Day Master) doesn't change. Part of "What Shaped You" and your Da Yun cycles fall right on the ${name} boundary, so they could belong to either the earlier or the later month.${isRisshun ? ' Because this is the Start of Spring, the same goes for your birth year (and whether your Da Yun runs forward or backward).' : ''}${timeUnknown ? ' Add your birth time and it becomes clear.' : ''}`,
     adviceLabel: '【A word from Kokuyo-sensei】',
     luckyLabel: "🔮 Kokuyo-sensei's Lucky Pick",
     luckySeeMore: (name) => `Shop ${name}`,
@@ -590,10 +666,10 @@ const UI_TEXT = {
     followLabel4: '🐾 Check out more animal trivia & quizzes',
     followLinkTwMatome: 'Animal Trivia Roundup',
     footerPr: '🔖 The "Lucky Item" links on this page include affiliate links. Purchases made through them may earn this site a referral fee. As an Amazon Associate, Desk Animals Lab earns from qualifying purchases. We do not guarantee any luck-bringing effect from the items listed.',
-    footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, but the month boundaries use approximate dates that can be off by about a day from the actual calendar. Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. If you select a birthplace (prefecture), we adjust the time using that prefectural capital's longitude, but this is a simplified correction that does not account for the seasonal equation of time (up to about ±16 minutes). The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
+    footerDisclaimer: "This reading is for entertainment purposes only. Fortune-teller \"Kokuyo-sensei\" is a fictional character, unrelated to any real person. It's based on BaZi (Four Pillars of Destiny) principles, and the year and month boundaries (the solar terms, such as the start of spring) are set as follows — 2004–2027: solar-term times published by the National Astronomical Observatory of Japan (NAOJ); other years: astronomical calculation of the sun's position (error up to ~15 min). Births after 11pm follow the traditional convention of using the next day's stem/branch, though this varies by school of thought. If you select a birthplace (prefecture), we adjust the time using that prefectural capital's longitude, but this is a simplified correction that does not account for the seasonal equation of time (up to about ±16 minutes). The illustrations are AI-generated, and this English text is an AI-assisted write-up/translation. It is not a substitute for a scientific assessment or a professional reading.",
     transparencyTitle: "🔮 What makes this reading different",
     transparencyBody: 'Most fortune-telling sites give you a single, generic reading. This one breaks it into five separate readings — your core nature, career, love, relationships, and advice — each read independently. It\'s built around your "Day Master" in BaZi (Four Pillars of Destiny): the heavenly stem of the day you were born, which shapes what kind of tree you are.',
-    transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. To be upfront: month boundaries use approximate dates that can be off by about a day from the real calendar. And your birth date is never stored anywhere, full stop.",
+    transparencyNote: "This isn't meant to predict your future — it's meant to give you something to reflect on. Your year and month boundaries (solar terms) use, for 2004–2027, the solar-term times published by NAOJ (National Astronomical Observatory of Japan), and for other years an astronomical calculation of the sun's position (error up to ~15 min). And your birth date is never stored anywhere, full stop.",
     footerPrivacy: "Your birth date and time themselves are used only for this reading and are never sent to or stored on a server (the reading is calculated entirely on your device). We do use Google Analytics for traffic measurement, which records information about the pages you view. It uses cookies for this measurement. Loading Google Fonts also sends your IP address to Google.",
     footerNichishuLink: 'Browse the 10 Day-Master Types',
     footerOperator: 'Operated by Desk Animals Lab / Contact:',
@@ -839,11 +915,13 @@ function startDivination() {
   setTimeout(() => {
     try {
       let by = Number(y), bm = Number(m), bd = Number(d), bh = hour, bMin = minute;
+      // 年柱・月柱・大運の節入り判定は補正前のJSTで行う(節入りは絶対時刻のため)
+      const jst = { y: by, m: bm, d: bd, hour, minute };
       if (hour !== null && longitude !== null) {
         const corrected = applyBirthplaceCorrection(by, bm, bd, hour, minute, longitude);
         by = corrected.y; bm = corrected.m; bd = corrected.d; bh = corrected.hour; bMin = corrected.minute;
       }
-      renderResult(by, bm, bd, bh, bMin, gender);
+      renderResult(by, bm, bd, bh, bMin, gender, jst);
       if (typeof gtag === 'function') gtag('event', 'quiz_complete', { quiz_name: 'kokuyo' });
     } catch (e) {
       console.error('鑑定の生成に失敗しました', e);
@@ -853,13 +931,16 @@ function startDivination() {
   }, 700);
 }
 
-function renderResult(y, m, d, hour, minute, gender) {
-  const pillars = computeFourPillars(y, m, d, hour);
+// y/m/d/hour/minuteは出生地補正後(日柱・時柱用)、jstは補正前のJST(年柱・月柱・大運用)
+function renderResult(y, m, d, hour, minute, gender, jst) {
+  const src = jst || { y, m, d, hour, minute };
+  const pillars = computeFourPillars(y, m, d, hour, src);
   let dayYun = null;
   if (gender) {
     // 大運の起運計算には出生時刻の精度があった方が良いが必須ではないため、
-    // 時刻未入力の場合は正午(12:00)を暫定値として使う(日付レベルの精度は保たれる)
-    dayYun = computeDaYun(pillars, y, m, d, hour !== null ? hour : 12, hour !== null ? minute : 0, gender);
+    // 時刻未入力の場合は正午(12:00 JST)を暫定値として使う(日付レベルの精度は保たれる)
+    const known = src.hour !== null && src.hour !== undefined;
+    dayYun = computeDaYun(pillars, src.y, src.m, src.d, known ? src.hour : 12, known ? (src.minute || 0) : 0, gender);
   }
   applyResult(pillars, dayYun);
 }
@@ -1011,6 +1092,18 @@ function applyResult(pillars, dayYun) {
     pendingNoteEl.style.display = 'block';
   } else {
     pendingNoteEl.style.display = 'none';
+  }
+
+  // 節入りの日(時刻不明)・節入りの直前直後の生まれは、月柱(立春なら年柱も)が前後どちらもありうる
+  // 古いHTMLがキャッシュに残っていて要素が無い場合でも結果画面を止めない
+  const setsuNoteEl = $('result-setsu-note');
+  if (!setsuNoteEl) {
+    // 何もしない
+  } else if (pillars.nearSetsu) {
+    setsuNoteEl.textContent = t.setsuNote(t.setsuNames[pillars.nearSetsu.k], pillars.nearSetsu.k === 1, pillars.nearSetsu.timeUnknown);
+    setsuNoteEl.style.display = 'block';
+  } else {
+    setsuNoteEl.style.display = 'none';
   }
 
   const luckyLink = $('lucky-link');

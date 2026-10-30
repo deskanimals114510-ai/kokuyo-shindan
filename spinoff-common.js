@@ -7,30 +7,111 @@ const $ = (function () {
   };
 })();
 
-// ===== スピンオフ診断(前世診断・守護霊診断)共通エンジン =====
-// 黒曜診断本体(script.js)には一切手を加えず、年柱計算に必要な最小限のロジックのみを
-// このファイルに独立して持たせている(本体の計算式と同じ検証済みアルゴリズムを踏襲)。
+// ===== スピンオフ診断(金運・2027年の運勢・天職・前世・守護霊)共通エンジン =====
+// スピンオフはscript.jsを読み込まないため、年柱(年干支)の計算に必要な最小限のロジックを
+// このファイルに持たせている。立春の判定はscript.jsの年柱判定と同じ方式(下記)。
 
 const SPINOFF_STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
 const SPINOFF_STEM_READING = ['きのえ', 'きのと', 'ひのえ', 'ひのと', 'つちのえ', 'つちのと', 'かのえ', 'かのと', 'みずのえ', 'みずのと'];
 const SPINOFF_BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 const SPINOFF_BRANCH_READING = ['ね', 'うし', 'とら', 'う', 'たつ', 'み', 'うま', 'ひつじ', 'さる', 'とり', 'いぬ', 'い'];
 
-// 立春(近似2/4)を年の境界とする(script.jsのeffectiveYearと同一ロジック)
+// 立春(太陽黄経315度)の瞬間を年の境界とする(2026-10-31、立春=2/4固定の近似から切り替え)。
+// script.jsの年柱判定(NAOJ_SETSU+Meeus)と同じ考え方で、年柱に必要な立春だけをここに複製している
+// (Meeus式・暦要項の値はscript.jsと同一)。表にある年は暦要項の時刻、表にない年はMeeusで求める。
+// スピンオフは時刻を取らないので、正午(12:00 JST)時点で立春を過ぎているかで判定する。
+function spinoffNormalizeDeg(x) { return ((x % 360) + 360) % 360; }
+// グレゴリオ暦(JST)→ユリウス日(script.jsのgregorianToJDと同一)
+function spinoffGregorianToJD(y, m, d, hourJST, minuteJST) {
+  let yy = y, mm = m;
+  if (mm <= 2) { yy -= 1; mm += 12; }
+  const A = Math.floor(yy / 100);
+  const B = 2 - A + Math.floor(A / 4);
+  const dayFrac = d + (hourJST - 9 + minuteJST / 60) / 24;
+  return Math.floor(365.25 * (yy + 4716)) + Math.floor(30.6001 * (mm + 1)) + dayFrac + B - 1524.5;
+}
+// Meeusの低精度太陽視黄経(script.jsのsolarApparentLongitudeと同一)
+function spinoffSolarLongitude(jd) {
+  const T = (jd - 2451545.0) / 36525;
+  const L0 = spinoffNormalizeDeg(280.46646 + 36000.76983 * T + 0.0003032 * T * T);
+  const M = spinoffNormalizeDeg(357.52911 + 35999.05029 * T - 0.0001537 * T * T);
+  const Mrad = M * Math.PI / 180;
+  const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(Mrad)
+    + (0.019993 - 0.000101 * T) * Math.sin(2 * Mrad)
+    + 0.000289 * Math.sin(3 * Mrad);
+  const Omega = 125.04 - 1934.136 * T;
+  return spinoffNormalizeDeg(L0 + C - 0.00569 - 0.00478 * Math.sin(Omega * Math.PI / 180));
+}
+// 国立天文台 暦要項の立春(MMDDhhmm、JST)。script.jsのNAOJ_SETSUの立春列と同じ値
+// (年を足すときは script.js の NAOJ_SETSU 直上の「追加手順」を参照)
+const SPINOFF_NAOJ_RISSHUN = {
+  2004: '02042056', 2005: '02040243', 2006: '02040827', 2007: '02041418', 2008: '02042000', 2009: '02040150',
+  2010: '02040748', 2011: '02041333', 2012: '02041922', 2013: '02040113', 2014: '02040703', 2015: '02041258',
+  2016: '02041846', 2017: '02040034', 2018: '02040628', 2019: '02041214', 2020: '02041803', 2021: '02032359',
+  2022: '02040551', 2023: '02041143', 2024: '02041727', 2025: '02032310', 2026: '02040502', 2027: '02041046',
+};
+const spinoffRisshunCache = {};
+function spinoffRisshunJD(year) {
+  if (spinoffRisshunCache[year]) return spinoffRisshunCache[year];
+  let jd = spinoffGregorianToJD(year, 2, 4, 12, 0);
+  for (let i = 0; i < 8; i++) {
+    const diff = ((315 - spinoffSolarLongitude(jd) + 180) % 360 + 360) % 360 - 180;
+    jd += diff / 0.9856;
+  }
+  const s = SPINOFF_NAOJ_RISSHUN[year];
+  if (s) {
+    const tableJD = /^\d{8}$/.test(s)
+      ? spinoffGregorianToJD(year, Number(s.slice(0, 2)), Number(s.slice(2, 4)), Number(s.slice(4, 6)), Number(s.slice(6, 8)))
+      : NaN;
+    // 表の書き間違い検知: Meeusとの差が30分を超えたらMeeusを使う
+    if (Math.abs(tableJD - jd) * 1440 <= 30) jd = tableJD;
+    else console.warn(`SPINOFF_NAOJ_RISSHUN ${year}: Meeusとの差が30分を超えています。この年は天文計算で判定します。`);
+  }
+  spinoffRisshunCache[year] = jd;
+  return jd;
+}
 function spinoffEffectiveYear(y, m, d) {
-  if (m < 2 || (m === 2 && d < 4)) return y - 1;
-  return y;
+  return spinoffGregorianToJD(y, m, d, 12, 0) >= spinoffRisshunJD(y) ? y : y - 1;
+}
+// 生まれた日(JST)に立春の瞬間があるか(時刻によっては前の年になりうる)
+function spinoffIsRisshunDay(y, m, d) {
+  const start = spinoffGregorianToJD(y, m, d, 0, 0);
+  const jd = spinoffRisshunJD(y);
+  return jd >= start && jd < start + 1;
 }
 
-// 年干支: 1984年 = 甲子(index0) を基準(script.jsのyearGanzhiIndexと同一ロジック)
+// 年干支: 1984年 = 甲子(index0) を基準(script.jsの年柱と同じ基準)
 function spinoffYearGanzhiIndex(y, m, d) {
   const effY = spinoffEffectiveYear(y, m, d);
   return (((effY - 1984) % 60) + 60) % 60;
 }
 
+// 立春当日の生まれなら、次に結果画面を出すとき(spinoffShowScreen)に一言添える。
+// 各スピンオフの*.jsはこの関数→結果描画→spinoffShowScreen('screen-result')の順に呼ぶので、
+// 5本のファイルを触らずに済むようここでフラグを立てる(結果URLからの表示では立たない)。
+let spinoffPendingRisshunNote = false;
 function spinoffComputeYearPillar(y, m, d) {
   const idx = spinoffYearGanzhiIndex(y, m, d);
+  spinoffPendingRisshunNote = spinoffIsRisshunDay(y, m, d);
   return { stemIdx: idx % 10, branchIdx: idx % 12 };
+}
+const SPINOFF_RISSHUN_NOTE = '立春の日の生まれなので、時刻によっては前の年になることがあるわ。';
+function spinoffRenderRisshunNote() {
+  const label = document.getElementById('result-type-label');
+  let note = document.getElementById('spinoff-risshun-note');
+  if (spinoffPendingRisshunNote && label) {
+    if (!note) {
+      note = document.createElement('p');
+      note.id = 'spinoff-risshun-note';
+      note.className = 'setsu-note';
+      label.insertAdjacentElement('afterend', note);
+    }
+    note.textContent = SPINOFF_RISSHUN_NOTE;
+    note.hidden = false;
+  } else if (note) {
+    note.hidden = true;
+  }
+  spinoffPendingRisshunNote = false;
 }
 
 // 生年月日そのものではなく干支インデックスだけをURLに載せて結果を再現する(プライバシー配慮)
@@ -158,6 +239,7 @@ let spinoffIsSharedView = false;
 
 function spinoffShowScreen(id) {
   if (id === 'screen-start') spinoffIsSharedView = false;
+  if (id === 'screen-result') spinoffRenderRisshunNote();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $(id).classList.add('active');
 }
